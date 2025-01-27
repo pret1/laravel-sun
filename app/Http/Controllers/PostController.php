@@ -32,7 +32,6 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
-        $post = Post::findOrFail($post);
         dd($post);
     }
 
