@@ -39,7 +39,7 @@ class GoCommand extends Command
                'author' => 'author command',
                'is_published' => true,
                'likes' => 1,
-               'image_path' => 'path command',
+               'image_path' => '/var/www/html/31231',
                'tag' => 'tag command',
                'category' => 'category command',
                'views' => 1,
