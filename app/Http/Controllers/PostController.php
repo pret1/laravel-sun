@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Services\PostService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
@@ -16,7 +17,7 @@ class PostController extends Controller
 
     public function store()
     {
-         return Post::create([
+         $post = [
             'title' => 'Command title',
             'content' => 'content command',
             'author' => 'author command',
@@ -27,7 +28,9 @@ class PostController extends Controller
             'category' => 'category command',
             'views' => 1,
             'published_at' => '2025-01-23 16:38:27',
-        ]);
+        ];
+
+         return PostService::store($post);
     }
 
     public function show(Post $post)
@@ -35,19 +38,17 @@ class PostController extends Controller
         dd($post);
     }
 
-    public function update()
+    public function update(Post $post)
     {
         $data = [
             'title' => 'update title',
         ];
-        $post = Post::find(10);
         $post->update($data);
         return $post;
     }
 
-    public function destroy()
+    public function destroy(Post $post)
     {
-        $post = Post::find(10);
         $post->delete();
         return response([
             'message' => 'delete success',
