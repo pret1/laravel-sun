@@ -3,18 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Services\CommentService;
 use Illuminate\Http\Request;
+use App\Http\Resources\Comment\CommentResource;
 
 class CommentController extends Controller
 {
     public function index()
     {
-        return Comment::all();
+        return CommentResource::collection(Comment::all())->resolve();
     }
 
     public function show(Comment $comment)
     {
-        return $comment;
+        return CommentResource::make($comment)->resolve();
     }
 
     public function store()
@@ -28,7 +30,7 @@ class CommentController extends Controller
             'like' => 11,
         ];
 
-        return Comment::create($data);
+        return CommentService::store($data);
     }
 
     public function update(Comment $comment)
