@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
@@ -67,5 +68,13 @@ Route::group(['prefix' => 'users'], function () {
     Route::get('/store', [UserController::class, 'store']);
     Route::get('/{user}/update', [UserController::class, 'update']);
     Route::get('/{user}/destroy', [UserController::class, 'destroy']);
+});
+
+Route::group(['prefix' => 'profiles'], function () {
+    Route::get('/index', [ProfileController::class, 'index']);
+    Route::get('/{profile}/show', [ProfileController::class, 'show']);
+    Route::get('/store', [ProfileController::class, 'store']);
+    Route::get('/{profile}/update', [ProfileController::class, 'update']);
+    Route::get('/{profile}/destroy', [ProfileController::class, 'destroy']);
 });
 
