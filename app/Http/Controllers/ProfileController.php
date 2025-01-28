@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\Profile\ProfileResource;
 use App\Models\Profile;
 use Illuminate\Http\Request;
 
@@ -9,12 +10,12 @@ class ProfileController extends Controller
 {
     public function index()
     {
-        return Profile::all();
+        return ProfileResource::collection(Profile::all())->resolve();
     }
 
     public function show(Profile $profile)
     {
-        return $profile;
+        return ProfileResource::make($profile)->resolve();
     }
 
     public function store()
