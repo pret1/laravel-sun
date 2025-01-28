@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\Profile\ProfileResource;
 use App\Models\Profile;
+use App\Services\ProfileService;
 use Illuminate\Http\Request;
 
 class ProfileController extends Controller
@@ -27,9 +28,7 @@ class ProfileController extends Controller
             'gender' => 'male',
         ];
 
-        Profile::create($data);
-
-        return Profile::all();
+        return ProfileService::store($data);
     }
 
     public function update(Profile $profile)
