@@ -4,8 +4,15 @@ namespace App\Http\Requests\Api\Comment;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreRequest extends FormRequest
+class UpdateRequest extends FormRequest
 {
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {
+        return false;
+    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -15,12 +22,7 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'post' => 'required|string',
-            'content' => 'required|string',
-            'author' => 'required|string',
-            'status' => 'required|boolean',
-            'parent' => 'required|string',
-            'like' => 'required|integer',
+            //
         ];
     }
 }
