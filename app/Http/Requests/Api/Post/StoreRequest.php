@@ -20,7 +20,7 @@ class StoreRequest extends FormRequest
             'author' => 'required|string',
             'is_published' => 'required|boolean',
             'likes' => 'required|integer',
-            'image_path' => 'required|string',
+            'image_path' => 'required|string|unique:posts,image_path',
             'tag' => 'required|string',
             'category' => 'required|string',
             'views' => 'required|integer',
