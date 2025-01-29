@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\Post\UpdateRequest;
 use App\Http\Resources\Post\PostResource;
 use App\Models\Post;
 use App\Services\PostService;
@@ -40,9 +41,11 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Post $post)
+    public function update(UpdateRequest $request, Post $post)
     {
-        //
+        $data = $request->validated();
+        $post->update($data);
+        return PostResource::make($post)->resolve();
     }
 
     /**
@@ -50,6 +53,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return response('success deleted', 200);
     }
 }
