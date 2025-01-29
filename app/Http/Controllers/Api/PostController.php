@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Post\PostResource;
 use App\Models\Post;
+use App\Services\PostService;
 use Illuminate\Http\Request;
+use App\Http\Requests\Api\Post\StoreRequest;
 
 class PostController extends Controller
 {
@@ -20,9 +22,11 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        
+        $data = $request->validated();
+        $post = PostService::store($data);
+        return PostResource::make($post)->resolve();
     }
 
     /**
