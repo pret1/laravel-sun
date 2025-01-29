@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Comment\StoreRequest;
+use App\Http\Requests\Api\Comment\UpdateRequest;
 use App\Http\Resources\Comment\CommentResource;
 use App\Models\Comment;
 use App\Services\CommentService;
@@ -32,24 +33,27 @@ class CommentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Comment $post)
+    public function show(Comment $comment)
     {
-        return CommentResource::make($post)->resolve();
+        return CommentResource::make($comment)->resolve();
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Comment $post)
+    public function update(UpdateRequest $request, Comment $comment)
     {
-
+        $data = $request->validated();
+        $comment->update($data);
+        return $comment;
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Comment $post)
+    public function destroy(Comment $comment)
     {
-        //
+        $comment->delete();
+        return response('success deleted ', 200);
     }
 }
