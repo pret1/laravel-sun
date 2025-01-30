@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\CommentController;
+use App\Http\Controllers\Api\LikeController;
 use App\Http\Controllers\Api\PostController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -21,3 +22,11 @@ Route::group(['prefix' => 'comments'], function () {
 });
 
 Route::apiResource('categories', CategoryController::class);
+
+Route::group(['prefix' => 'likes'], function () {
+    Route::get('/', [LikeController::class, 'index']);
+    Route::post('/', [LikeController::class, 'store']);
+    Route::get('/{like}', [LikeController::class, 'show']);
+    Route::patch('/{like}', [LikeController::class, 'update']);
+    Route::delete('/{like}', [LikeController::class, 'destroy']);
+});
