@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\Api\LikeController;
 use App\Http\Controllers\Api\PostController;
+use App\Http\Controllers\Api\ProfileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -30,3 +31,5 @@ Route::group(['prefix' => 'likes'], function () {
     Route::patch('/{like}', [LikeController::class, 'update']);
     Route::delete('/{like}', [LikeController::class, 'destroy']);
 });
+
+Route::apiResource('profiles', ProfileController::class);
