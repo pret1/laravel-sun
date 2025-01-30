@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\Api\LikeController;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\ProfileController;
+use App\Http\Controllers\Api\RoleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -33,3 +34,7 @@ Route::group(['prefix' => 'likes'], function () {
 });
 
 Route::apiResource('profiles', ProfileController::class);
+
+Route::apiResource('roles', RoleController::class);
+
+Route::apiResource('tags', RoleController::class);

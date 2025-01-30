@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\Role\StoreRequest;
+use App\Http\Requests\Api\Role\UpdateRequest;
 use App\Models\Role;
 use Illuminate\Http\Request;
 
@@ -13,15 +15,16 @@ class RoleController extends Controller
      */
     public function index()
     {
-        //
+        return Role::all();
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        //
+        $data = $request->validated();
+        return Role::create($data);
     }
 
     /**
@@ -29,15 +32,17 @@ class RoleController extends Controller
      */
     public function show(Role $role)
     {
-        //
+        return $role;
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Role $role)
+    public function update(UpdateRequest $request, Role $role)
     {
-        //
+        $data = $request->validated();
+        $role->update($data);
+        return $role;
     }
 
     /**
@@ -45,6 +50,7 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
-        //
+        $role->delete();
+        return response('success deleted role', 200);
     }
 }
