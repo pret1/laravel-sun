@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\LikeController;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\RoleController;
+use App\Http\Controllers\Api\TagController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -37,4 +38,4 @@ Route::apiResource('profiles', ProfileController::class);
 
 Route::apiResource('roles', RoleController::class);
 
-Route::apiResource('tags', RoleController::class);
+Route::apiResource('tags', TagController::class);
