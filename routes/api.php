@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\Api\PostController;
 use Illuminate\Http\Request;
@@ -18,3 +19,5 @@ Route::group(['prefix' => 'comments'], function () {
     Route::patch('/{comment}', [CommentController::class, 'update']);
     Route::delete('/{comment}', [CommentController::class, 'destroy']);
 });
+
+Route::apiResource('categories', CategoryController::class);

@@ -9,13 +9,17 @@ use App\Http\Resources\Comment\CommentResource;
 use App\Models\Comment;
 use App\Services\CommentService;
 use Illuminate\Http\Request;
+use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Foundation\Application;
+use \Illuminate\Http\Response;
 
 class CommentController extends Controller
 {
     /**
      * Display a listing of the resource.
+     * @return array
      */
-    public function index()
+    public function index(): array
     {
         return CommentResource::collection(Comment::all())->resolve();
     }
@@ -23,7 +27,7 @@ class CommentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreRequest $request)
+    public function store(StoreRequest $request): array
     {
         $data = $request->validated();
         $post = CommentService::store($data);
@@ -33,7 +37,7 @@ class CommentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Comment $comment)
+    public function show(Comment $comment): array
     {
         return CommentResource::make($comment)->resolve();
     }
@@ -41,7 +45,7 @@ class CommentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRequest $request, Comment $comment)
+    public function update(UpdateRequest $request, Comment $comment): Comment
     {
         $data = $request->validated();
         $comment->update($data);
@@ -51,7 +55,7 @@ class CommentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Comment $comment)
+    public function destroy(Comment $comment): ResponseFactory|Application|Response
     {
         $comment->delete();
         return response('success deleted ', 200);
