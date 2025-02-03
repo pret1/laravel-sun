@@ -2,7 +2,9 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Category;
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Console\Command;
 
 class GoCommand extends Command
@@ -30,8 +32,16 @@ class GoCommand extends Command
         $post = Post::find(8);
 
         if ($action === 'r') {
-            $this->line(Post::find(8));
-            dump(Post::all()->toArray());
+            $user = User::first();
+            dd($user);
+
+//            $post = Post::first();
+//            $category = Category::first();
+//            dd($category->posts);
+//            dd($post->tags->toArray());
+
+//            $this->line(Post::find(8));
+//            dump(Post::all()->toArray());
         } elseif($action === 'c') {
             Post::create([
                'title' => 'Command title',

@@ -15,12 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('content')->nullable();
-            $table->string('author');
+            $table->foreignId('profile_id')->index()->constrained('profiles');
             $table->boolean('is_published')->default(true);
             $table->unsignedInteger('likes');
             $table->string('image_path')->unique();
-            $table->string('tag');
-            $table->string('category');
+            $table->foreignId('category_id')->index()->constrained('categories');
             $table->unsignedInteger('views');
             $table->dateTime('published_at')->index();
             $table->timestamps();
