@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('comments', function (Blueprint $table) {
+        Schema::create('comment_profile_likes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('post_id')->index()->constrained('posts');
-            $table->text('content');
+
+            $table->foreignId('comment_id')->index()->constrained('comments');
             $table->foreignId('profile_id')->index()->constrained('profiles');
-            $table->boolean('status')->default(true);
-            $table->foreignId('parent_id')->nullable()->index()->constrained('comments');
+
             $table->timestamps();
         });
     }
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('comments');
+        Schema::dropIfExists('comment_profile_likes');
     }
 };

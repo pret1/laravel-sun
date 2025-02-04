@@ -23,4 +23,9 @@ class Profile extends Model
     {
         return $this->hasMany(Comment::class);
     }
+
+    public function likedComments(): BelongsToMany
+    {
+        return $this->belongsToMany(Comment::class, 'comment_profile_likes');
+    }
 }
