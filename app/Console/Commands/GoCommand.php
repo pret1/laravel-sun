@@ -32,8 +32,10 @@ class GoCommand extends Command
         $post = Post::find(8);
 
         if ($action === 'r') {
-            $user = User::first();
-            dd($user);
+            $post = Post::first();
+            dd($post->likedProfiles);
+//            $user = User::first();
+//            dd($user);
 
 //            $post = Post::first();
 //            $category = Category::first();

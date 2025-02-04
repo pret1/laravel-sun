@@ -17,7 +17,6 @@ return new class extends Migration
             $table->text('content')->nullable();
             $table->foreignId('profile_id')->index()->constrained('profiles');
             $table->boolean('is_published')->default(true);
-            $table->unsignedInteger('likes');
             $table->string('image_path')->unique();
             $table->foreignId('category_id')->index()->constrained('categories');
             $table->unsignedInteger('views');

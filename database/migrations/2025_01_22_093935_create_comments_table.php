@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('content');
             $table->foreignId('profile_id')->index()->constrained('profiles');
             $table->boolean('status')->default(true);
-            $table->foreignId('parent_id')->index()->constrained('comments');
+            $table->foreignId('parent_id')->nullable()->index()->constrained('comments');
             $table->unsignedInteger('like')->default(0);
             $table->timestamps();
         });
