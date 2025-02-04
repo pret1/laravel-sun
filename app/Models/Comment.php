@@ -33,4 +33,9 @@ class Comment extends Model
     {
         return $this->belongsToMany(Profile::class, 'comment_profile_likes');
     }
+
+    public function category(): BelongsTo
+    {
+        return $this->post->category();
+    }
 }

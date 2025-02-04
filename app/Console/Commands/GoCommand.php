@@ -37,6 +37,13 @@ class GoCommand extends Command
 
         if ($action === 'r') {
 
+            // attach
+            // detach
+            // sync -- work with exist data, for example we want edit tags, we write expected tags and when we save, we expect save need tags, other way use array_dif
+            // syncWithoutDetaching
+            // toggle -- work with likes, just switched status
+            // updateExistingPivot -- work on shop or store
+
             //------COMMENTS---------
 //            $comment = Comment::first();
 //            $comment = Comment::find(3);
@@ -45,12 +52,14 @@ class GoCommand extends Command
 //            dd($comment->profile?->toArray());
 //            dd($comment->childrenComments?->toArray());
 //            dd($comment->parentComment?->toArray());
+//            dd($comment->category?->toArray());
             //------------------------------------------
 
             //-------CATEGORIES----------
 //            $category = Category::first();
 //            $category = Category::find(2);
 //            dd($category->posts->toArray());
+//            dd($category->comments->toArray());
             //---------------------------------
 
             //--------POSTS------------------
