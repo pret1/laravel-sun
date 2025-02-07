@@ -22,4 +22,9 @@ class Category extends Model
     {
         return $this->hasOneThrough(Comment::class, Post::class);
     }
+
+    public function latestComment(): HasOneThrough
+    {
+        return $this->hasOneThrough(Comment::class, Post::class)->latest();
+    }
 }

@@ -28,4 +28,14 @@ class Post extends Model
     {
         return $this->hasMany(Comment::class);
     }
+
+    public function profile(): BelongsTo
+    {
+        return $this->belongsTo(Profile::class);
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->profile->user();
+    }
 }

@@ -37,12 +37,12 @@ class GoCommand extends Command
 
         if ($action === 'r') {
 
-            // attach
-            // detach
-            // sync -- work with exist data, for example we want edit tags, we write expected tags and when we save, we expect save need tags, other way use array_dif
-            // syncWithoutDetaching
-            // toggle -- work with likes, just switched status
-            // updateExistingPivot -- work on shop or store
+            // attach -- Attach(add) new
+            // detach -- Detach(delete) specific
+            // sync -- work with exist data, for example we want edit tags, we write expected tags and when we save, we expect save need tags, other way use array_dif -- Sync (Replace all existing with new)
+            // syncWithoutDetaching -- Sync without detaching (Add new, keep existing)
+            // toggle -- work with likes, just switched status -- Toggle (Attach if not exists, detach if exists)
+            // updateExistingPivot -- work on shop or store -- Update pivot data (e.g., add custom fields like 'priority')
 
             //------COMMENTS---------
 //            $comment = Comment::first();
@@ -54,12 +54,17 @@ class GoCommand extends Command
 //            dd($comment->parentComment?->toArray());
 //            dd($comment->category?->toArray());
             //------------------------------------------
+//            dd($comment->user?->toArray());
+            //------------------------------------------
 
             //-------CATEGORIES----------
 //            $category = Category::first();
 //            $category = Category::find(2);
 //            dd($category->posts->toArray());
 //            dd($category->comments->toArray());
+            //--------------------------------------
+//            dd($category->latestComment->toArray());
+//            dd($category->profile->toArray());
             //---------------------------------
 
             //--------POSTS------------------
@@ -69,6 +74,17 @@ class GoCommand extends Command
 //            dd($post->tags->toArray());
 //            dd($post->likedProfiles->toArray());
 //            dd($post->comments->toArray());
+            //-----------------------------------
+//            dd($post->user?->toArray());
+            //-------------------------------
+//            $post = Post::find(2);
+//            $tagIds = [2, 3, 4];
+//            $post->tags()->attach($tagIds);
+//            $post->tags()->detach([2]);
+//            $post->tags()->sync([1, 3]);
+//            $post->tags()->syncWithoutDetaching([5]);
+//            $post->tags()->toggle([4, 6]);
+//            $post->tags()->updateExistingPivot(3, ['created_at' => '2020-01-30']);
             //-------------------------------
 
             //---------Profiles----------
@@ -78,6 +94,26 @@ class GoCommand extends Command
 //            dd($profile->likedPosts->toArray());
 //            dd($profile->comments->toArray());
 //            dd($profile->likedComments->toArray());
+            //-----------------------------------------
+//            dd($profile->categories->toArray());
+//            dd($profile->tags->toArray());
+            //-----------------------------
+//            $profile = Profile::find(1);
+//            $postIds = [2, 3, 4];
+//            $profile->likedPosts()->attach($postIds);
+//            $profile->likedPosts()->detach(2);
+//            $profile->likedPosts()->sync([1, 3]);
+//            $profile->likedPosts()->syncWithoutDetaching(5);
+//            $profile->likedPosts()->toggle([4, 6]);
+//            $profile->likedPosts()->updateExistingPivot(3, ['updated_at' => now()]);
+            //----------------------------
+//            $profile = Profile::find(1);
+//            $profile->likedComments()->attach([1, 2, 3]);
+//            $profile->likedComments()->detach(2);
+//            $profile->likedComments()->sync(4, 5);
+//            $profile->likedComments()->syncWithoutDetaching(6);
+//            $profile->likedComments()->toggle([4, 7]);
+//            $profile->likedComments()->updateExistingPivot(4, ['updated_at' => now()]);
             //----------------------------
 
             //-----------Roles------------
@@ -92,9 +128,22 @@ class GoCommand extends Command
             //---------------------------
 
             //----------Users--------------
-//            $user = User::first();
+            $user = User::first();
 //            dd($user->roles->toArray());
 //            dd($user->profile->toArray());
+            //-------------------------------
+//            dd($user->comments->toArray());
+//            dd($user->posts->toArray());
+//            dd($user->tags->toArray());
+            //------------------------------
+//            $user = User::find(5);
+//            $user->roles()->attach([1, 2]);
+//            $user->roles()->detach([1]);
+//            $user->roles()->sync([2, 3]);
+//            $user->roles()->syncWithoutDetaching([4]);
+//            $user->roles()->toggle([2, 5]);
+//            $user->roles()->updateExistingPivot(2, ['updated_at' => now()]);
+
             //-------------------------------
 
 //            $this->line(Post::find(8));

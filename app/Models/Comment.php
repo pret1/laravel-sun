@@ -38,4 +38,9 @@ class Comment extends Model
     {
         return $this->post->category();
     }
+
+    public function user(): BelongsTo
+    {
+        return $this->profile->user();
+    }
 }
