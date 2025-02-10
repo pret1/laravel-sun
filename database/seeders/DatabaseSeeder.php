@@ -41,6 +41,7 @@ class DatabaseSeeder extends Seeder
             PostSeeder::class,
             PostProfileLikeSeeder::class,
             CommentSeeder::class,
+            CommentProfileLikeSeeder::class,
         ]);
 
         $role = Role::where('title', 'USER')->first();

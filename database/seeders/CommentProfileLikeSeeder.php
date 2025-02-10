@@ -2,12 +2,12 @@
 
 namespace Database\Seeders;
 
-use App\Models\Post;
+use App\Models\Comment;
 use App\Models\Profile;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class PostProfileLikeSeeder extends Seeder
+class CommentProfileLikeSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,15 +15,15 @@ class PostProfileLikeSeeder extends Seeder
     public function run(): void
     {
         $profiles = Profile::all();
-        $posts = Post::all();
+        $comments = Comment::all();
 
-        if ($profiles->isEmpty() || $posts->isEmpty()) {
+        if ($profiles->isEmpty() || $comments->isEmpty()) {
             return;
         }
 
         foreach ($profiles as $profile) {
-            $likedPosts = $posts->random(rand(1, 5));
-            $profile->likedPosts()->toggle($likedPosts->pluck('id'));
+            $likedComments = $comments->random(rand(5, 8));
+            $profile->likedComments()->toggle($likedComments->pluck('id'));
         }
     }
 }
