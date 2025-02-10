@@ -13,7 +13,8 @@ class RoleFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => null,
+            'title' => 'USER',
+//            'title' => null,
         ];
     }
 }
