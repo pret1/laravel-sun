@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Role;
 use App\Models\User;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -35,8 +36,14 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             TagSeeder::class,
+            RoleSeeder::class,
             CategorySeeder::class,
             PostSeeder::class,
         ]);
+
+        $role = Role::where('title', 'USER')->first();
+        if ($role) {
+            $user->roles()->toggle($role->id);
+        }
     }
 }
