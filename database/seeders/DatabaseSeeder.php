@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\Profile;
 use App\Models\Role;
@@ -22,46 +23,60 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-//        $user = [
-//            'login' => 'user',
-//            'email' => 'user@gmail.com',
-//            'password' => Hash::make('password'),
-//        ];
+        $user = [
+            'login' => 'user',
+            'email' => 'user@gmail.com',
+            'password' => Hash::make('password'),
+        ];
+
+        $user = User::firstOrCreate([
+            'email' => $user['email'],
+        ], $user);
+
+        $user->profile()->create([
+            'name' => 'Vasy',
+            'phone' => '7777777777777',
+            'address' => 'asdasdasdasdasd',
+            'gender' => 'male',
+        ]);
+
+//        $user = User::factory()
+//            ->has(Profile::factory())
+//            ->has(Post::factory()->count(3))
+//            ->has(Role::factory()->count(2))
+//            ->create();
 //
-//        $user = User::firstOrCreate([
-//            'email' => $user['email'],
-//        ], $user);
 //
-//        $user->profile()->create([
-//            'name' => 'Vasy',
-//            'phone' => '7777777777777',
-//            'address' => 'asdasdasdasdasd',
-//            'gender' => 'male',
-//        ]);
+//        $role = Role::factory()->hasAttached(User::factory())->create();
+//        $category = Category::factory()->has(Post::factory()->count(5))->create();
+//
+//        $post = Post::factory()->count(5)
+//            ->for(Category::factory())
+//            ->for(Profile::factory())
+//            ->has(Comment::factory()->count(3))
+//            ->create();
 
-        $user = User::factory()
-            ->has(Profile::factory())
-            ->has(Post::factory()->count(3))
-            ->has(Role::factory()->count(2))
-            ->create();
+        //--------need check
+//            ->hasAttached(Profile::factory()->count(5))
 
+//        $profile = Profile::factory()
+//            ->hasAttached(Post::factory()->count(3))
+//            ->create();
+        //-------------------------
 
-        $role = Role::factory()->hasAttached(User::factory())->create();
-        $category = Category::factory()->has(Post::factory()->count(5))->create();
-
-        $post = Post::factory()
-            ->for(Category::factory())
-            ->for(Profile::factory())
-            ->create();
-
-        $tag = Tag::factory()->for(Post::factory())->create();
+//        $tag = Tag::factory()->count(10)->hasAttached(Post::factory()->count(10))->create();
+//
+//        $comment = Comment::factory()->count(10)
+//            ->for(Post::factory())
+//            ->for(Profile::factory())
+//            ->create();
 
 
         $this->call([
-//            TagSeeder::class,
-//            RoleSeeder::class,
-//            CategorySeeder::class,
-//            PostSeeder::class,
+            TagSeeder::class,
+            RoleSeeder::class,
+            CategorySeeder::class,
+            PostSeeder::class,
             PostProfileLikeSeeder::class,
             CommentSeeder::class,
             CommentProfileLikeSeeder::class,
