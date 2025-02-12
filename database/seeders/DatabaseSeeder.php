@@ -23,28 +23,30 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $user = [
-            'login' => 'user',
-            'email' => 'user@gmail.com',
-            'password' => Hash::make('password'),
-        ];
+//        $user = [
+//            'login' => 'user',
+//            'email' => 'user@gmail.com',
+//            'password' => Hash::make('password'),
+//        ];
+//
+//        $user = User::firstOrCreate([
+//            'email' => $user['email'],
+//        ], $user);
+//
+//        $user->profile()->create([
+//            'name' => 'Vasy',
+//            'phone' => '7777777777777',
+//            'address' => 'asdasdasdasdasd',
+//            'gender' => 'male',
+//        ]);
 
-        $user = User::firstOrCreate([
-            'email' => $user['email'],
-        ], $user);
-
-        $user->profile()->create([
-            'name' => 'Vasy',
-            'phone' => '7777777777777',
-            'address' => 'asdasdasdasdasd',
-            'gender' => 'male',
-        ]);
-
-//        $user = User::factory()
-//            ->has(Profile::factory())
-//            ->has(Post::factory()->count(3))
-//            ->has(Role::factory()->count(2))
-//            ->create();
+        $user = User::factory()
+            ->count(20)
+            ->has(Profile::factory())
+            ->has(Post::factory()->count(3))
+//            ->has(Role::factory())
+//            ->hasAttached(Role::factory()->count(2))
+            ->create();
 //
 //
 //        $role = Role::factory()->hasAttached(User::factory())->create();
@@ -77,14 +79,22 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             CategorySeeder::class,
             PostSeeder::class,
-            PostProfileLikeSeeder::class,
+//            PostProfileLikeSeeder::class,
             CommentSeeder::class,
-            CommentProfileLikeSeeder::class,
+            LikeableSeeder::class,
+//            CommentProfileLikeSeeder::class,
         ]);
 
-        $role = Role::where('title', 'USER')->first();
-        if ($role) {
-            $user->roles()->toggle($role->id);
-        }
+//        $role = Role::where('title', 'USER')->first();
+//        if ($role) {
+//            $user->roles()->toggle($role->id);
+//        }
+
+        $roles = Role::all();
+        $user->each(function ($user) use ($roles) {
+            $user->roles()->attach(
+                $roles->random(rand(1, 3))->pluck('id')->toArray()
+            );
+        });
     }
 }

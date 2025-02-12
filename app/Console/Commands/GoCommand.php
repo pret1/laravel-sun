@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Category;
 use App\Models\Comment;
+use App\Models\Image;
 use App\Models\Post;
 use App\Models\Profile;
 use App\Models\Role;
@@ -36,6 +37,29 @@ class GoCommand extends Command
 //        $post = Post::find(8);
 
         if ($action === 'r') {
+
+            //------morphs----------
+            $post = Post::first();
+//            $post->image()->create();
+//            $image = Image::first();
+//            dd($image->imageable);
+//            dd($post->image);
+
+//            $post->comments()->create([
+//                'content' => 'ddddddd',
+//                'status' => true,
+//                'profile_id' => $post->profile_id
+//            ]);
+
+//            $comment = Comment::first();
+//            dd($comment->commentable);
+
+//            $post->likedProfiles()->attach(1);
+            $profile = Profile::first();
+//            dd($profile->likedPosts);
+            $profile->likedComments()->attach(1);
+            dd($profile->likedComments);
+            //----------------------
 
             // attach -- Attach(add) new
             // detach -- Detach(delete) specific
@@ -128,7 +152,7 @@ class GoCommand extends Command
             //---------------------------
 
             //----------Users--------------
-            $user = User::first();
+//            $user = User::first();
 //            dd($user->roles->toArray());
 //            dd($user->profile->toArray());
             //-------------------------------
