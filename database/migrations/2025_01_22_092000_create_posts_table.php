@@ -19,7 +19,6 @@ return new class extends Migration
             $table->boolean('is_published')->default(true);
             $table->string('image_path')->unique();
             $table->foreignId('category_id')->index()->constrained('categories');
-            $table->unsignedInteger('views')->nullable()->default(0);
             $table->dateTime('published_at')->index();
             $table->timestamps();
         });

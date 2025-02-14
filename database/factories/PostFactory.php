@@ -26,7 +26,7 @@ class PostFactory extends Factory
             'is_published' => fake()->boolean(),
             'image_path' => fake()->imageUrl,
             'category_id' => Category::inRandomOrder()->first()->id,
-            'views' => fake()->numberBetween(0, 1000),
+//            'views' => fake()->numberBetween(0, 1000),
             'published_at' => fake()->dateTime(),
         ];
     }

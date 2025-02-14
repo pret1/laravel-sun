@@ -82,6 +82,8 @@ class DatabaseSeeder extends Seeder
 //            PostProfileLikeSeeder::class,
             CommentSeeder::class,
             LikeableSeeder::class,
+            ViewSeeder::class,
+            ImageSeeder::class,
 //            CommentProfileLikeSeeder::class,
         ]);
 
@@ -90,11 +92,22 @@ class DatabaseSeeder extends Seeder
 //            $user->roles()->toggle($role->id);
 //        }
 
-        $roles = Role::all();
-        $user->each(function ($user) use ($roles) {
-            $user->roles()->attach(
-                $roles->random(rand(1, 3))->pluck('id')->toArray()
-            );
-        });
+//        $roles = Role::all();
+//        $user->each(function ($user) use ($roles) {
+//            $user->roles()->attach(
+//                $roles->random(rand(1, 3))->pluck('id')->toArray()
+//            );
+//        });
+
+//        $comments = Comment::all();
+//        foreach ($comments as $comment) {
+//            if($comment->id > 3) {
+//                do {
+//                    $randomComment = Comment::inRandomOrder()->first();
+//                } while ($randomComment->id === $comment->id);
+//
+//                $comment->update(['parent_id' => $randomComment->id]);
+//            }
+//        }
     }
 }

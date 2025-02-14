@@ -39,7 +39,7 @@ class GoCommand extends Command
         if ($action === 'r') {
 
             //------morphs----------
-            $post = Post::first();
+//            $post = Post::first();
 //            $post->image()->create();
 //            $image = Image::first();
 //            dd($image->imageable);
@@ -55,10 +55,10 @@ class GoCommand extends Command
 //            dd($comment->commentable);
 
 //            $post->likedProfiles()->attach(1);
-            $profile = Profile::first();
+//            $profile = Profile::first();
 //            dd($profile->likedPosts);
-            $profile->likedComments()->attach(1);
-            dd($profile->likedComments);
+//            $profile->likedComments()->attach(1);
+//            dd($profile->likedComments);
             //----------------------
 
             // attach -- Attach(add) new

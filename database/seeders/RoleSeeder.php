@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Role;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -19,5 +20,13 @@ class RoleSeeder extends Seeder
                 'title' => $role
             ]);
         }
+
+        $users = User::all();
+        $roles = Role::all();
+        $users->each(function ($user) use ($roles) {
+            $user->roles()->attach(
+                $roles->random(rand(1, 3))->pluck('id')->toArray()
+            );
+        });
     }
 }
