@@ -13,11 +13,7 @@ return new class extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
-            $table->morphs('commentable');
-            $table->text('content');
-            $table->foreignId('profile_id')->index()->constrained('profiles');
-            $table->boolean('status')->default(true);
-            $table->foreignId('parent_id')->nullable()->index()->constrained('comments');
+
             $table->timestamps();
         });
     }

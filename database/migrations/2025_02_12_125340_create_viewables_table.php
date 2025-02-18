@@ -12,10 +12,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('views', function (Blueprint $table) {
+        Schema::create('viewables', function (Blueprint $table) {
             $table->id();
-            $table->morphs('viewable');
-            $table->foreignIdFor(Profile::class)->index()->constrained();
+
             $table->timestamps();
         });
     }
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('views');
+        Schema::dropIfExists('viewables');
     }
 };

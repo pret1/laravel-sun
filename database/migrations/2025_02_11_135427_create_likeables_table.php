@@ -15,8 +15,7 @@ return new class extends Migration
     {
         Schema::create('likeables', function (Blueprint $table) {
             $table->id();
-            $table->morphs('likeable');
-            $table->foreignIdFor(Profile::class)->index()->constrained();
+
 //            $table->foreignId('profile_id')->index()->constrained('profiles');
             $table->timestamps();
         });
