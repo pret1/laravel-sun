@@ -95,3 +95,76 @@ php artisan make:migration change_title_in_posts_table
 php artisan make:migration rename_title_in_posts_table
 php artisan make:migration add_fk_in_posts_table
 ```
+
+```
+profiles
+            $table->string('name');
+            $table->foreignId('user_id')->index()->constrained('users');
+            $table->string('phone')->unique();
+            $table->string('address');
+            $table->enum('gender', ['male', 'female', 'other']);
+```
+
+```
+categories
+$table->string('title');
+```
+
+```
+posts
+            $table->string('title');
+            $table->text('content')->nullable();
+            $table->foreignId('profile_id')->index()->constrained('profiles');
+            $table->boolean('is_published')->default(true);
+            $table->string('image_path')->unique();
+            $table->foreignId('category_id')->index()->constrained('categories');
+            $table->dateTime('published_at')->index();
+```
+
+```
+comments
+            $table->morphs('commentable');
+            $table->text('content');
+            $table->foreignId('profile_id')->index()->constrained('profiles');
+            $table->boolean('status')->default(true);
+            $table->foreignId('parent_id')->nullable()->index()->constrained('comments');
+```
+
+```
+tags
+$table->string('title');
+```
+
+```
+roles
+$table->string('title');
+```
+
+```
+post_tag
+            $table->foreignId('post_id')->index()->constrained('posts');
+            $table->foreignId('tag_id')->index()->constrained('tags');
+```
+
+```
+role_user
+            $table->foreignId('role_id')->index()->constrained('roles');
+            $table->foreignId('user_id')->index()->constrained('users');
+```
+
+```
+images
+$table->morphs('imageable');
+```
+
+```
+likeables
+            $table->morphs('likeable');
+            $table->foreignIdFor(Profile::class)->index()->constrained();
+```
+
+```
+viewables
+            $table->morphs('viewable');
+            $table->foreignIdFor(Profile::class)->index()->constrained();
+```
