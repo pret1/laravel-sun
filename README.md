@@ -81,3 +81,17 @@ one user can have many roles
 нужно ли схлопывать миграции? нет, не нужно.
 
 если используем софт делит, не кончиться ли память? зависит от проекта вбольшенстве своём об этом не нужно беспокоиться.
+
+размышлял по поводу просмотров(views)
+разве тут не зависит от контекста?
+могут ли просматривать не зарегистрированные пользователи посты? если да то это не многие ко многим(это один ко многим полиморфное) если нет, то многоие ко многим
+у нас будет привязка просмотра к профилю?
+ответ. В нашем случае надо, чтобы можно было посмотреть, кто просмотрел
+
+```
+php artisan make:migration add_description_in_posts_table
+php artisan make:migration drop_colum_description_in_posts_table
+php artisan make:migration change_title_in_posts_table
+php artisan make:migration rename_title_in_posts_table
+php artisan make:migration add_fk_in_posts_table
+```
