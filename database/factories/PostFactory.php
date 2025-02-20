@@ -24,7 +24,7 @@ class PostFactory extends Factory
 //            'content' => fake()->realTextBetween(300, 1255),
             'profile_id' => Profile::first()->id,
             'is_published' => fake()->boolean(),
-            'image_path' => fake()->imageUrl,
+//            'image_path' => fake()->imageUrl,
             'category_id' => Category::inRandomOrder()->first()->id,
 //            'views' => fake()->numberBetween(0, 1000),
             'published_at' => fake()->dateTime(),
