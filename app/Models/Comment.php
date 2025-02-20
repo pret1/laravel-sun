@@ -37,11 +37,15 @@ class Comment extends Model
         return $this->belongsTo(Comment::class, 'parent_id');
     }
 
-    public function likedProfiles(): BelongsToMany
-    {
-        return $this->belongsToMany(Profile::class, 'comment_profile_likes');
-    }
+//    public function likedProfiles(): BelongsToMany
+//    {
+//        return $this->belongsToMany(Profile::class, 'comment_profile_likes');
+//    }
 
+    public function likedProfiles()
+    {
+        return $this->morphMany(Profile::class, 'likeable');
+    }
     public function category(): BelongsTo
     {
         return $this->post->category();
@@ -62,8 +66,13 @@ class Comment extends Model
         return $this->morphOne(Image::class, 'imageable');
     }
 
-    public function views(): MorphMany
+//    public function views(): MorphMany
+//    {
+//        return $this->morphMany(View::class, 'viewable');
+//    }
+
+    public function viewedProfiles(): MorphMany
     {
-        return $this->morphMany(View::class, 'viewable');
+        return $this->morphMany(Profile::class, 'viewable');
     }
 }

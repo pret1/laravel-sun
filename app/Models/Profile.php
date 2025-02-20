@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
@@ -51,5 +52,15 @@ class Profile extends Model
     public function image(): MorphOne
     {
         return $this->morphOne(Image::class, 'imageable');
+    }
+
+    public function viewedComments(): MorphMany
+    {
+        return $this->morphMany(Comment::class, 'viewable');
+    }
+
+    public function viewedPosts(): MorphToMany
+    {
+        return $this->morphToMany(Post::class, 'viewable');
     }
 }

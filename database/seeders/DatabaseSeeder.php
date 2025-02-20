@@ -82,7 +82,8 @@ class DatabaseSeeder extends Seeder
 //            PostProfileLikeSeeder::class,
             CommentSeeder::class,
             LikeableSeeder::class,
-            ViewSeeder::class,
+//            ViewSeeder::class,
+            ViewAbleSeeder::class,
             ImageSeeder::class,
 //            CommentProfileLikeSeeder::class,
         ]);
