@@ -168,3 +168,9 @@ viewables
             $table->morphs('viewable');
             $table->foreignIdFor(Profile::class)->index()->constrained();
 ```
+
+```
+php artisan make:observer UserObserver -m User
+php artisan make:event User/StoredUserEvent 
+php artisan make:listener User/StoreProfileListener -e User/StoredUserEvent
+```

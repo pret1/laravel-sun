@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Events\User\StoredUserEvent;
 use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Post;
@@ -32,6 +33,8 @@ class DatabaseSeeder extends Seeder
         $user = User::firstOrCreate([
             'email' => $user['email'],
         ], $user);
+
+        StoredUserEvent::dispatch($user);
 //
 //        $user->profile()->create([
 //            'name' => 'Vasy',

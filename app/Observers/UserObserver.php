@@ -11,12 +11,12 @@ class UserObserver
      */
     public function created(User $user): void
     {
-        $user->profile()->create([
-            'name' => 'Vasy',
-            'phone' => '7777777777777',
-            'address' => 'asdasdasdasdasd',
-            'gender' => 'male',
-        ]);
+//        $user->profile()->create([
+//            'name' => 'Vasy',
+//            'phone' => '7777777777777',
+//            'address' => 'asdasdasdasdasd',
+//            'gender' => 'male',
+//        ]);
     }
 
     /**
