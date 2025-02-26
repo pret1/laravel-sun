@@ -37,6 +37,17 @@ class GoCommand extends Command
 //        $post = Post::find(8);
 
         if ($action === 'r') {
+            $post = Post::create([
+                'title' => 'New Post',
+                'content' => 'This is a test post',
+                'is_published' => '',
+                'published_at' => '',
+                'category_id' => '',
+                'profile_id' => '', //TODO: filled
+            ]);
+            $post->update(['content' => 'Updated content']);
+            $post->delete();
+            Post::find(1);
 
             //------morphs----------
 //            $post = Post::first();
