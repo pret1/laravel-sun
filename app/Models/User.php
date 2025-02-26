@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Observers\UserObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
@@ -10,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+#[ObservedBy(UserObserver::class)]
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
@@ -49,17 +52,17 @@ class User extends Authenticatable
         ];
     }
 
-    protected static function booted(): void
-    {
-        static::created(function (User $user) {
-            $user->profile()->create([
-                'name' => 'Vasy',
-                'phone' => '7777777777777',
-                'address' => 'asdasdasdasdasd',
-                'gender' => 'male',
-            ]);
-        });
-    }
+//    protected static function booted(): void
+//    {
+//        static::created(function (User $user) {
+//            $user->profile()->create([
+//                'name' => 'Vasy',
+//                'phone' => '7777777777777',
+//                'address' => 'asdasdasdasdasd',
+//                'gender' => 'male',
+//            ]);
+//        });
+//    }
 
     public function profile(): HasOne
     {
