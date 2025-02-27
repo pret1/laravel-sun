@@ -37,21 +37,35 @@ class GoCommand extends Command
 //        $post = Post::find(8);
 
         if ($action === 'r') {
-            $post = Post::create([
-                'title' => 'Go Post',
-                'content' => 'This is a test post',
-                'is_published' => true,
-                'published_at' => now(),
-                'category_id' => '1',
-                'profile_id' => '1', //TODO: filled
+//            $post = Post::create([
+//                'title' => 'Go Post',
+//                'content' => 'This is a test post',
+//                'is_published' => true,
+//                'published_at' => now(),
+//                'category_id' => '1',
+//                'profile_id' => '1', //TODO: filled
+//            ]);
+//            dump($post->getDirty());
+//            $post->update([
+//                'title' => 'Updated title',
+//                'content' => 'GO Updated content',
+//                'is_published' => false
+//            ]);
+//            dump($post->getDirty());
+//            $post->delete();
+//            Post::find(1);
+
+            $comment = Comment::create([
+                'content' => 'Terminal comment',
+                'profile_id' => 1,
+                'status' => true,
+                'commentable_type' => 'App\Models\Post',
+                'commentable_id' => 1,
             ]);
-            $post->update([
-                'title' => 'Updated title',
-                'content' => 'GO Updated content',
-                'is_published' => false
+            $comment->update([
+                'content' => 'Go updated Terminal comment',
             ]);
-            $post->delete();
-            Post::find(1);
+            $comment->delete();
 
             //------morphs----------
 //            $post = Post::first();
