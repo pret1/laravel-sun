@@ -14,6 +14,14 @@ class Tag extends Model
     use SoftDeletes;
     use HasLog;
 
+    protected static function booted(): void
+    {
+
+        static::created(function (Tag $tag) {
+            dump(11111111111111111);
+        });
+    }
+
     public function posts(): BelongsToMany
     {
         return $this->belongsToMany(Post::class);

@@ -55,17 +55,23 @@ class GoCommand extends Command
 //            $post->delete();
 //            Post::find(1);
 
-            $comment = Comment::create([
-                'content' => 'Terminal comment',
-                'profile_id' => 1,
-                'status' => true,
-                'commentable_type' => 'App\Models\Post',
-                'commentable_id' => 1,
+//            $comment = Comment::create([
+//                'content' => 'Terminal comment',
+//                'profile_id' => 1,
+//                'status' => true,
+//                'commentable_type' => 'App\Models\Post',
+//                'commentable_id' => 1,
+//            ]);
+//            $comment->update([
+//                'content' => 'Go updated Terminal comment',
+//            ]);
+//            $comment->delete();
+
+            $tag = Tag::create([
+                'title' => 'Terminal title',
             ]);
-            $comment->update([
-                'content' => 'Go updated Terminal comment',
-            ]);
-            $comment->delete();
+
+            $tag->update(['title' => 'GO tag']);
 
             //------morphs----------
 //            $post = Post::first();
