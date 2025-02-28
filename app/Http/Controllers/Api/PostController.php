@@ -9,6 +9,7 @@ use App\Models\Post;
 use App\Services\PostService;
 use Illuminate\Http\Request;
 use App\Http\Requests\Api\Post\StoreRequest;
+use Illuminate\Http\Response;
 
 class PostController extends Controller
 {
@@ -35,7 +36,25 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        return PostResource::make($post)->resolve();
+        $title = 'Test dasdasdasdyjjjt';
+
+        $post = Post::firstOrCreate([
+            'title' => $title,
+        ], [
+            'content' => 'This is a test post',
+            'is_published' => true,
+            'published_at' => now(),
+            'category_id' => '1',
+            'profile_id' => '1',
+        ]);
+
+        if(!$post->wasRecentlyCreated) {
+            return response([
+                'message' => 'Post already created',
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+//        return PostResource::make($post)->resolve();
     }
 
     /**
