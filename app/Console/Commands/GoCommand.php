@@ -11,6 +11,7 @@ use App\Models\Role;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class GoCommand extends Command
 {
@@ -37,6 +38,9 @@ class GoCommand extends Command
 //        $post = Post::find(8);
 
         if ($action === 'r') {
+            $post = Post::factory()->create();
+            Log::channel('posts')->info("Post created: {$post->id}");
+
 //            $post = Post::create([
 //                'title' => 'Go Post',
 //                'content' => 'This is a test post',
@@ -67,11 +71,10 @@ class GoCommand extends Command
 //            ]);
 //            $comment->delete();
 
-            $tag = Tag::create([
-                'title' => 'Terminal title',
-            ]);
-
-            $tag->update(['title' => 'GO tag']);
+//            $tag = Tag::create([
+//                'title' => 'Terminal title',
+//            ]);
+//            $tag->update(['title' => 'GO tag']);
 
             //------morphs----------
 //            $post = Post::first();
