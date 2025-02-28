@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Exceptions\PostException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Post\UpdateRequest;
 use App\Http\Resources\Post\PostResource;
@@ -48,11 +49,7 @@ class PostController extends Controller
             'profile_id' => '1',
         ]);
 
-        if(!$post->wasRecentlyCreated) {
-            return response([
-                'message' => 'Post already created',
-            ], Response::HTTP_UNPROCESSABLE_ENTITY);
-        }
+        PostException::ifPostExists($post);
 
 //        return PostResource::make($post)->resolve();
     }
