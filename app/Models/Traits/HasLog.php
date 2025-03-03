@@ -2,71 +2,44 @@
 
 namespace App\Models\Traits;
 
-use App\Events\Log\LoggingEnded;
-use App\Events\Log\LoggingStarted;
-use App\Models\Log;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Log;
 
 trait HasLog
 {
     protected static function bootHasLog(): void
     {
         static::created(function (Model $model) {
-            self::logEvent($model, 'created');
+            self::logEvent($model, 'created', $model->getAttributes());
         });
 
         static::updated(function (Model $model) {
-            self::logEvent($model, 'updated', $model->getOriginal());
+            $changes = $model->getChanges();
+            if (!empty($changes)) {
+                self::logEvent($model, 'updated', $changes);
+            }
         });
 
         static::deleted(function (Model $model) {
-            self::logEvent($model, 'deleted', $model->getOriginal());
+            self::logEvent($model, 'deleted', ['id' => $model->id]);
         });
 
-        static::restored(function (Model $model) {
-            self::logEvent($model, 'restored');
+        static::retrieved(function (Model $model) {
+            self::logEvent($model, 'retrieved', ['id' => $model->id]);
         });
     }
 
-//    protected static function bootHasLog(): void
-//    {
-//        static::registerLoggingEvent('created');
-//        static::registerLoggingEvent('updated');
-//        static::registerLoggingEvent('deleted');
-//        static::registerLoggingEvent('restored');
-//    }
-//
-//    private static function registerLoggingEvent(string $event): void
-//    {
-//        if (self::hasEventListener(static::class, $event)) {
-//            return;
-//        }
-//
-//        static::$event(function (Model $model) use ($event) {
-//            self::logEvent($model, $event, $event === 'updated' ? $model->getOriginal() : []);
-//        });
-//    }
-//
-//    private static function hasEventListener(string $modelClass, string $event): bool
-//    {
-//        $dispatcher = Event::getFacadeRoot();
-//        $listeners = $dispatcher->getListeners("eloquent.{$event}: {$modelClass}");
-//
-//        return !empty($listeners);
-//    }
-
-    private static function logEvent(Model $model, string $event, array $oldData = null): void
+    private static function logEvent(Model $model, string $event, array $attributes = []): void
     {
-        LoggingStarted::dispatch($model, $event);
+        $modelName = strtolower(class_basename($model));
 
-        Log::create([
-            'model' => get_class($model),
-            'event' => $event,
-            'old_data' => $oldData,
-            'new_data' => $model->toArray(),
-        ]);
+        $channel = "logs/{$modelName}/{$event}.log";
 
-        LoggingEnded::dispatch($model, $event);
+        Log::build([
+            'driver' => 'single',
+            'path' => storage_path($channel),
+            'level' => 'info',
+            'tap' => [\App\Logging\LogFormatter::class],
+        ])->info(strtoupper($event) . " | Model: {$modelName} | Data: " . json_encode($attributes));
     }
 }
