@@ -1,5 +1,6 @@
 <?php
 
+use App\LogFormatters\LogFormatter;
 use App\LogFormatters\PostLogFormatter;
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
@@ -133,6 +134,13 @@ return [
             'path' => storage_path('logs/posts.log'),
             'replace_placeholders' => true,
             'tap' => [PostLogFormatter::class]
+        ],
+
+        'dynamic' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/dynamic.log'),
+            'level' => 'info',
+            'tap' => [LogFormatter::class],
         ],
 
     ],
