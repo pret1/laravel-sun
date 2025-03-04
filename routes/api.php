@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\TagController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Middleware\IsAdminMiddleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,10 +23,11 @@ Route::group(['middleware' => 'jwt.auth', 'prefix' => 'auth'], function () {
     Route::post('refresh', [AuthController::class, 'refresh']);
     Route::post('me', [AuthController::class, 'me']);
 
-    Route::apiResource('posts', PostController::class);
 });
 
-
+Route::group(['middleware' => ['jwt.auth', IsAdminMiddleware::class]], function () {
+    Route::apiResource('posts', PostController::class);
+});
 
 Route::group(['prefix' => 'comments'], function () {
     Route::get('/', [CommentController::class, 'index']);
