@@ -10,10 +10,17 @@ class LogFormatter
     public function __invoke(Logger $logger): void
     {
         foreach ($logger->getHandlers() as $handler) {
-            $handler->setFormatter(new LineFormatter(
-                "[%datetime%] %level_name%: %message%\n", "Y-m-d H:i:s", true, true
-            ));
+            $formatter = new LineFormatter("%message%\n", null, false, true);
+            $formatter->includeStacktraces(false);
+            $handler->setFormatter($formatter);
         }
+    }
+
+    protected function formatter()
+    {
+        return tap(new LineFormatter("%message%"), function ($formatter) {
+            $formatter->includeStacktraces(false);
+        });
     }
 
 }
