@@ -13,16 +13,19 @@ class CommentSeeder extends Seeder
      */
     public function run(): void
     {
-        Comment::factory()->count(10)->create();
+        Comment::factory()->count(100)->create();
 
         $comments = Comment::all();
         foreach ($comments as $comment) {
-            if($comment->id > 3) {
-                do {
-                    $randomComment = Comment::inRandomOrder()->first();
-                } while ($randomComment->id === $comment->id);
+            if($comment->id > 30) {
+                $randomParent = Comment::where('commentable_type', $comment->commentable_type)
+                    ->where('id', '!=', $comment->id)
+                    ->inRandomOrder()
+                    ->first();
 
-                $comment->update(['parent_id' => $randomComment->id]);
+                if($randomParent) {
+                    $comment->update(['parent_id' => $randomParent->id]);
+                }
             }
         }
     }

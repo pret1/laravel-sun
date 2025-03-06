@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Article;
 use App\Models\Comment;
 use App\Models\Post;
 use App\Models\Profile;
@@ -33,7 +34,8 @@ class CommentFactory extends Factory
 
     private function getRandomCommentable(): Model
     {
-        return Post::inRandomOrder()->first() ?? Post::factory()->create();
+        $randomElement = $this->faker->randomElement([Post::class, Article::class]);
+        return $randomElement::inRandomOrder()->first() ?? $randomElement::factory()->create();
     }
 
     private function getCommentId(): ?int

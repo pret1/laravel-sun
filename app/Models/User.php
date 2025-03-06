@@ -114,6 +114,11 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasManyThrough(Post::class, Profile::class);
     }
 
+    public function articles(): HasManyThrough
+    {
+        return $this->hasManyThrough(Article::class, Profile::class);
+    }
+
     public function getIsAdminAttribute(): bool
     {
         return auth()->user()->roles->contains('title', 'ADMIN');

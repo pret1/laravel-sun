@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Article;
 use App\Models\Comment;
 use App\Models\Post;
 use App\Models\Profile;
@@ -23,7 +24,7 @@ class LikeableSeeder extends Seeder
 
     public function run(): void
     {
-        $likeableTypes = [Post::class, Comment::class];
+        $likeableTypes = [Post::class, Comment::class, Article::class];
 
         for ($i = 0; $i < 50; $i++) {
             $likeableType = $likeableTypes[array_rand($likeableTypes)];

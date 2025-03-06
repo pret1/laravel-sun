@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Events\User\StoredUserEvent;
+use App\Models\Article;
 use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Post;
@@ -24,17 +25,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $user = [
-            'login' => 'user',
-            'email' => 'user@gmail.com',
-            'password' => Hash::make('password'),
-        ];
-
-        $user = User::firstOrCreate([
-            'email' => $user['email'],
-        ], $user);
-
-        StoredUserEvent::dispatch($user);
+//        $user = [
+//            'login' => 'user',
+//            'email' => 'user@gmail.com',
+//            'password' => Hash::make('password'),
+//        ];
+//
+//        $user = User::firstOrCreate([
+//            'email' => $user['email'],
+//        ], $user);
+//
+//        StoredUserEvent::dispatch($user);
 //
 //        $user->profile()->create([
 //            'name' => 'Vasy',
@@ -43,13 +44,14 @@ class DatabaseSeeder extends Seeder
 //            'gender' => 'male',
 //        ]);
 
-//        $user = User::factory()
-//            ->count(20)
-//            ->has(Profile::factory())
-//            ->has(Post::factory()->count(3))
-////            ->has(Role::factory())
-////            ->hasAttached(Role::factory()->count(2))
-//            ->create();
+        $user = User::factory()
+            ->count(20)
+            ->has(Profile::factory())
+            ->has(Post::factory()->count(3))
+            ->has(Article::factory()->count(3))
+//            ->has(Role::factory())
+//            ->hasAttached(Role::factory()->count(2))
+            ->create();
 //
 //
 //        $role = Role::factory()->hasAttached(User::factory())->create();
@@ -82,6 +84,7 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             CategorySeeder::class,
             PostSeeder::class,
+            ArticleSeeder::class,
 //            PostProfileLikeSeeder::class,
             CommentSeeder::class,
             LikeableSeeder::class,

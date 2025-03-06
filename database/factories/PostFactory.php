@@ -22,7 +22,7 @@ class PostFactory extends Factory
             'title' => fake()->words(3, true),
             'content' => fake()->sentence(),
 //            'content' => fake()->realTextBetween(300, 1255),
-            'profile_id' => Profile::first()->id,
+            'profile_id' => Profile::inRandomOrder()->first()->id,
             'is_published' => fake()->boolean(),
 //            'image_path' => fake()->imageUrl,
             'category_id' => Category::inRandomOrder()->first()->id,

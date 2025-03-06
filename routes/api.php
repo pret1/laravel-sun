@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ArticleController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\CommentController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Middleware\IsAdminMiddleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\RoleMiddleware;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -25,8 +27,9 @@ Route::group(['middleware' => 'jwt.auth', 'prefix' => 'auth'], function () {
 
 });
 
-Route::group(['middleware' => ['jwt.auth', IsAdminMiddleware::class]], function () {
+Route::group(['middleware' => ['jwt.auth', RoleMiddleware::class]], function () {
     Route::apiResource('posts', PostController::class);
+    Route::apiResource('articles', ArticleController::class);
 });
 
 Route::group(['prefix' => 'comments'], function () {
