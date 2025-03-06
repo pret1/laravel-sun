@@ -29,7 +29,19 @@ class RoleMiddleware
             "admin",
         ];
 
-        if(!$user->roles()->whereIn('title', $requiredRoles)->exists()) {
+        $actionMap = [
+            'POST'   => 'store',
+            'GET'    => 'show',
+            'PUT'    => 'update',
+            'PATCH'  => 'update',
+            'DELETE' => 'delete',
+        ];
+        $methodMap = $request->method();
+
+        $permissionName = $actionMap[$request->method()] ?? null;
+        $role = $user->roles()->whereIn('title', $requiredRoles)->exists();
+        $permission = $user->hasPermission($permissionName);
+        if(!$role || !$permission) {
             return response()->json(['error' => 'Forbidden'], Response::HTTP_FORBIDDEN);
         }
         return $next($request);

@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use App\Models\Permission;
 
 #[ObservedBy(UserObserver::class)]
 class User extends Authenticatable implements JWTSubject
@@ -122,6 +123,16 @@ class User extends Authenticatable implements JWTSubject
     public function getIsAdminAttribute(): bool
     {
         return auth()->user()->roles->contains('title', 'ADMIN');
+    }
+
+    public function permissions(): BelongsToMany
+    {
+        return $this->belongsToMany(Permission::class, 'permission_user');
+    }
+
+    public function hasPermission(string $permissionName): bool
+    {
+        return $this->permissions()->where('name', $permissionName)->exists();
     }
 
 }

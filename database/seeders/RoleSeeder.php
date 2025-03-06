@@ -9,7 +9,16 @@ use Illuminate\Database\Seeder;
 
 class RoleSeeder extends Seeder
 {
-    private array $roles = ['USER', 'MANAGER', 'SUPER_MANAGER', 'ADMIN', 'SUPER_ADMIN'];
+    private array $roles = [
+        'user',
+//        'manager',
+//        'super_manager',
+        'admin',
+//        'super_admin',
+        'moderator_posts',
+        'moderator_comments',
+        'moderator_articles',
+        ];
     /**
      * Run the database seeds.
      */
@@ -25,7 +34,7 @@ class RoleSeeder extends Seeder
         $roles = Role::all();
         $users->each(function ($user) use ($roles) {
             $user->roles()->attach(
-                $roles->random(rand(1, 3))->pluck('id')->toArray()
+                $roles->random(rand(1, 2))->pluck('id')->toArray()
             );
         });
     }
