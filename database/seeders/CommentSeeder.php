@@ -17,7 +17,7 @@ class CommentSeeder extends Seeder
 
         $comments = Comment::all();
         foreach ($comments as $comment) {
-            if($comment->id > 30) {
+            if($comment->id > 30 && !$comment->parent_id && !$comment->childrenComments()->exists()) {
                 $randomParent = Comment::where('commentable_type', $comment->commentable_type)
                     ->where('id', '!=', $comment->id)
                     ->inRandomOrder()
