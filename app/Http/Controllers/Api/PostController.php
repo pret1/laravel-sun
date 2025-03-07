@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Exceptions\PostException;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\Post\IndexRequest;
 use App\Http\Requests\Api\Post\UpdateRequest;
 use App\Http\Resources\Post\PostResource;
 use App\Models\Post;
@@ -17,9 +18,33 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(IndexRequest $request)
     {
-        return PostResource::collection(Post::all())->resolve();
+        $data = $request->validated();
+
+        $postsQuery = Post::query();
+        if (isset($data['title'])) {
+            $postsQuery->where('title', 'ilike', '%' . $data['title'] . '%');
+        }
+
+        if (isset($data['category_title'])) {
+            $postsQuery->whereRelation('category', 'title', 'ilike', '%' . $data['category_title'] . '%');
+        }
+
+//        if (isset($data['title'])) {
+//            $postsQuery->where('title', 'ilike', '%' . $data['title'] . '%');
+//        }
+//
+//        if (isset($data['title'])) {
+//            $postsQuery->where('title', 'ilike', '%' . $data['title'] . '%');
+//        }
+//
+//        if (isset($data['title'])) {
+//            $postsQuery->where('title', 'ilike', '%' . $data['title'] . '%');
+//        }
+
+
+        return PostResource::collection($postsQuery->get())->resolve();
     }
 
     /**
