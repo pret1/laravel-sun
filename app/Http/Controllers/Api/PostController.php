@@ -34,6 +34,14 @@ class PostController extends Controller
 //            $postsQuery->whereRelation('category', 'title', 'ilike', '%' . $data['category_title'] . '%');
         }
 
+        if (isset($data['published_at_from'])) {
+            $postsQuery->where('published_at', '>=', $data['published_at_from']);
+        }
+
+        if (isset($data['published_at_to'])) {
+            $postsQuery->where('published_at', '>=', $data['published_at_to']);
+        }
+
         return PostResource::collection($postsQuery->get())->resolve();
     }
 
