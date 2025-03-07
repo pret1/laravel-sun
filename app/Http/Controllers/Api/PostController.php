@@ -23,24 +23,6 @@ class PostController extends Controller
         $data = $request->validated();
 
         $postsQuery = Post::query();
-        if (isset($data['title'])) {
-            $postsQuery->where('title', 'ilike', '%' . $data['title'] . '%');
-        }
-
-        if (isset($data['category_title'])) {
-            $postsQuery->whereHas('category', function ($query) use ($data) {
-                $query->where('title', 'ilike', '%' . $data['category_title'] . '%');
-            });
-//            $postsQuery->whereRelation('category', 'title', 'ilike', '%' . $data['category_title'] . '%');
-        }
-
-        if (isset($data['published_at_from'])) {
-            $postsQuery->where('published_at', '>=', $data['published_at_from']);
-        }
-
-        if (isset($data['published_at_to'])) {
-            $postsQuery->where('published_at', '>=', $data['published_at_to']);
-        }
 
         return PostResource::collection($postsQuery->get())->resolve();
     }
