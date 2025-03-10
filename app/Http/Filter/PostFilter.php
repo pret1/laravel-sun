@@ -55,10 +55,13 @@ class PostFilter extends AbstractFilter
 
     protected function likesTo(Builder $builder, int $value): void
     {
-        $builder->whereHas('likedProfiles', function ($q) use ($value) {
-            $q->select('likeable_id')
-                ->groupBy('likeable_id')
-                ->havingRaw('COUNT(*) <= ?', [$value]);
+        $builder->where(function ($query) use ($value) {
+            $query->whereHas('likedProfiles', function ($q) use ($value) {
+                $q->select('likeable_id')
+                    ->groupBy('likeable_id')
+                    ->havingRaw('COUNT(*) <= ?', [$value]);
+            })
+                ->orWhereDoesntHave('likedProfiles');
         });
     }
 
