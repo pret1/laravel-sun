@@ -3,6 +3,7 @@
 namespace App\Http\Filter;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Str;
 
 class PostFilter
 {
@@ -13,48 +14,37 @@ class PostFilter
         'published_at_to',
     ];
 
-    public function apply(): Builder
+    public function apply(array $data, Builder $builder): Builder
     {
         foreach ($this->filters as $filter) {
-            $this->$filter();
+            if(isset($data[$filter])) {
+                $methodName = Str::camel($filter);
+                $this->$methodName($builder, $data[$filter]);
+            }
         }
+
+        return $builder;
     }
 
 
-    private function title(Builder $builder, $value)
+    private function title(Builder $builder, string $value): void
     {
         $builder->where('title', 'ilike', '%' . $value . '%');
     }
 
-    private function categoryTitle(Builder $builder, $value)
+    private function categoryTitle(Builder $builder, $value): void
     {
         $builder->whereRelation('category', 'title', 'ilike', '%' . $value . '%');
     }
 
-    private function publishedAtFrom(Builder $builder, $value)
+    private function publishedAtFrom(Builder $builder, $value): void
     {
         $builder->where('published_at', '>=', $value);
     }
 
-    private function publishedAtTo(Builder $builder, $value)
+    private function publishedAtTo(Builder $builder, $value): void
     {
         $builder->where('published_at', '<=', $value);
     }
 
-}
-
-if (isset($data['title'])) {
-    $builder->where('title', 'ilike', '%' . $data['title'] . '%');
-}
-
-if (isset($data['category_title'])) {
-    $postsQuery->whereRelation('category', 'title', 'ilike', '%' . $data['category_title'] . '%');
-}
-
-if (isset($data['published_at_from'])) {
-    $postsQuery->where('published_at', '>=', $data['published_at_from']);
-}
-
-if (isset($data['published_at_to'])) {
-    $postsQuery->where('published_at', '>=', $data['published_at_to']);
 }

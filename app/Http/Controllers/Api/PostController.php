@@ -12,6 +12,7 @@ use App\Services\PostService;
 use Illuminate\Http\Request;
 use App\Http\Requests\Api\Post\StoreRequest;
 use Illuminate\Http\Response;
+use \App\Http\Filter\PostFilter;
 
 class PostController extends Controller
 {
@@ -23,6 +24,9 @@ class PostController extends Controller
         $data = $request->validated();
 
         $postsQuery = Post::query();
+
+        $postFilter = new PostFilter();
+        $postFilter->apply($data, $postsQuery);
 
         return PostResource::collection($postsQuery->get())->resolve();
     }
