@@ -13,7 +13,9 @@ class AbstractFilter
         foreach ($this->filters as $filter) {
             if(isset($data[$filter])) {
                 $methodName = Str::camel($filter);
-                $this->$methodName($builder, $data[$filter]);
+                if(method_exists($this, $methodName)) {
+                    $this->$methodName($builder, $data[$filter]);
+                }
             }
         }
 

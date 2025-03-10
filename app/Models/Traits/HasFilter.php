@@ -10,6 +10,10 @@ trait HasFilter
     public function scopeFilter(Builder $builder, array $data): Builder
     {
         $ClassFilter = "\\App\\Http\\Filter\\" . class_basename($this) . "Filter";
-        return (new $ClassFilter)->apply($data, $builder);
+        if(class_exists($ClassFilter)) {
+            return (new $ClassFilter)->apply($data, $builder);
+        }
+
+        return $builder;
     }
 }
