@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Http\Filter\PostFilter;
 use App\Observers\PostObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -72,5 +74,11 @@ class Post extends Model
     public function viewedProfiles(): MorphToMany
     {
         return $this->morphToMany(Profile::class, 'viewable');
+    }
+
+    public function scopeFilter(Builder $builder, array $data): Builder
+    {
+        $postFilter = new PostFilter();
+        return $postFilter->apply($data, $builder);
     }
 }

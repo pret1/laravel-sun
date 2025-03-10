@@ -23,12 +23,9 @@ class PostController extends Controller
     {
         $data = $request->validated();
 
-        $postsQuery = Post::query();
+        $posts = Post::filter($data)->get();
 
-        $postFilter = new PostFilter();
-        $postFilter->apply($data, $postsQuery);
-
-        return PostResource::collection($postsQuery->get())->resolve();
+        return PostResource::collection($posts)->resolve();
     }
 
     /**
