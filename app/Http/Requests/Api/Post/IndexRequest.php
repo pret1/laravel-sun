@@ -27,6 +27,11 @@ class IndexRequest extends FormRequest
             'category_title' => 'nullable|string',
             'published_at_from' => 'nullable|date',
             'published_at_to' => 'nullable|date',
+            'profile_id' => 'nullable|integer',
+            'tag_title' => 'nullable|string',
+            'likes_from' => 'nullable|integer',
+            'likes_to' => 'nullable|integer',
+            'liked_by_profile' => 'nullable|integer',
         ];
     }
 }
