@@ -2,13 +2,21 @@
 
 namespace App\Http\Filter;
 
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Str;
+
 class AbstractFilter
 {
-    /**
-     * Create a new class instance.
-     */
-    public function __construct()
+    protected array $filters = [];
+    public function apply(array $data, Builder $builder): Builder
     {
-        //
+        foreach ($this->filters as $filter) {
+            if(isset($data[$filter])) {
+                $methodName = Str::camel($filter);
+                $this->$methodName($builder, $data[$filter]);
+            }
+        }
+
+        return $builder;
     }
 }
