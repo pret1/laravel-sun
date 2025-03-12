@@ -2,6 +2,7 @@
 
 namespace App\Http\Filter;
 
+use App\Models\Post;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 
@@ -55,14 +56,16 @@ class PostFilter extends AbstractFilter
 
     protected function likesTo(Builder $builder, int $value): void
     {
-        $builder->where(function ($query) use ($value) {
-            $query->whereHas('likedProfiles', function ($q) use ($value) {
-                $q->select('likeable_id')
-                    ->groupBy('likeable_id')
-                    ->havingRaw('COUNT(*) <= ?', [$value]);
-            })
-                ->orWhereDoesntHave('likedProfiles');
-        });
+//        $builder->has('likedProfiles', '<=', $value)->ddRawSql(); // ->ddRawSql() keep in mind
+        $builder->has('likedProfiles', '<=', $value);
+//        $builder->where(function ($query) use ($value) {
+//            $query->whereHas('likedProfiles', function ($q) use ($value) {
+//                $q->select('likeable_id')
+//                    ->groupBy('likeable_id')
+//                    ->havingRaw('COUNT(*) <= ?', [$value]);
+//            })
+//                ->orWhereDoesntHave('likedProfiles');
+//        });
     }
 
     protected function likesFrom(Builder $builder, int $value): void
@@ -71,7 +74,7 @@ class PostFilter extends AbstractFilter
             $q->select('likeable_id')
                 ->groupBy('likeable_id')
                 ->havingRaw('COUNT(*) >= ?', [$value]);
-        });
+        })->ddRawSql();
     }
 
     protected function likedByProfile(Builder $builder, int $profileId): void

@@ -43,21 +43,21 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        $title = 'Test dasdasdasdyjjjt';
+//        $title = 'Test dasdasdasdyjjjt';
+//
+//        $post = Post::firstOrCreate([
+//            'title' => $title,
+//        ], [
+//            'content' => 'This is a test post',
+//            'is_published' => true,
+//            'published_at' => now(),
+//            'category_id' => '1',
+//            'profile_id' => '1',
+//        ]);
+//
+//        PostException::ifPostExists($post);
 
-        $post = Post::firstOrCreate([
-            'title' => $title,
-        ], [
-            'content' => 'This is a test post',
-            'is_published' => true,
-            'published_at' => now(),
-            'category_id' => '1',
-            'profile_id' => '1',
-        ]);
-
-        PostException::ifPostExists($post);
-
-//        return PostResource::make($post)->resolve();
+        return PostResource::make($post)->resolve();
     }
 
     /**

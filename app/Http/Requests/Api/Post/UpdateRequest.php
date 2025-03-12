@@ -15,16 +15,17 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string',
-            'content' => 'required|string',
-            'author' => 'required|string',
-            'is_published' => 'required|boolean',
-            'likes' => 'required|integer',
-            'image_path' => 'required|string|unique:posts,image_path,' . $this->post->id,
-            'tag' => 'required|string',
-            'category' => 'required|string',
-            'views' => 'required|integer',
-            'published_at' => 'required|date_format:Y-m-d',
+            'title' => 'nullable|string',
+            'content' => 'nullable|string',
+//            'author' => 'nullable|string',
+            'is_published' => 'nullable|boolean',
+//            'likes' => 'nullable|integer',
+//            'image_path' => 'nullable|string|unique:posts,image_path,' . $this->post->id,
+//            'tag' => 'nullable|string',
+            'category_id' => 'nullable|integer:categories,id',
+            'profile_id' => 'nullable|integer:profiles,id',
+//            'views' => 'nullable|integer',
+            'published_at' => 'nullable|date_format:Y-m-d',
         ];
     }
 }

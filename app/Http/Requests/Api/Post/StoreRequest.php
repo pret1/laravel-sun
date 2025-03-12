@@ -17,13 +17,14 @@ class StoreRequest extends FormRequest
         return [
             'title' => 'required|string',
             'content' => 'required|string',
-            'author' => 'required|string',
+//            'author' => 'required|string',
             'is_published' => 'required|boolean',
-            'likes' => 'required|integer',
-            'image_path' => 'required|string|unique:posts,image_path',
-            'tag' => 'required|string',
+//            'likes' => 'required|integer',
+//            'image_path' => 'required|string|unique:posts,image_path',
+//            'tag' => 'required|string',
             'category_id' => 'required|integer|exists:categories,id', //TODO: redo all returns requests
-            'views' => 'required|integer',
+            'profile_id' => 'required|integer|exists:profile,id', //TODO: redo all returns requests
+//            'views' => 'required|integer',
             'published_at' => 'required|date_format:Y-m-d',
         ];
     }
