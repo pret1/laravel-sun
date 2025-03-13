@@ -26,6 +26,11 @@ class PostFilter extends AbstractFilter
         $builder->where('title', 'ilike', '%' . $value . '%');
     }
 
+    protected function content(Builder $builder, string $value): void
+    {
+        $builder->where('content', 'ilike', '%' . $value . '%');
+    }
+
     protected function categoryTitle(Builder $builder, string $value): void
     {
         $builder->whereRelation('category', 'title', 'ilike', '%' . $value . '%');
@@ -74,7 +79,7 @@ class PostFilter extends AbstractFilter
             $q->select('likeable_id')
                 ->groupBy('likeable_id')
                 ->havingRaw('COUNT(*) >= ?', [$value]);
-        })->ddRawSql();
+        });
     }
 
     protected function likedByProfile(Builder $builder, int $profileId): void

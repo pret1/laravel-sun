@@ -23,7 +23,7 @@ class StoreRequest extends FormRequest
 //            'image_path' => 'required|string|unique:posts,image_path',
 //            'tag' => 'required|string',
             'category_id' => 'required|integer|exists:categories,id', //TODO: redo all returns requests
-            'profile_id' => 'required|integer|exists:profile,id', //TODO: redo all returns requests
+            'profile_id' => 'required|integer|exists:profiles,id', //TODO: redo all returns requests
 //            'views' => 'required|integer',
             'published_at' => 'required|date_format:Y-m-d',
         ];

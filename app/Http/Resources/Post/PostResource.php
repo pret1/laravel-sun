@@ -22,7 +22,7 @@ class PostResource extends JsonResource
             'title' => $this->title,
             'content' => $this->content,
 //            'profile_id' => $this->profile_id,
-            'profile' => ProfileResource::make($this->category)->resolve(),
+            'profile' => ProfileResource::make($this->profile)->resolve(),
             'is_published' => $this->is_published,
             'likes' => $this->likedProfiles->count(),
             'image_id' => $this->image?->id,

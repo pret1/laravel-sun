@@ -23,6 +23,7 @@ class IndexRequest extends FormRequest
     {
         return [
             'title' => 'nullable|string',
+            'content' => 'nullable|string',
 //            'category_id' => 'nullable|integer',
             'category_title' => 'nullable|string',
             'published_at_from' => 'nullable|date',
