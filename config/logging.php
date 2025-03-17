@@ -143,6 +143,12 @@ return [
             'tap' => [LogFormatter::class],
         ],
 
+        'http_clients' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/http_clients.log'),
+            'level' => 'error',
+        ],
+
     ],
 
 ];

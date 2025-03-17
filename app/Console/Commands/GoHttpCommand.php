@@ -14,7 +14,7 @@ class GoHttpCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'go';
+    protected $signature = 'go-http';
 
     /**
      * The console command description.
@@ -43,22 +43,22 @@ class GoHttpCommand extends Command
 //        }
 
         $data = [
-            'title' => 'HTTP update title',
-            'content' => 'HTTP update content',
-//            'is_published' => true,
-//            'published_at' => '2025-03-06',
-//            'category_id' => 1,
-//            'profile_id' => 1,
+            'title' => 'HTTP  title',
+            'content' => 'HTTP  content',
+            'is_published' => true,
+            'published_at' => '2025-03-06',
+            'category_id' => 1,
+            'profile_id' => 1,
         ];
 
         $client = PostHttpClient::make()->login();
 //        $client->store($data);
-//        $client->update(51, $data);
-//        $post = $client->show(51);
-//        $post = $client->delete(52);
+//        $client->update(53, $data);
+//        $post = $client->show(53);
+        $post = $client->delete(53);
 //        $client->delete(51);
 //        $this->info(json_encode($post, JSON_PRETTY_PRINT));
-//        dump($post);
+        dump($post);
     }
 }
 
