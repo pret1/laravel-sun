@@ -14,6 +14,7 @@ use App\Http\Middleware\IsAdminMiddleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\RoleMiddleware;
+use App\Http\Middleware\LogDbQueries;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -27,7 +28,8 @@ Route::group(['middleware' => 'jwt.auth', 'prefix' => 'auth'], function () {
 
 });
 
-Route::group(['middleware' => ['jwt.auth', RoleMiddleware::class]], function () {
+//Route::group(['middleware' => ['jwt.auth', RoleMiddleware::class]], function () {
+Route::group(['middleware' => ['jwt.auth', LogDbQueries::class]], function () {
     Route::apiResource('posts', PostController::class);
     Route::apiResource('articles', ArticleController::class);
 });
