@@ -122,7 +122,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function getIsAdminAttribute(): bool
     {
-        return auth()->user()->roles->contains('title', 'ADMIN');
+        return auth()->user()->roles->contains('title', 'admin');
     }
 
     public function permissions(): BelongsToMany
