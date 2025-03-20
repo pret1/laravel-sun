@@ -20,6 +20,7 @@ class CommentController extends Controller
 
     public function show(Comment $comment)
     {
+        $comment = CommentResource::make($comment)->resolve();
         return Inertia::render('Admin/Comment/Show', compact('comment'));
     }
 }
