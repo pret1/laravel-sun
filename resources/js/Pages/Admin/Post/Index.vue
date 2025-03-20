@@ -1,10 +1,20 @@
 <template>
-11111111111111
+<div>
+    <div>
+        <div v-for="post in posts">
+            {{ post.title }}
+        </div>
+    </div>
+</div>
 </template>
 
 <script>
 export default {
-    name: "Index"
+    name: "Index",
+
+    props: {
+        posts: Array
+    }
 }
 
 </script>
