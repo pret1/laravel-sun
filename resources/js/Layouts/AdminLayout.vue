@@ -1,18 +1,18 @@
 <template>
     <section class="w-full">
         <header class="w-3/4 mx-auto p-4">
-            HHEHEHEHEH
+            HEADER
         </header>
     </section>
     <section class="w-full">
         <section class="w-3/4 mx-auto flex">
-            <aside class="w-1/4 bg-gray-900">
+            <aside class="w-1/4 bg-gray-900 min-h-screen">
                 <div>
                     <Link :href="route('admin.posts.index')"
                           class="block p-4 border-gray-500 text-gray-300">Posts</Link>
                 </div>
             </aside>
-            <article class="w-3/4 p-4">
+            <article class="w-3/4 p-4 bg-gray-50">
                 <slot></slot>
             </article>
         </section>
