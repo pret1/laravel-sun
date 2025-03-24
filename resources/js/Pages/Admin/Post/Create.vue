@@ -16,13 +16,13 @@
                 <input v-model="post.published_at" type="date" class="border border-gray-200 w-1/3" placeholder="date">
             </div>
             <div class="mb-4">
-                <select class="border border-gray-200 w-1/3">
+                <select v-model="post.category_id" class="border border-gray-200 w-1/3">
                     <option value="null" disabled selected>Chose category</option>
                     <option v-for="category in categories" :value="category.id">{{ category.title }}</option>
                 </select>
             </div>
             <div class="mb-4">
-                <a href="#"
+                <a @click.prevent="storePost" href="#"
                       class="inline-block px-3 py-1 bg-emerald-700 text-white border border-emerald-800">Create
                 </a>
             </div>
@@ -35,7 +35,7 @@ import {Link} from "@inertiajs/vue3";
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 
 export default {
-    name: 'Show',
+    name: 'Create',
     components: {Link},
 
     layout: AdminLayout,
@@ -47,10 +47,16 @@ export default {
     data() {
         return {
             post: {
-
+                category_id: null,
             }
         }
     },
+
+    methods: {
+        storePost() {
+            console.log(11111111111111);
+        }
+    }
 }
 
 </script>
