@@ -26,7 +26,7 @@ class StoreRequest extends FormRequest
             'content' => 'required|string',
             'published_at' => 'required|date_format:Y-m-d',
             'category_id' => 'required|integer|exists:categories,id',
-            'profile_id' => 'required|integer|exists:profiles,id',
+//            'profile_id' => 'required|integer|exists:profiles,id',
         ];
     }
 }

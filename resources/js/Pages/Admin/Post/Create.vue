@@ -33,6 +33,7 @@
 <script>
 import {Link} from "@inertiajs/vue3";
 import AdminLayout from "@/Layouts/AdminLayout.vue";
+import axios from "axios";
 
 export default {
     name: 'Create',
@@ -54,7 +55,10 @@ export default {
 
     methods: {
         storePost() {
-            console.log(11111111111111);
+            axios.post(route('admin.posts.store'), this.post)
+                .then(res => {
+                    console.log(res);
+                })
         }
     }
 }
