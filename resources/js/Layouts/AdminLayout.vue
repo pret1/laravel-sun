@@ -10,6 +10,8 @@
                 <div>
                     <Link :href="route('admin.posts.index')"
                           class="block p-4 border-gray-500 text-gray-300">Posts</Link>
+                    <Link :href="route('admin.articles.index')"
+                          class="block p-4 border-gray-500 text-gray-300">Articles</Link>
                 </div>
             </aside>
             <article class="w-3/4 p-4 bg-gray-50">
