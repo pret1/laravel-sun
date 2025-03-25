@@ -174,3 +174,10 @@ php artisan make:observer UserObserver -m User
 php artisan make:event User/StoredUserEvent 
 php artisan make:listener User/StoreProfileListener -e User/StoredUserEvent
 ```
+
+View [welcome] not found.
+```
+php artisan route:clear
+php artisan route:cache
+composer dump-autoload
+```
