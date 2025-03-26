@@ -7,7 +7,7 @@
         </div>
         <div>
             <div v-for="comment in comments" class="mb-4 pb-3 border-b border-gray-200">
-                <Link :href="route('admin.comments.show', comment.id)">{{ comment.id }}</Link>
+                <Link :href="route('admin.comments.show', comment.id)">{{ comment.content }}</Link>
             </div>
         </div>
     </div>

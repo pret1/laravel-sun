@@ -14,6 +14,8 @@
                           class="block p-4 border-gray-500 text-gray-300">Articles</Link>
                     <Link :href="route('admin.comments.index')"
                           class="block p-4 border-gray-500 text-gray-300">Comments</Link>
+                    <Link :href="route('admin.categories.index')"
+                          class="block p-4 border-gray-500 text-gray-300">Categories</Link>
                 </div>
             </aside>
             <article class="w-3/4 p-4 bg-gray-50">

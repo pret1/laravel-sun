@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Middleware\IsAdminMiddleware;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\PostController;
@@ -22,6 +23,11 @@ Route::group(['prefix'=>'admin','middleware' => ['auth', IsAdminMiddleware::clas
     Route::get('articles/create', [ArticleController::class, 'create'])->name('admin.articles.create');
     Route::get('articles/{article}', [ArticleController::class, 'show'])->name('admin.articles.show');
     Route::post('articles', [ArticleController::class, 'store'])->name('admin.articles.store');
+
+    Route::get('categories', [CategoryController::class, 'index'])->name('admin.categories.index');
+    Route::get('categories/create', [CategoryController::class, 'create'])->name('admin.categories.create');
+    Route::get('categories/{category}', [CategoryController::class, 'show'])->name('admin.categories.show');
+    Route::post('categories', [CategoryController::class, 'store'])->name('admin.categories.store');
 
     Route::get('profiles', [ProfileController::class, 'index'])->name('admin.profiles.index');
     Route::get('profiles/{profile}', [ProfileController::class, 'show'])->name('admin.profiles.show');
