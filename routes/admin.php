@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Middleware\IsAdminMiddleware;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\PostController;
@@ -33,4 +34,9 @@ Route::group(['prefix'=>'admin','middleware' => ['auth', IsAdminMiddleware::clas
     Route::get('profiles/create', [ProfileController::class, 'create'])->name('admin.profiles.create');
     Route::get('profiles/{profile}', [ProfileController::class, 'show'])->name('admin.profiles.show');
     Route::post('profiles', [ProfileController::class, 'store'])->name('admin.profiles.store');
+
+    Route::get('permissions', [PermissionController::class, 'index'])->name('admin.permissions.index');
+    Route::get('permissions/create', [PermissionController::class, 'create'])->name('admin.permissions.create');
+    Route::get('permissions/{permission}', [PermissionController::class, 'show'])->name('admin.permissions.show');
+    Route::post('permissions', [PermissionController::class, 'store'])->name('admin.permissions.store');
 });
