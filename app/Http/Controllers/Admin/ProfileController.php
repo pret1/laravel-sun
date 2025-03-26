@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Profile\StoreRequest;
 use App\Http\Resources\Profile\ProfileResource;
 use App\Models\Profile;
 use Illuminate\Http\Request;
@@ -21,5 +22,18 @@ class ProfileController extends Controller
     {
         $profile = ProfileResource::make($profile)->resolve();
         return inertia("Admin/Profile/Show", compact('profile'));
+    }
+
+    public function create(): Response|ResponseFactory
+    {
+        return inertia("Admin/Profile/Create");
+    }
+
+    public function store(StoreRequest $request): array
+    {
+        $data = $request->validated();
+        $data['user_id'] = auth()->user()->id;
+        $profile = Profile::create($data);
+        return ProfileResource::make($profile)->resolve();
     }
 }
