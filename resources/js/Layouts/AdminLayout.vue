@@ -20,6 +20,8 @@
                           class="block p-4 border-gray-500 text-gray-300">Profiles</Link>
                     <Link :href="route('admin.permissions.index')"
                           class="block p-4 border-gray-500 text-gray-300">Permissions</Link>
+                    <Link :href="route('admin.roles.index')"
+                          class="block p-4 border-gray-500 text-gray-300">Roles</Link>
                 </div>
             </aside>
             <article class="w-3/4 p-4 bg-gray-50">
