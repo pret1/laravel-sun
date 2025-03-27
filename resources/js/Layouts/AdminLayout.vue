@@ -22,6 +22,8 @@
                           class="block p-4 border-gray-500 text-gray-300">Permissions</Link>
                     <Link :href="route('admin.roles.index')"
                           class="block p-4 border-gray-500 text-gray-300">Roles</Link>
+                    <Link :href="route('admin.tags.index')"
+                          class="block p-4 border-gray-500 text-gray-300">Tags</Link>
                 </div>
             </aside>
             <article class="w-3/4 p-4 bg-gray-50">
