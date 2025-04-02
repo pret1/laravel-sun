@@ -22,6 +22,9 @@
                 </select>
             </div>
             <div class="mb-4">
+                <input @change="addImage" type="file" class="border border-gray-200 w-1/3" placeholder="image">
+            </div>
+            <div class="mb-4">
                 <a @click.prevent="storePost" href="#"
                       class="inline-block px-3 py-1 bg-emerald-700 text-white border border-emerald-800">Create
                 </a>
@@ -55,10 +58,18 @@ export default {
 
     methods: {
         storePost() {
-            axios.post(route('admin.posts.store'), this.post)
+            axios.post(route('admin.posts.store'), this.post, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
                 .then(res => {
                     console.log(res);
                 })
+        },
+
+        addImage(e){
+            this.post.image = e.target.files[0]
         }
     }
 }
