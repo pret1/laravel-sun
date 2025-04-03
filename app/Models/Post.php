@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 
 #[ObservedBy(PostObserver::class)]
 class Post extends Model
@@ -76,6 +77,11 @@ class Post extends Model
     public function viewedProfiles(): MorphToMany
     {
         return $this->morphToMany(Profile::class, 'viewable');
+    }
+
+    public function getImageUrlAttribute(): string
+    {
+        return Storage::disk('public')->url($this->image?->image_path);
     }
 
 }

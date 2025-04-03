@@ -7,8 +7,11 @@
         </div>
         <div>
             <div class="mb-4 pb-4 border-b border-gray-200">
-                <h3>{{ post.title }}</h3>
-                {{ post.content }}
+                <div><h3>{{ post.title }}</h3></div>
+                <div>{{ post.content }}</div>
+                <div>
+                    <img :src="post.image_url" :alt="post.title">
+                </div>
             </div>
         </div>
     </div>
