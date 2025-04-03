@@ -9,14 +9,13 @@ class PostService
 {
     public static function store(array $data): Post
     {
-        if(isset($data['image_path'])) {
-           $imagePath = $data['image_path'];
-           unset($data['image_path']);
-        }
+
+        $imagePath = $data['image_path'] ?? null;
+        unset($data['image_path']);
 
         $post = Post::create($data);
 
-        if ($post && isset($data['image_path'])) {
+        if ($post && $imagePath) {
             $post->image()->create(['image_path' => $imagePath]);
         }
 
