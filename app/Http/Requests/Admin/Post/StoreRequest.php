@@ -35,8 +35,12 @@ class StoreRequest extends FormRequest
     {
         $this->merge([
             'profile_id' => auth()->user()->profile->id,
-            'image_path' => Storage::disk('public')->put('/images', $this->image)
         ]);
 
+        if ($this->hasFile('image')) {
+            $this->merge([
+                'image_path' => Storage::disk('public')->put('/images', $this->image)
+            ]);
+        }
     }
 }
