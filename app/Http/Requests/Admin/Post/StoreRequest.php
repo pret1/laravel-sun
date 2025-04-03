@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin\Post;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Storage;
 
 class StoreRequest extends FormRequest
 {
@@ -26,13 +27,15 @@ class StoreRequest extends FormRequest
             'content' => 'required|string',
             'published_at' => 'required|date_format:Y-m-d',
             'category_id' => 'required|integer|exists:categories,id',
+            'image' => 'nullable|file',
         ];
     }
 
     protected function passedValidation()
     {
         $this->merge([
-            'profile_id' => auth()->user()->profile->id
+            'profile_id' => auth()->user()->profile->id,
+            'image_path' => Storage::disk('public')->put('/images', $this->image)
         ]);
 
     }

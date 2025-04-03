@@ -6,7 +6,7 @@
             </Link>
         </div>
         <div>
-            <div v-for="post in posts" class="mb-4 pb-4 border-b border-gray-200">
+            <div v-for="post in posts" :key="post.id" class="mb-4 pb-4 border-b border-gray-200">
                 <Link :href="route('admin.posts.show', post.id)">{{ post.title }}</Link>
             </div>
         </div>
