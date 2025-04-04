@@ -5,6 +5,9 @@
                   class="inline-block px-3 py-1 bg-indigo-700 text-white border border-indigo-800">Back
             </Link>
         </div>
+        <div v-if="success" class="w-full bg-emerald-600 text-white mb-4 p-4">
+            Post created.
+        </div>
         <div>
             <div class="mb-4">
                 <div v-if="errors['post.title']" class="text-red-500">
@@ -71,7 +74,8 @@ export default {
                 },
                 tags: ""
             },
-            errors: {}
+            errors: {},
+            success: false
         }
     },
 
@@ -90,6 +94,7 @@ export default {
                         tags: ""
                     }
                     this.$refs.input_image.value = null
+                    this.success = true
                 })
                 .catch(error => {
                     this.errors = error.response.data.errors
