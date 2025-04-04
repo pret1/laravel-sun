@@ -75,7 +75,7 @@ export default {
         },
 
         addImage(e){
-            this.entries.post.image = e.target.files[0]
+            this.entries.image = e.target.files[0]
         }
     }
 }

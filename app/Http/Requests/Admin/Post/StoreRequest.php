@@ -27,7 +27,7 @@ class StoreRequest extends FormRequest
             'post.content' => 'required|string',
             'post.published_at' => 'required|date_format:Y-m-d',
             'post.category_id' => 'required|integer|exists:categories,id',
-            'post.image' => 'nullable|file',
+            'image' => 'nullable|file',
             'tags' => 'nullable|string',
         ];
     }
@@ -38,8 +38,8 @@ class StoreRequest extends FormRequest
             'post' => [
                 ...$this->validated()['post'] ?? [],
                 'profile_id' => auth()->user()->profile->id,
-                'image_path' => $this->image ? Storage::disk('public')->put('/images', $this->image) : null,
-            ]
+            ],
+            'image_path' => $this->image ? Storage::disk('public')->put('/images', $this->image) : null,
         ]);
     }
 }
