@@ -94,7 +94,9 @@ export default {
                         tags: ""
                     }
                     this.$refs.input_image.value = null
-                    this.success = true
+                    this.$nextTick(() => {
+                        this.success = true
+                    })
                 })
                 .catch(error => {
                     this.errors = error.response.data.errors
@@ -103,6 +105,15 @@ export default {
 
         addImage(e){
             this.entries.image = e.target.files[0]
+        }
+    },
+
+    watch: {
+        entries: {
+            handler() {
+                this.success = false
+            },
+            deep: true
         }
     }
 }
