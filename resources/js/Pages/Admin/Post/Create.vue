@@ -25,7 +25,7 @@
                 <input v-model="entries.tags" type="text" class="border border-gray-200 w-1/3" placeholder="tags">
             </div>
             <div class="mb-4">
-                <input @change="addImage" type="file" class="border border-gray-200 w-1/3" placeholder="image">
+                <input ref="input_image" @change="addImage" type="file" class="border border-gray-200 w-1/3" placeholder="image">
             </div>
             <div class="mb-4">
                 <a @click.prevent="storePost" href="#"
@@ -70,7 +70,13 @@ export default {
                 }
             })
                 .then(res => {
-                    console.log(res);
+                    this.entries = {
+                        post: {
+                            category_id: null,
+                        },
+                        tags: ""
+                    }
+                    this.$refs.input_image.value = null
                 })
         },
 
