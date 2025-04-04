@@ -23,19 +23,23 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string',
-            'content' => 'required|string',
-            'published_at' => 'required|date_format:Y-m-d',
-            'category_id' => 'required|integer|exists:categories,id',
-            'image' => 'nullable|file',
+            'post.title' => 'required|string',
+            'post.content' => 'required|string',
+            'post.published_at' => 'required|date_format:Y-m-d',
+            'post.category_id' => 'required|integer|exists:categories,id',
+            'post.image' => 'nullable|file',
+            'tags' => 'nullable|string',
         ];
     }
 
     protected function passedValidation()
     {
         $this->merge([
-            'profile_id' => auth()->user()->profile->id,
-            'image_path' => $this->image ? Storage::disk('public')->put('/images', $this->image) : null,
+            'post' => [
+                ...$this->validated()['post'] ?? [],
+                'profile_id' => auth()->user()->profile->id,
+                'image_path' => $this->image ? Storage::disk('public')->put('/images', $this->image) : null,
+            ]
         ]);
     }
 }

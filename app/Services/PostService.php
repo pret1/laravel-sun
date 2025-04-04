@@ -10,12 +10,14 @@ class PostService
     public static function store(array $data): Post
     {
 
-        $imagePath = $data['image_path'] ?? null;
-        unset($data['image_path']);
+        $imagePath = $data['post']['image_path'] ?? null;
+        unset($data['post']['image_path']);
 
-        $post = Post::create($data);
+        $post = Post::create($data['post']);
+        $tagIds = TagService::storeBatch($data['tags']);
+        $post->tags()->attach($tagIds);
 
-        if ($post && $imagePath) {
+        if ($imagePath) {
             $post->image()->create(['image_path' => $imagePath]);
         }
 
