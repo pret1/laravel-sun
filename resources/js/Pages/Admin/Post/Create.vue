@@ -7,15 +7,27 @@
         </div>
         <div>
             <div class="mb-4">
+                <div v-if="errors['post.title']" class="text-red-500">
+                    <p v-for="error in errors['post.title']">{{ error }}</p>
+                </div>
                 <input v-model="entries.post.title" type="text" class="border border-gray-200 w-1/3" placeholder="title">
             </div>
             <div class="mb-4">
+                <div v-if="errors['post.content']" class="text-red-500">
+                    <p v-for="error in errors['post.content']">{{ error }}</p>
+                </div>
                 <textarea v-model="entries.post.content" type="text" class="border border-gray-200 w-1/3" placeholder="content"></textarea>
             </div>
             <div class="mb-4">
+                <div v-if="errors['post.published_at']" class="text-red-500">
+                    <p v-for="error in errors['post.published_at']">{{ error }}</p>
+                </div>
                 <input v-model="entries.post.published_at" type="date" class="border border-gray-200 w-1/3" placeholder="date">
             </div>
             <div class="mb-4">
+                <div v-if="errors['post.category_id']" class="text-red-500">
+                    <p v-for="error in errors['post.category_id']">{{ error }}</p>
+                </div>
                 <select v-model="entries.post.category_id" class="border border-gray-200 w-1/3">
                     <option value="null" disabled selected>Chose category</option>
                     <option v-for="category in categories" :value="category.id">{{ category.title }}</option>
@@ -58,7 +70,8 @@ export default {
                     category_id: null,
                 },
                 tags: ""
-            }
+            },
+            errors: {}
         }
     },
 
@@ -77,6 +90,9 @@ export default {
                         tags: ""
                     }
                     this.$refs.input_image.value = null
+                })
+                .catch(error => {
+                    this.errors = error.response.data.errors
                 })
         },
 
