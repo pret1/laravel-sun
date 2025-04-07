@@ -8,6 +8,9 @@
         <div v-if="success" class="w-full bg-emerald-600 text-white mb-4 p-4">
             Post created.
         </div>
+        <div v-if="errorMessage" class="w-full bg-red-600 text-white mb-4 p-4">
+            <p>{{ errorMessage }}</p>
+        </div>
         <div>
             <div class="mb-4">
                 <div v-if="errors['post.title']" class="text-red-500">
@@ -75,6 +78,7 @@ export default {
                 tags: ""
             },
             errors: {},
+            errorMessage: "",
             success: false
         }
     },
@@ -99,6 +103,7 @@ export default {
                     })
                 })
                 .catch(error => {
+                    this.errorMessage = error.response.data.message
                     this.errors = error.response.data.errors
                 })
         },
@@ -112,6 +117,7 @@ export default {
         entries: {
             handler() {
                 this.success = false
+                this.errorMessage = false
             },
             deep: true
         }
