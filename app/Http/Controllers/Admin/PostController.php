@@ -35,7 +35,7 @@ class PostController extends Controller
 
     public function store(StoreRequest $request): array
     {
-        $data = $request->except('image');
+        $data = $request->except('images');
         $post = PostService::store($data);
         return PostResource::make($post)->resolve();
     }

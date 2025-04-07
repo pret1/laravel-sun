@@ -14,8 +14,10 @@ class PostService
         $tagIds = TagService::storeBatch($data['tags']);
         $post->tags()->attach($tagIds);
 
-        if ($data['image_path']) {
-            $post->image()->create(['image_path' => $data['image_path']]);
+        if ($data['image_paths']) {
+            foreach ($data['image_paths'] as $image) {
+                $post->image()->create(['image_path' => $image]);
+            }
         }
 
         return $post;

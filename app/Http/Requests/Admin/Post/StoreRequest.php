@@ -27,19 +27,28 @@ class StoreRequest extends FormRequest
             'post.content' => 'required|string',
             'post.published_at' => 'required|date_format:Y-m-d',
             'post.category_id' => 'required|integer|exists:categories,id',
-            'image' => 'nullable|file',
+            'images' => 'nullable|array',
             'tags' => 'nullable|string',
         ];
     }
 
     protected function passedValidation()
     {
+        $imagePaths = [];
+
+        if ($this->hasFile('images')) {
+            foreach ($this->file('images') as $image) {
+                $path = Storage::disk('public')->putFile('/images', $image);
+                $imagePaths[] = $path;
+            }
+        }
+
         $this->merge([
             'post' => [
                 ...$this->validated()['post'] ?? [],
                 'profile_id' => auth()->user()->profile->id,
             ],
-            'image_path' => $this->image ? Storage::disk('public')->put('/images', $this->image) : null,
+            'image_paths' => $imagePaths,
         ]);
     }
 }
