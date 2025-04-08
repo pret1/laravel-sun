@@ -1,4 +1,5 @@
 <?php
+declare (strict_types=1);
 
 namespace App\Http\Requests\Admin\Post;
 
@@ -32,7 +33,7 @@ class StoreRequest extends FormRequest
         ];
     }
 
-    protected function passedValidation()
+    protected function passedValidation(): void
     {
         $imagePaths = [];
 
