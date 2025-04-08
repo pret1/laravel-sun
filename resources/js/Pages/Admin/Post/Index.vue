@@ -73,6 +73,15 @@ export default {
                     this.postsData = this.postsData.filter(postData => postData.id !== res.data.id)
                 })
         }
+    },
+
+    watch: {
+        filter: {
+            deep: true,
+            handler() {
+                this.getPosts()
+            }
+        }
     }
 }
 
