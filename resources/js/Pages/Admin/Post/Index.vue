@@ -23,7 +23,10 @@
         </div>
         <div>
             <div v-for="post in postsData" :key="post.id" class="mb-4 pb-4 border-b border-gray-200">
-                <Link :href="route('admin.posts.show', post.id)">{{ post.title }}</Link>
+                <div class="flex justify-between items-center">
+                    <Link :href="route('admin.posts.show', post.id)">{{ post.title }}</Link>
+                    <a @click.prevent="deletePost(post)" href="#" class="text-white inline-block bg-red-600 px-3 py-1">Delete</a>
+                </div>
             </div>
         </div>
     </div>
@@ -61,6 +64,13 @@ export default {
             })
                 .then(res => {
                     this.postsData = res.data
+                })
+        },
+
+        deletePost(post) {
+            axios.delete(route('admin.posts.destroy', post.id))
+                .then(res => {
+                    this.postsData = this.postsData.filter(postData => postData.id !== res.data.id)
                 })
         }
     }

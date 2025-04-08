@@ -16,6 +16,7 @@ Route::group(['prefix'=>'admin','middleware' => ['auth', IsAdminMiddleware::clas
     Route::get('posts/create', [PostController::class, 'create'])->name('admin.posts.create');
     Route::get('posts/{post}', [PostController::class, 'show'])->name('admin.posts.show');
     Route::post('posts', [PostController::class, 'store'])->name('admin.posts.store');
+    Route::delete('posts/{post}', [PostController::class, 'destroy'])->name('admin.posts.destroy');
 
     Route::get('comments', [CommentController::class, 'index'])->name('admin.comments.index');
     Route::get('comments/create', [CommentController::class, 'create'])->name('admin.comments.create');

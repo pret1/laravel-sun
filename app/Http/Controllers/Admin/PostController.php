@@ -47,4 +47,10 @@ class PostController extends Controller
         $post = PostService::store($data);
         return PostResource::make($post)->resolve();
     }
+
+    public function destroy(Post $post): array
+    {
+        $post->delete();
+        return PostResource::make($post)->resolve();
+    }
 }
