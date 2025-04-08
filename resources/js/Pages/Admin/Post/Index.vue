@@ -1,12 +1,28 @@
 <template>
     <div>
-        <div class="p-4">
+        <div class="mb-4">
             <Link :href="route('admin.posts.create')"
                   class="inline-block px-3 py-1 bg-indigo-700 text-white border border-indigo-800">Create
             </Link>
         </div>
+        <div class="mb-4 flex justify-between">
+            <div>
+                <input v-model="filter.title" type="text"  placeholder="title"/>
+            </div>
+            <div>
+                <input v-model="filter.likes_from" type="number" placeholder="likes"/>
+            </div>
+            <div class="mb-4">
+                <input v-model="filter.published_at_from" type="date" placeholder="published at"/>
+            </div>
+            <div>
+                <a @click.prevent="getPosts"
+                   href="#"
+                   class="inline-block bg-emerald-700 px-3 py-1 text-white border border-emerald-800" >Filter</a>
+            </div>
+        </div>
         <div>
-            <div v-for="post in posts" :key="post.id" class="mb-4 pb-4 border-b border-gray-200">
+            <div v-for="post in postsData" :key="post.id" class="mb-4 pb-4 border-b border-gray-200">
                 <Link :href="route('admin.posts.show', post.id)">{{ post.title }}</Link>
             </div>
         </div>
@@ -16,6 +32,7 @@
 <script>
 import {Link} from "@inertiajs/vue3";
 import AdminLayout from "@/Layouts/AdminLayout.vue";
+import axios from "axios";
 
 export default {
     name: "Index",
@@ -28,6 +45,24 @@ export default {
 
     components: {
         Link
+    },
+
+    data() {
+        return {
+            filter: {},
+            postsData: this.posts
+        }
+    },
+
+    methods: {
+        getPosts() {
+            axios.get(route('admin.posts.index'), {
+                params: this.filter
+            })
+                .then(res => {
+                    this.postsData = res.data
+                })
+        }
     }
 }
 

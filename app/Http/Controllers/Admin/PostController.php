@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
@@ -9,15 +10,22 @@ use App\Http\Resources\Post\PostResource;
 use App\Models\Category;
 use App\Models\Post;
 use App\Services\PostService;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Request;
 use Inertia\Response;
 use Inertia\ResponseFactory;
+use App\Http\Requests\Admin\Post\IndexRequest;
 
 class PostController extends Controller
 {
-    public function index(): Response|ResponseFactory
+    public function index(IndexRequest $request): Response|ResponseFactory|array
     {
-        $posts = PostResource::collection(Post::all())->resolve();
+        $data = $request->validated();
+        $posts = PostResource::collection(Post::filter($data)->latest()->get())->resolve();
+
+        if(Request::wantsJson()) {
+            return $posts;
+        }
+
         return inertia('Admin/Post/Index', compact('posts'));
     }
 
