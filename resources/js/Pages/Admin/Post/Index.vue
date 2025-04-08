@@ -18,6 +18,15 @@
             <div>
                 <input v-model="filter.views_from" type="number" placeholder="views"/>
             </div>
+            <div>
+                <input v-model="filter.is_published" type="text" placeholder="published"/>
+            </div>
+            <div>
+                <input v-model="filter.tag" type="text" placeholder="published"/>
+            </div>
+            <div>
+                <input v-model="filter.category" type="text" placeholder="published"/>
+            </div>
             <div class="mb-4">
                 <input v-model="filter.published_at_from" type="date" placeholder="published at"/>
             </div>
@@ -40,6 +49,14 @@
                         </div>
                         <div>
                             views: {{ post.views }}
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            published: {{ post.is_published ? 'Yes' : 'No' }}
+                        </div>
+                        <div>
+                            published
                         </div>
                     </div>
                     <div>
