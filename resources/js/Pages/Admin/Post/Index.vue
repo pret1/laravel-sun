@@ -10,7 +10,13 @@
                 <input v-model="filter.title" type="text"  placeholder="title"/>
             </div>
             <div>
+                <input v-model="filter.content" type="text"  placeholder="content"/>
+            </div>
+            <div>
                 <input v-model="filter.likes_from" type="number" placeholder="likes"/>
+            </div>
+            <div>
+                <input v-model="filter.views_from" type="number" placeholder="views"/>
             </div>
             <div class="mb-4">
                 <input v-model="filter.published_at_from" type="date" placeholder="published at"/>
@@ -24,8 +30,24 @@
         <div>
             <div v-for="post in postsData" :key="post.id" class="mb-4 pb-4 border-b border-gray-200">
                 <div class="flex justify-between items-center">
-                    <Link :href="route('admin.posts.show', post.id)">{{ post.title }}</Link>
-                    <a @click.prevent="deletePost(post)" href="#" class="text-white inline-block bg-red-600 px-3 py-1">Delete</a>
+                    <div>
+                        <Link :href="route('admin.posts.show', post.id)" class="text-blue-500"><h3>Title: {{ post.title }}</h3></Link>
+                        Content: {{ post.content }}
+                    </div>
+                    <div>
+                        <div>
+                            likes: {{ post.likes }}
+                        </div>
+                        <div>
+                            views: {{ post.views }}
+                        </div>
+                    </div>
+                    <div>
+                        author: {{ post.profile.name }}
+                    </div>
+                    <div>
+                        <a @click.prevent="deletePost(post)" href="#" class="text-white inline-block bg-red-600 px-3 py-1">Delete</a>
+                    </div>
                 </div>
             </div>
         </div>

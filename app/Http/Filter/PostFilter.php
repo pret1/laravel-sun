@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Http\Filter;
 
@@ -18,6 +19,8 @@ class PostFilter extends AbstractFilter
         'tag_title',
         'likes_from',
         'likes_to',
+        'views_from',
+        'views_to',
         'liked_by_profile'
     ];
 
@@ -87,5 +90,15 @@ class PostFilter extends AbstractFilter
         $builder->whereHas('likedProfiles', function ($q) use ($profileId) {
             $q->where('profile_id', $profileId);
         });
+    }
+
+    protected function viewsTo(Builder $builder, int $value): void
+    {
+        $builder->has('viewedProfiles', '<=', $value);
+    }
+
+    protected function viewsFrom(Builder $builder, int $value): void
+    {
+        $builder->has('viewedProfiles', '>=', $value);
     }
 }

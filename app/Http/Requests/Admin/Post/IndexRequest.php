@@ -33,6 +33,8 @@ class IndexRequest extends FormRequest
             'tag_title' => 'nullable|string',
             'likes_from' => 'nullable|integer',
             'likes_to' => 'nullable|integer',
+            'views_from' => 'nullable|integer',
+            'views_to' => 'nullable|integer',
             'liked_by_profile' => 'nullable|integer',
         ];
     }
