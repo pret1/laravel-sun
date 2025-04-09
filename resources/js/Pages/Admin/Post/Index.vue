@@ -23,9 +23,10 @@
                        class="w-full border border-gray-300 p-1"/>
             </div>
             <div>
-                <select class="w-full border border-gray-300 p-1">
-                    <option>Yes</option>
-                    <option>No</option>
+                <select v-model="filter.is_published" class="w-full border border-gray-300 p-1">
+                    <option value="null" disabled selected>Is published</option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
                 </select>
             </div>
             <div>
@@ -130,7 +131,9 @@ export default {
 
     data() {
         return {
-            filter: {},
+            filter: {
+                is_published: null
+            },
             postsData: this.posts
         }
     },

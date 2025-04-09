@@ -21,7 +21,8 @@ class PostFilter extends AbstractFilter
         'likes_to',
         'views_from',
         'views_to',
-        'liked_by_profile'
+        'liked_by_profile',
+        'is_published'
     ];
 
     protected function title(Builder $builder, string $value): void
@@ -100,5 +101,10 @@ class PostFilter extends AbstractFilter
     protected function viewsFrom(Builder $builder, int $value): void
     {
         $builder->has('viewedProfiles', '>=', $value);
+    }
+
+    protected function isPublished(Builder $builder, bool $value): void
+    {
+        $builder->where('is_published', '=', $value);
     }
 }
