@@ -33,7 +33,7 @@
                 <input v-model="filter.tag" type="text" placeholder="Tag" class="w-full border border-gray-300 p-1"/>
             </div>
             <div>
-                <input v-model="filter.category" type="text" placeholder="Category"
+                <input v-model="filter.category_title" type="text" placeholder="Category"
                        class="w-full border border-gray-300 p-1"/>
             </div>
             <div>
