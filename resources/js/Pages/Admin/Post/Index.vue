@@ -5,69 +5,108 @@
                   class="inline-block px-3 py-1 bg-indigo-700 text-white border border-indigo-800">Create
             </Link>
         </div>
-        <div class="mb-4 flex justify-between">
+        <div class="mb-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             <div>
-                <input v-model="filter.title" type="text"  placeholder="title"/>
+                <input v-model="filter.title" type="text" placeholder="Title"
+                       class="w-full border border-gray-300 p-1"/>
             </div>
             <div>
-                <input v-model="filter.content" type="text"  placeholder="content"/>
+                <input v-model="filter.content" type="text" placeholder="Content"
+                       class="w-full border border-gray-300 p-1"/>
             </div>
             <div>
-                <input v-model="filter.likes_from" type="number" placeholder="likes"/>
+                <input v-model="filter.likes_from" type="number" placeholder="Likes"
+                       class="w-full border border-gray-300 p-1"/>
             </div>
             <div>
-                <input v-model="filter.views_from" type="number" placeholder="views"/>
+                <input v-model="filter.views_from" type="number" placeholder="Views"
+                       class="w-full border border-gray-300 p-1"/>
             </div>
             <div>
-                <input v-model="filter.is_published" type="text" placeholder="published"/>
+                <select class="w-full border border-gray-300 p-1">
+                    <option>Yes</option>
+                    <option>No</option>
+                </select>
             </div>
             <div>
-                <input v-model="filter.tag" type="text" placeholder="published"/>
+                <input v-model="filter.tag" type="text" placeholder="Tag" class="w-full border border-gray-300 p-1"/>
             </div>
             <div>
-                <input v-model="filter.category" type="text" placeholder="published"/>
+                <input v-model="filter.category" type="text" placeholder="Category"
+                       class="w-full border border-gray-300 p-1"/>
             </div>
-            <div class="mb-4">
-                <input v-model="filter.published_at_from" type="date" placeholder="published at"/>
+            <div>
+                <input v-model="filter.published_at_from" type="date" placeholder="Published at"
+                       class="w-full border border-gray-300 p-1"/>
             </div>
             <div>
                 <a @click.prevent="getPosts"
                    href="#"
-                   class="inline-block bg-emerald-700 px-3 py-1 text-white border border-emerald-800" >Filter</a>
+                   class="inline-block bg-emerald-700 w-full px-3 py-1 text-white border border-emerald-800 text-center">
+                    Filter
+                </a>
             </div>
         </div>
+
         <div>
-            <div v-for="post in postsData" :key="post.id" class="mb-4 pb-4 border-b border-gray-200">
-                <div class="flex justify-between items-center">
-                    <div>
-                        <Link :href="route('admin.posts.show', post.id)" class="text-blue-500"><h3>Title: {{ post.title }}</h3></Link>
-                        Content: {{ post.content }}
+            <div
+                v-for="post in postsData"
+                :key="post.id"
+                class="mb-4 pb-4 border-b border-gray-200"
+            >
+                <div class="flex gap-4 items-start">
+                    <div class="flex-grow">
+                        <Link
+                            :href="route('admin.posts.show', post.id)"
+                            class="text-blue-600 font-semibold"
+                        >
+                            <h3 class="text-lg">Title: {{ post.title }}</h3>
+                        </Link>
+                        <p class="text-gray-800">Content: {{ post.content }}</p>
                     </div>
-                    <div>
-                        <div>
-                            likes: {{ post.likes }}
+                    <div class="ml-auto flex gap-4 items-start shrink-0">
+                        <div class="w-32">
+                            <p class="text-sm font-medium text-gray-600">Author:</p>
+                            <p>{{ post.profile.name }}</p>
                         </div>
-                        <div>
-                            views: {{ post.views }}
+                        <div class="w-48">
+                            <p class="text-sm font-medium text-gray-600 mb-1">Tags:</p>
+                            <div class="flex flex-wrap gap-1">
+                                <span
+                                    v-for="tag in post.tag"
+                                    :key="tag.id"
+                                    class="bg-gray-200 text-gray-800 text-xs px-2 py-1 rounded-full"
+                                >
+                                    {{ tag.title }}
+                                </span>
+                            </div>
                         </div>
-                    </div>
-                    <div>
-                        <div>
-                            published: {{ post.is_published ? 'Yes' : 'No' }}
+                        <div class="w-24">
+                            <p class="text-sm font-medium text-gray-600">Likes:</p>
+                            <p>{{ post.likes }}</p>
+                            <p class="text-sm font-medium text-gray-600">Views:</p>
+                            <p>{{ post.views }}</p>
                         </div>
-                        <div>
-                            published
+                        <div class="w-28">
+                            <p class="text-sm font-medium text-gray-600">Published:</p>
+                            <p>{{ post.is_published ? 'Yes' : 'No' }}</p>
+                            <p class="text-sm font-medium text-gray-600">Category:</p>
+                            <p>{{ post.category.title }}</p>
                         </div>
-                    </div>
-                    <div>
-                        author: {{ post.profile.name }}
-                    </div>
-                    <div>
-                        <a @click.prevent="deletePost(post)" href="#" class="text-white inline-block bg-red-600 px-3 py-1">Delete</a>
+                        <div class="self-center">
+                            <a
+                                @click.prevent="deletePost(post)"
+                                href="#"
+                                class="text-white bg-red-600 px-3 py-1 rounded hover:bg-red-700"
+                            >
+                                Delete
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
 </template>
 
