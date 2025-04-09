@@ -30,7 +30,7 @@
                 </select>
             </div>
             <div>
-                <input v-model="filter.tag" type="text" placeholder="Tag" class="w-full border border-gray-300 p-1"/>
+                <input v-model="filter.tags" type="text" placeholder="Tags" class="w-full border border-gray-300 p-1"/>
             </div>
             <div>
                 <input v-model="filter.category_title" type="text" placeholder="Category"

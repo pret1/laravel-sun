@@ -37,6 +37,7 @@ class IndexRequest extends FormRequest
             'views_to' => 'nullable|integer',
             'liked_by_profile' => 'nullable|integer',
             'is_published' => 'nullable|boolean',
+            'tags' => 'nullable|string',
         ];
     }
 }

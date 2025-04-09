@@ -22,7 +22,8 @@ class PostFilter extends AbstractFilter
         'views_from',
         'views_to',
         'liked_by_profile',
-        'is_published'
+        'is_published',
+        'tags'
     ];
 
     protected function title(Builder $builder, string $value): void
@@ -106,5 +107,19 @@ class PostFilter extends AbstractFilter
     protected function isPublished(Builder $builder, bool $value): void
     {
         $builder->where('is_published', '=', $value);
+    }
+
+    public function tags(Builder $builder, string $value): void
+    {
+        $tags = array_map('trim', explode(',', $value));
+
+        $builder->whereHas('tags', function ($q) use ($tags) {
+            $q->where(function ($query) use ($tags) {
+                foreach ($tags as $tag) {
+                    $query->orWhere('title', 'ilike', "%{$tag}%");
+                }
+            });
+        });
+
     }
 }
