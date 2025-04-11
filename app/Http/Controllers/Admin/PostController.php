@@ -11,6 +11,7 @@ use App\Models\Category;
 use App\Models\Post;
 use App\Services\PostService;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Request;
 use Inertia\Response;
 use Inertia\ResponseFactory;
@@ -21,11 +22,16 @@ class PostController extends Controller
     public function index(IndexRequest $request): Response|ResponseFactory|AnonymousResourceCollection
     {
         $data = $request->validationData();
-        $posts = PostResource::collection(
-            Post::filter($data)
-                ->latest()
-                ->paginate($data['per_page'], '*', 'page', $data['page'])
-        );
+        $key = md5(json_encode($data));
+
+        $posts = Cache::remember($key, now()->addMinutes(10), function () use ($data) {
+            return PostResource::collection(
+                Post::filter($data)
+                    ->latest()
+                    ->paginate($data['per_page'], '*', 'page', $data['page'])
+            );
+        });
+
 
         if(Request::wantsJson()) {
             return $posts;
