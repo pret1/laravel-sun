@@ -38,7 +38,17 @@ class IndexRequest extends FormRequest
             'liked_by_profile' => 'nullable|integer',
             'is_published' => 'nullable|boolean',
             'tags' => 'nullable|string',
+            'per_page' => 'nullable|integer',
+            'page' => 'nullable|integer',
         ];
+    }
+
+    public function passedValidation(): void
+    {
+        $this->merge([
+            'per_page' => $this->per_page ?? 5,
+            'page' => $this->page ?? 1,
+        ]);
     }
 }
 

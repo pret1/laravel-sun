@@ -10,6 +10,7 @@ use App\Http\Resources\Post\PostResource;
 use App\Models\Category;
 use App\Models\Post;
 use App\Services\PostService;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Request;
 use Inertia\Response;
 use Inertia\ResponseFactory;
@@ -17,10 +18,14 @@ use App\Http\Requests\Admin\Post\IndexRequest;
 
 class PostController extends Controller
 {
-    public function index(IndexRequest $request): Response|ResponseFactory|array
+    public function index(IndexRequest $request): Response|ResponseFactory|AnonymousResourceCollection
     {
-        $data = $request->validated();
-        $posts = PostResource::collection(Post::filter($data)->latest()->get())->resolve();
+        $data = $request->validationData();
+        $posts = PostResource::collection(
+            Post::filter($data)
+                ->latest()
+                ->paginate($data['per_page'], '*', 'page', $data['page'])
+        );
 
         if(Request::wantsJson()) {
             return $posts;

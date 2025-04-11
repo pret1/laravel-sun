@@ -51,7 +51,7 @@
 
         <div>
             <div
-                v-for="post in postsData"
+                v-for="post in postsData.data"
                 :key="post.id"
                 class="mb-4 pb-4 border-b border-gray-200"
             >
@@ -106,6 +106,15 @@
                     </div>
                 </div>
             </div>
+
+            <div>
+                <a class="inline-block mr-2 px-3 py-1 bg-white border border-gray-700"
+                   href="#"
+                   v-for="page in postsData.meta.links"
+                   v-html="page.label"
+                   @click.prevent="filter.page = page.label"
+                ></a>
+            </div>
         </div>
 
     </div>
@@ -120,7 +129,7 @@ export default {
     name: "Index",
 
     props: {
-        posts: Array
+        posts: Object
     },
 
     layout: AdminLayout,
