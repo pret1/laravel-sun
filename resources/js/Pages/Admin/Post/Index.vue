@@ -150,12 +150,18 @@ export default {
 
     methods: {
         getPosts() {
+
+            const params = {
+                ...this.filter,
+                page: this.page
+            };
+
+            const queryString = new URLSearchParams(params).toString();
+
+            window.history.pushState({}, '', `${window.location.pathname}?${queryString}`);
+
             axios.get(route('admin.posts.index'), {
-                params: {
-                    ...this.filter,
-                    page: this.page
-                }
-            })
+                params })
                 .then(res => {
                     this.postsData = res.data
                 })
