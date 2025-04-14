@@ -171,7 +171,7 @@ export default {
         deletePost(post) {
             axios.delete(route('admin.posts.destroy', post.id))
                 .then(res => {
-                    this.postsData.data = this.postsData.data.filter(postData => postData.id !== res.data.id)
+                    this.getPosts()
                 })
         },
 
