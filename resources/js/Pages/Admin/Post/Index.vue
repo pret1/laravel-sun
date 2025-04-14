@@ -112,7 +112,7 @@
                    href="#"
                    v-for="page in postsData.meta.links"
                    v-html="page.label"
-                   @click.prevent="filter.page = page.label"
+                   @click.prevent="goToPage(page.label)"
                 ></a>
             </div>
         </div>
@@ -143,6 +143,7 @@ export default {
             filter: {
                 is_published: null
             },
+            page: 1,
             postsData: this.posts
         }
     },
@@ -150,7 +151,10 @@ export default {
     methods: {
         getPosts() {
             axios.get(route('admin.posts.index'), {
-                params: this.filter
+                params: {
+                    ...this.filter,
+                    page: this.page
+                }
             })
                 .then(res => {
                     this.postsData = res.data
@@ -162,7 +166,12 @@ export default {
                 .then(res => {
                     this.postsData = this.postsData.filter(postData => postData.id !== res.data.id)
                 })
-        }
+        },
+
+        goToPage(page) {
+            this.page = page;
+            this.getPosts();
+        },
     },
 
     // mounted() {
@@ -173,7 +182,8 @@ export default {
         filter: {
             deep: true,
             handler() {
-                this.getPosts()
+                this.page = 1;
+                this.getPosts();
             }
         }
     }
