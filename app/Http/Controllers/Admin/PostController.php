@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\Post\PostCacheEvent;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Post\DeleteRequest;
 use App\Http\Requests\Admin\Post\StoreRequest;
 use App\Http\Resources\Category\CategoryResource;
 use App\Http\Resources\Post\PostResource;
@@ -59,8 +61,11 @@ class PostController extends Controller
         return PostResource::make($post)->resolve();
     }
 
-    public function destroy(Post $post): array
+    public function destroy(DeleteRequest $request, Post $post): array
     {
+        $data = $request->validationData();
+        event(new PostCacheEvent($data));
+
         $post->delete();
         return PostResource::make($post)->resolve();
     }
