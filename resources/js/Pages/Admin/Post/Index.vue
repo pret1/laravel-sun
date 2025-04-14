@@ -108,11 +108,11 @@
             </div>
 
             <div>
-                <a class="inline-block mr-2 px-3 py-1 bg-white border border-gray-700"
-                   href="#"
-                   v-for="page in postsData.meta.links"
-                   v-html="page.label"
-                   @click.prevent="goToPage(page.label)"
+                <a v-for="link in postsData.meta.links"
+                   class="inline-block mr-2 px-3 py-1 bg-white border border-gray-700"
+                   :href="link.url || '#'"
+                   v-html="link.label"
+                   @click.prevent="goToPage(link)"
                 ></a>
             </div>
         </div>
@@ -168,10 +168,28 @@ export default {
                 })
         },
 
-        goToPage(page) {
-            this.page = page;
-            this.getPosts();
-        },
+        goToPage(link) {
+            if (!link.url && link.label === '...') {
+                const current = this.page;
+                const last = this.postsData.meta.last_page;
+                // let next = Math.min(current + 10, last);
+                let next = last - 1;
+                if (current > 10) {
+                     // next = Math.min(current - 10, last);
+                     next = current - 10;
+                }
+                this.page = next;
+                this.getPosts();
+                return;
+            }
+
+            if (!link.url) return;
+            const match = link.url.match(/[\?&]page=(\d+)/);
+            if (match) {
+                this.page = parseInt(match[1]);
+                this.getPosts();
+            }
+        }
     },
 
     // mounted() {
