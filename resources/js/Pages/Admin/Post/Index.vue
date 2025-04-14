@@ -25,6 +25,7 @@
             <div>
                 <select v-model="filter.is_published" class="w-full border border-gray-300 p-1">
                     <option value="null" disabled selected>Is published</option>
+                    <option value="">All</option>
                     <option value="1">Yes</option>
                     <option value="0">No</option>
                 </select>
@@ -170,7 +171,7 @@ export default {
         deletePost(post) {
             axios.delete(route('admin.posts.destroy', post.id))
                 .then(res => {
-                    this.postsData = this.postsData.filter(postData => postData.id !== res.data.id)
+                    this.postsData.data = this.postsData.data.filter(postData => postData.id !== res.data.id)
                 })
         },
 
