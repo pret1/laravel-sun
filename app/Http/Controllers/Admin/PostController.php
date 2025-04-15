@@ -24,18 +24,25 @@ class PostController extends Controller
     public function index(IndexRequest $request): Response|ResponseFactory|AnonymousResourceCollection
     {
         $data = $request->validationData();
-        $key = md5(json_encode($data));
+//        $key = md5(json_encode($data));
 
-        $posts = Cache::remember($key, now()->addMinutes(10), function () use ($data) {
-            return PostResource::collection(
-                Post::filter($data)
-                    ->latest()
-                    ->paginate($data['per_page'], '*', 'page', $data['page'])
-            );
-        });
+//        $posts = Cache::remember($key, now()->addMinutes(10), function () use ($data) {
+//            return PostResource::collection(
+//                Post::filter($data)
+//                    ->latest()
+//                    ->paginate($data['per_page'], '*', 'page', $data['page'])
+//            );
+//        });
 
 
-        if(Request::wantsJson()) {
+        $posts = PostResource::collection(
+            Post::filter($data)
+                ->latest()
+                ->paginate($data['per_page'], '*', 'page', $data['page'])
+        );
+
+
+        if (Request::wantsJson()) {
             return $posts;
         }
 
