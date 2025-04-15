@@ -30,6 +30,7 @@ class PostResource extends JsonResource
             'category' => CategoryResource::make($this->category)->resolve(),
             'views' => $this->viewedProfiles->count(),
             'published_at' => $this->published_at,
+            'is_liked' => $this->is_liked,
         ];
     }
 }

@@ -42,7 +42,7 @@ class Post extends Model
 //    }
     public function likedProfiles(): MorphToMany
     {
-        return $this->morphToMany(Profile::class, 'likeable');
+        return $this->morphToMany(Profile::class, 'likeable')->withTimestamps();
     }
 
 //    public function comments(): HasMany
@@ -82,6 +82,11 @@ class Post extends Model
     public function getImageUrlAttribute(): string
     {
         return Storage::disk('public')->url($this->image?->image_path);
+    }
+
+    public function getIsLikedAttribute(): bool
+    {
+        return $this->likedProfiles->contains('id', auth()->user()->profile->id);
     }
 
 }
