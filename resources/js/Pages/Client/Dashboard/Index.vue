@@ -5,7 +5,7 @@
         >
             <div class="items-center">
                 <div>
-                        <h3 class="text-lg">Title: {{ post.title }}</h3>
+                    <Link class="text-lg" :href="route('client.posts.show', post.id)">Title: {{ post.title }}</Link>
                     <p class="text-gray-800">Content: {{ post.content }}</p>
                     <img v-if="post.image_url" :alt="post.title" :src="post.image_url">
                 </div>
@@ -33,10 +33,6 @@ export default {
             postsData: this.posts
         }
     },
-
-    mounted() {
-        console.log(this.postsData);
-    }
 
 }
 </script>
