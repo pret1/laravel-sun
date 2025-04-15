@@ -152,19 +152,24 @@ export default {
     methods: {
         getPosts() {
 
-            const params = {
-                ...this.filter,
-                page: this.page
-            };
+            // const params = {
+            //     ...this.filter,
+            //     page: this.page
+            // };
 
-            const queryString = new URLSearchParams(params).toString();
-
-            window.history.pushState({}, '', `${window.location.pathname}?${queryString}`);
+            // another approach for add url
+            // const queryString = new URLSearchParams(params).toString();
+            // window.history.pushState({}, '', `${window.location.pathname}?${queryString}`);
 
             axios.get(route('admin.posts.index'), {
-                params })
+                params: {
+                    ...this.filter,
+                    page: this.page
+                }
+            })
                 .then(res => {
                     this.postsData = res.data
+                    window.history.replaceState({}, document.title, res.request.responseURL)
                 })
         },
 
@@ -199,9 +204,14 @@ export default {
         }
     },
 
-    // mounted() {
-    //     debugger;
-    // },
+    mounted() {
+        // debugger;
+        this.filter = {
+            is_published: null
+        }
+        this.page =  1
+        window.history.replaceState({}, document.title, route('admin.posts.index'));
+    },
 
     watch: {
         filter: {
