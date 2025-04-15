@@ -26,6 +26,8 @@ class Post extends Model
     use SoftDeletes;
     use HasFilter;
 
+    protected $withCount = ['likedProfiles'];
+
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);

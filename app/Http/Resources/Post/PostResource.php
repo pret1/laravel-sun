@@ -31,6 +31,7 @@ class PostResource extends JsonResource
             'views' => $this->viewedProfiles->count(),
             'published_at' => $this->published_at,
             'is_liked' => $this->is_liked,
+            'liked_profiles_count' => $this->liked_profiles_count,
         ];
     }
 }
