@@ -95,14 +95,23 @@
                             <p class="text-sm font-medium text-gray-600">Category:</p>
                             <p>{{ post.category.title }}</p>
                         </div>
-                        <div class="self-center">
-                            <a
-                                @click.prevent="deletePost(post)"
-                                href="#"
-                                class="text-white bg-red-600 px-3 py-1 rounded hover:bg-red-700"
-                            >
-                                Delete
-                            </a>
+                        <div class="w-28">
+                            <div class="mb-4">
+                                <a
+                                    @click.prevent="deletePost(post)"
+                                    href="#"
+                                    class="text-white bg-red-600 px-3 py-1 rounded hover:bg-red-700"
+                                >
+                                    Delete
+                                </a>
+                            </div>
+                            <div>
+                                <div class="mb-4">
+                                    <Link :href="route('admin.posts.edit', post.id)"
+                                          class="inline-block px-3 py-1 bg-indigo-700 text-white border border-indigo-800">Edit
+                                    </Link>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

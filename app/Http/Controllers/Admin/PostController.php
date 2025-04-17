@@ -55,6 +55,13 @@ class PostController extends Controller
         return inertia('Admin/Post/Show', compact('post'));
     }
 
+    public function edit(Post $post): Response|ResponseFactory
+    {
+        $post = PostResource::make($post)->resolve();
+        $categories = CategoryResource::collection(Category::all())->resolve();
+        return inertia('Admin/Post/Edit', compact('post', 'categories'));
+    }
+
     public function create(): Response|ResponseFactory
     {
         $categories = CategoryResource::collection(Category::all())->resolve();
