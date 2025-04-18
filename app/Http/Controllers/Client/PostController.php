@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Client\Post\StoreCommentRequest;
+use App\Http\Resources\Comment\Client\CommentResource;
 use App\Http\Resources\Post\PostResource;
 use App\Models\Post;
 use Illuminate\Http\JsonResponse;
@@ -25,5 +27,14 @@ class PostController extends Controller
             'is_liked' => count($res['attached']) > 0,
             'liked_profiles_count' => $likedProfilesCount,
         ]);
+    }
+
+    public function storeComments(StoreCommentRequest $request, Post $post): array
+    {
+        $data = $request->validationData();
+
+        $comment = $post->comments()->create($data);
+
+        return CommentResource::make($comment)->resolve();
     }
 }

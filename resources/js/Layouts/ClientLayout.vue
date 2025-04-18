@@ -6,7 +6,7 @@
     </section>
     <section class="w-full bg-gray-50">
         <section class="mx-auto flex">
-            <article class="p-4 mx-auto">
+            <article class="w-1/2 p-4 mx-auto">
                 <slot></slot>
             </article>
         </section>
