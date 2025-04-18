@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Request;
 use Inertia\Response;
 use Inertia\ResponseFactory;
 use App\Http\Requests\Admin\Post\IndexRequest;
+use App\Http\Requests\Admin\Post\UpdateRequest;
 
 class PostController extends Controller
 {
@@ -60,6 +61,14 @@ class PostController extends Controller
         $post = PostResource::make($post)->resolve();
         $categories = CategoryResource::collection(Category::all())->resolve();
         return inertia('Admin/Post/Edit', compact('post', 'categories'));
+    }
+
+    public function update(UpdateRequest $request, Post $post): array
+    {
+
+        $data = $request->except(['image']);
+        $post = PostService::update($data, $post);
+        return PostResource::make($post)->resolve();
     }
 
     public function create(): Response|ResponseFactory

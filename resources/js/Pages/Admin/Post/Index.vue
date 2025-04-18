@@ -100,7 +100,7 @@
                                 <a
                                     @click.prevent="deletePost(post)"
                                     href="#"
-                                    class="text-white bg-red-600 px-3 py-1 rounded hover:bg-red-700"
+                                    class="inline-block text-center w-full text-white bg-red-600 px-3 py-1 rounded hover:bg-red-700"
                                 >
                                     Delete
                                 </a>
@@ -108,7 +108,7 @@
                             <div>
                                 <div class="mb-4">
                                     <Link :href="route('admin.posts.edit', post.id)"
-                                          class="inline-block px-3 py-1 bg-indigo-700 text-white border border-indigo-800">Edit
+                                          class="inline-block w-full text-center text-white bg-orange-600 px-3 py-1 rounded hover:bg-orange-700">Edit
                                     </Link>
                                 </div>
                             </div>

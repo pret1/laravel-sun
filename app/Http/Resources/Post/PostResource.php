@@ -26,7 +26,7 @@ class PostResource extends JsonResource
             'likes' => $this->likedProfiles->count(),
             'image_path' => $this->image?->image_path,
             'image_url' => $this->image_url,
-            'tag' => TagResource::collection($this->tags)->resolve(),
+            'tags' => TagResource::collection($this->tags)->resolve(),
             'category' => CategoryResource::make($this->category)->resolve(),
             'views' => $this->viewedProfiles->count(),
             'published_at' => $this->published_at,
