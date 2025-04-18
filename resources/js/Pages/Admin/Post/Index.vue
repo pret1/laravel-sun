@@ -75,7 +75,7 @@
                             <p class="text-sm font-medium text-gray-600 mb-1">Tags:</p>
                             <div class="flex flex-wrap gap-1">
                                 <span
-                                    v-for="tag in post.tag"
+                                    v-for="tag in post.tags"
                                     :key="tag.id"
                                     class="bg-gray-200 text-gray-800 text-xs px-2 py-1 rounded-full"
                                 >

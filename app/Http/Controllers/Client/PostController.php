@@ -20,8 +20,10 @@ class PostController extends Controller
     public function toggleLike(Post $post): JsonResponse
     {
         $res = $post->likedProfiles()->toggle(auth()->user()->profile->id);
+        $likedProfilesCount = $post->likedProfiles()->count();
         return response()->json([
-            'is_liked' => count($res['attached']) > 0
+            'is_liked' => count($res['attached']) > 0,
+            'liked_profiles_count' => $likedProfilesCount,
         ]);
     }
 }

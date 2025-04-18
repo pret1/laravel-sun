@@ -38,7 +38,7 @@ export default {
                 .then( res => {
                     console.log(res)
                     this.post.is_liked = res.data.is_liked
-                    // this.post.is_liked = res.data.is_liked
+                    this.post.liked_profiles_count = res.data.liked_profiles_count;
                 })
         }
     }
