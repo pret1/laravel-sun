@@ -39,6 +39,29 @@
                 <div v-for="commentItem in comments" class="mb-4 pb-4 border-b border-gray-200">
                     <p>{{ commentItem.content }}</p>
                     <span class="text-sm text-gray-500">{{ commentItem.published_at }}</span>
+                    <button @click.prevent="replyingTo = commentItem.id; getChildComments(commentItem.id)"
+                        class="flex inline-block px-3 py-1 bg-blue-700 text-white border border-blue-800"
+                    >Reply</button>
+                    <div v-if="replyingTo === commentItem.id" class="mb-4 p-4 border border-gray-200 bg-white">
+                        <div class="mb-4">
+                            <h3>Child Comments</h3>
+                        </div>
+                        <div>
+                            <div v-for="commentItem in childComments" class="mb-4 pb-4 border-b border-gray-200">
+                                <p>{{ commentItem.content }}</p>
+                                <span class="text-sm text-gray-500">{{ commentItem.published_at }}</span>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <textarea v-model="comment.content" class="w-full"></textarea>
+                        </div>
+                        <div>
+                            <a @click.prevent="storeChildComment"
+                               href="#"
+                               class="inline-block px-3 py-1 bg-emerald-700 text-white border border-emerald-800"
+                            >Send</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -67,7 +90,10 @@ export default {
     data() {
         return {
             comment: {},
-            comments: []
+            comments: [],
+            childComments: [],
+            replyingTo: null,
+            childComment: {}
         }
     },
 
@@ -89,10 +115,28 @@ export default {
                 })
         },
 
+        storeChildComment() {
+            axios.post(route('client.posts.child-comments.store', this.post.id), this.childComment)
+                .then(res => {
+                    this.comments.unshift(res.data)
+                    this.comment.content = ''
+                })
+        },
+
         getComments() {
             axios.get(route('client.posts.comments.index', this.post.id))
                 .then(res => {
                     this.comments = res.data
+                })
+        },
+
+        getChildComments(commendId) {
+            axios.get(route('client.posts.child-comments.index', {
+                post: this.post.id,
+                comment: commendId
+            }))
+                .then(res => {
+                    this.childComments = res.data;
                 })
         }
     }

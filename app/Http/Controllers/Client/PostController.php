@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Client\Post\StoreCommentRequest;
 use App\Http\Resources\Comment\Client\CommentResource;
 use App\Http\Resources\Post\PostResource;
+use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\JsonResponse;
 use Inertia\Response;
@@ -31,7 +32,9 @@ class PostController extends Controller
 
     public function indexComments(Post $post): array
     {
-        return CommentResource::collection($post->comments)->resolve();
+        return CommentResource::collection(
+            $post->comments()->whereNull('parent_id')->latest()->get()
+        )->resolve();
     }
 
     public function storeComments(StoreCommentRequest $request, Post $post): array
@@ -41,5 +44,21 @@ class PostController extends Controller
         $comment = $post->comments()->create($data);
 
         return CommentResource::make($comment)->resolve();
+    }
+
+    public function storeChildComments(StoreCommentRequest $request, Post $post): array
+    {
+        $data = $request->validationData();
+
+        $comment = $post->comments()->create($data);
+
+        return CommentResource::make($comment)->resolve();
+    }
+
+
+    public function indexChildComments(Post $post, Comment $comment): array
+    {
+        $childComments = $comment->childrenComments()->latest()->get();
+        return CommentResource::collection($childComments)->resolve();
     }
 }
