@@ -49,7 +49,7 @@
                         <div>
                             <div v-for="commentItemChild in childComments" class="mb-4 pb-4 border-b border-gray-200">
                                 <p>{{ commentItemChild.content }}</p>
-                                <span class="text-sm text-gray-500">{{ commentItem.published_at }}</span>
+                                <span class="text-sm text-gray-500">{{ commentItemChild.published_at }}</span>
                                 <div class="flex justify-end">
                                     <span>{{ commentItemChild.likes }}</span>
                                     <svg @click="toggleLikeComment(commentItemChild.id, commentItem)" xmlns="http://www.w3.org/2000/svg"
