@@ -21,6 +21,7 @@ class CommentResource extends JsonResource
             'id' => $this->id,
             'profile' => ProfileResource::make($this->profile)->resolve(),
             'content' => $this->content,
+            'published_at' => $this->published_at
         ];
     }
 }

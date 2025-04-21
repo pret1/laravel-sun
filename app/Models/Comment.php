@@ -77,4 +77,9 @@ class Comment extends Model
     {
         return $this->morphMany(Profile::class, 'viewable');
     }
+
+    public function getPublishedAtAttribute(): string
+    {
+        return $this->created_at->diffForHumans();
+    }
 }

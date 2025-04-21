@@ -37,7 +37,8 @@
             </div>
             <div>
                 <div v-for="commentItem in comments" class="mb-4 pb-4 border-b border-gray-200">
-                    {{ commentItem.content }}
+                    <p>{{ commentItem.content }}</p>
+                    <span class="text-sm text-gray-500">{{ commentItem.published_at }}</span>
                 </div>
             </div>
         </div>
@@ -83,7 +84,8 @@ export default {
         storeComment() {
             axios.post(route('client.posts.comments.store', this.post.id), this.comment)
                 .then(res => {
-                    console.log(res);
+                    this.comments.unshift(res.data)
+                    this.comment.content = ''
                 })
         },
 
