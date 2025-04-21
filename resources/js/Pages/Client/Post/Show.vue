@@ -35,6 +35,11 @@
             <div class="mb-4">
                 <h3>Comments</h3>
             </div>
+            <div>
+                <div v-for="commentItem in comments" class="mb-4 pb-4 border-b border-gray-200">
+                    {{ commentItem.content }}
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -54,9 +59,14 @@ export default {
         post: Object
     },
 
+    mounted() {
+      this.getComments()
+    },
+
     data() {
         return {
-            comment: {}
+            comment: {},
+            comments: []
         }
     },
 
@@ -74,6 +84,13 @@ export default {
             axios.post(route('client.posts.comments.store', this.post.id), this.comment)
                 .then(res => {
                     console.log(res);
+                })
+        },
+
+        getComments() {
+            axios.get(route('client.posts.comments.index', this.post.id))
+                .then(res => {
+                    this.comments = res.data
                 })
         }
     }

@@ -29,6 +29,11 @@ class PostController extends Controller
         ]);
     }
 
+    public function indexComments(Post $post): array
+    {
+        return CommentResource::collection($post->comments)->resolve();
+    }
+
     public function storeComments(StoreCommentRequest $request, Post $post): array
     {
         $data = $request->validationData();
