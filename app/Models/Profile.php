@@ -46,7 +46,7 @@ class Profile extends Model
 //    }
     public function likedComments(): BelongsToMany
     {
-        return $this->morphedByMany(Comment::class, 'likeable');
+        return $this->morphedByMany(Comment::class, 'likeable', 'likeables')->withTimestamps();
     }
 
     public function posts(): HasMany

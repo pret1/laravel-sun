@@ -30,6 +30,13 @@ class PostController extends Controller
             'liked_profiles_count' => $likedProfilesCount,
         ]);
     }
+    public function toggleLikeComment(Comment $comment): JsonResponse
+    {
+        $res = $comment->likedProfiles()->toggle(auth()->user()->profile->id);
+        return response()->json([
+            'is_liked' => count($res['attached']) > 0,
+        ]);
+    }
 
     public function indexComments(Post $post): array
     {

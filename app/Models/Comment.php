@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Comment extends Model
@@ -44,9 +45,9 @@ class Comment extends Model
 //        return $this->belongsToMany(Profile::class, 'comment_profile_likes');
 //    }
 
-    public function likedProfiles()
+    public function likedProfiles(): MorphToMany
     {
-        return $this->morphMany(Profile::class, 'likeable');
+        return $this->morphToMany(Profile::class, 'likeable', 'likeables')->withTimestamps();
     }
     public function category(): BelongsTo
     {
@@ -81,5 +82,10 @@ class Comment extends Model
     public function getPublishedAtAttribute(): string
     {
         return $this->created_at->diffForHumans();
+    }
+
+    public function getIsLikedAttribute(): bool
+    {
+        return $this->likedProfiles->contains('id', auth()->user()->profile->id);
     }
 }

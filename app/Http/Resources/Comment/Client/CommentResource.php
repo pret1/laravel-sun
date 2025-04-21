@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Http\Resources\Comment\Client;
 
@@ -15,12 +16,13 @@ class CommentResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-//        dd($this->profile);
-//        dd($this->profile_id);
+
         return [
             'id' => $this->id,
             'profile' => ProfileResource::make($this->profile)->resolve(),
             'content' => $this->content,
+            'likes' => $this->likedProfiles()->count(),
+            'is_liked' => $this->is_liked,
             'published_at' => $this->published_at
         ];
     }
