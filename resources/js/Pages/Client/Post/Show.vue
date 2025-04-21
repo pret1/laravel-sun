@@ -53,10 +53,10 @@
                             </div>
                         </div>
                         <div class="mb-4">
-                            <textarea v-model="comment.content" class="w-full"></textarea>
+                            <textarea v-model="childComment.content" class="w-full"></textarea>
                         </div>
                         <div>
-                            <a @click.prevent="storeChildComment"
+                            <a @click.prevent="storeChildComment(commentItem.id)"
                                href="#"
                                class="inline-block px-3 py-1 bg-emerald-700 text-white border border-emerald-800"
                             >Send</a>
@@ -115,11 +115,14 @@ export default {
                 })
         },
 
-        storeChildComment() {
-            axios.post(route('client.posts.child-comments.store', this.post.id), this.childComment)
+        storeChildComment(commentId) {
+            axios.post(route('client.posts.child-comments.store', {
+                post: this.post.id,
+                comment: commentId
+            }), this.childComment)
                 .then(res => {
-                    this.comments.unshift(res.data)
-                    this.comment.content = ''
+                    this.childComments.unshift(res.data)
+                    this.childComment.content = ''
                 })
         },
 
@@ -130,10 +133,10 @@ export default {
                 })
         },
 
-        getChildComments(commendId) {
+        getChildComments(commentId) {
             axios.get(route('client.posts.child-comments.index', {
                 post: this.post.id,
-                comment: commendId
+                comment: commentId
             }))
                 .then(res => {
                     this.childComments = res.data;

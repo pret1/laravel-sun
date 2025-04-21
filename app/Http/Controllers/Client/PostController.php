@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Client\Post\StoreChildCommentRequest;
 use App\Http\Requests\Client\Post\StoreCommentRequest;
 use App\Http\Resources\Comment\Client\CommentResource;
 use App\Http\Resources\Post\PostResource;
@@ -46,13 +47,13 @@ class PostController extends Controller
         return CommentResource::make($comment)->resolve();
     }
 
-    public function storeChildComments(StoreCommentRequest $request, Post $post): array
+    public function storeChildComments(StoreChildCommentRequest $request, Post $post, Comment $comment): array
     {
         $data = $request->validationData();
 
-        $comment = $post->comments()->create($data);
+        $childComments = $post->comments()->create($data);
 
-        return CommentResource::make($comment)->resolve();
+        return CommentResource::make($childComments)->resolve();
     }
 
 
