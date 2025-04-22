@@ -23,6 +23,14 @@ class PostController extends Controller
         return inertia('Client/Post/Show', compact('post'));
     }
 
+    public function destroy(Post $post): JsonResponse
+    {
+        $post->delete();
+        return response()->json([
+            'message' => 'Post has been deleted.'
+        ]);
+    }
+
     public function toggleLike(Post $post): JsonResponse
     {
         $res = $post->likedProfiles()->toggle(auth()->user()->profile->id);

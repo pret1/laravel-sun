@@ -1,6 +1,6 @@
 <template>
     <div>
-        <PostItem v-for="post in postsData" :post="post"></PostItem>
+        <PostItem @post_deleted="refreshPosts" v-for="post in postsData" :post="post"></PostItem>
     </div>
 </template>
 
@@ -27,6 +27,12 @@ export default {
             postsData: this.posts
         }
     },
+
+    methods: {
+        refreshPosts(post) {
+            this.postsData = this.postsData.filter(postData => postData !== post)
+        }
+    }
 
 }
 </script>
