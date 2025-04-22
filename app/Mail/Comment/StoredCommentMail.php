@@ -2,6 +2,7 @@
 
 namespace App\Mail\Comment;
 
+use App\Models\Comment;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -16,10 +17,10 @@ class StoredCommentMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct()
-    {
-        //
-    }
+    public function __construct(
+        private readonly Comment $comment,
+    )
+    {}
 
     /**
      * Get the message envelope.
@@ -38,6 +39,9 @@ class StoredCommentMail extends Mailable
     {
         return new Content(
             view: 'mail.comment.stored_comment',
+            with: [
+                'comment' => $this->comment,
+            ]
         );
     }
 

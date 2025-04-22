@@ -8,9 +8,11 @@ use App\Http\Requests\Client\Post\StoreChildCommentRequest;
 use App\Http\Requests\Client\Post\StoreCommentRequest;
 use App\Http\Resources\Comment\Client\CommentResource;
 use App\Http\Resources\Post\PostResource;
+use App\Mail\Comment\StoredCommentMail;
 use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Mail;
 use Inertia\Response;
 
 class PostController extends Controller
@@ -50,7 +52,7 @@ class PostController extends Controller
         $data = $request->validationData();
 
         $comment = $post->comments()->create($data);
-
+        Mail::to($post->user)->send(new StoredCommentMail($comment));
         return CommentResource::make($comment)->resolve();
     }
 
