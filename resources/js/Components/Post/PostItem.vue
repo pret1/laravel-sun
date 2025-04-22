@@ -18,6 +18,8 @@
                 </div>
             </div>
         </div>
+
+        <div @click="changePerson">changePerson</div>
     </div>
 </template>
 
@@ -39,6 +41,16 @@ export default {
                 .then(res => {
                     this.$emit('post_deleted', this.post)
                 })
+        },
+
+        changePerson() {
+            window.dispatchEvent(new CustomEvent('foo-key-localstorage-changed', {
+                detail: {
+                    storage: {
+                        name: 'Vano'
+                    }
+                }
+            }));
         }
     }
 
