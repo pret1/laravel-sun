@@ -44,13 +44,15 @@ export default {
         },
 
         changePerson() {
-            window.dispatchEvent(new CustomEvent('foo-key-localstorage-changed', {
-                detail: {
-                    storage: {
-                        name: 'Vano'
-                    }
-                }
-            }));
+            // window.dispatchEvent(new CustomEvent('foo-key-localstorage-changed', {
+            //     detail: {
+            //         storage: {
+            //             name: 'Vano'
+            //         }
+            //     }
+            // }));
+
+            this.$page.props.person = 'Sergo'
         }
     }
 

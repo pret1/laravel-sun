@@ -26,7 +26,7 @@ export default {
     data() {
         return {
             postsData: this.posts,
-            person: {}
+            person: this.$page.props.person
         }
     },
 
