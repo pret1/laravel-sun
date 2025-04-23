@@ -9,6 +9,7 @@ use App\Http\Requests\Client\Post\StoreCommentRequest;
 use App\Http\Resources\Comment\Client\CommentResource;
 use App\Http\Resources\Post\PostResource;
 use App\Mail\Comment\StoredCommentMail;
+use App\Mail\Like\LikeMail;
 use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\JsonResponse;
@@ -35,6 +36,8 @@ class PostController extends Controller
     {
         $res = $post->likedProfiles()->toggle(auth()->user()->profile->id);
         $likedProfilesCount = $post->likedProfiles()->count();
+        $isLiked = count($res['attached']) > 0;
+        Mail::to($post->user)->send(new LikeMail($post, $isLiked));
         return response()->json([
             'is_liked' => count($res['attached']) > 0,
             'liked_profiles_count' => $likedProfilesCount,
@@ -43,8 +46,10 @@ class PostController extends Controller
     public function toggleLikeComment(Comment $comment): JsonResponse
     {
         $res = $comment->likedProfiles()->toggle(auth()->user()->profile->id);
+        $isLiked = count($res['attached']) > 0;
+        Mail::to($comment->user)->send(new LikeMail($comment, $isLiked));
         return response()->json([
-            'is_liked' => count($res['attached']) > 0,
+            'is_liked' => $isLiked,
         ]);
     }
 
