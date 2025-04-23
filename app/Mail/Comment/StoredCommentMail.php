@@ -19,6 +19,7 @@ class StoredCommentMail extends Mailable
      */
     public function __construct(
         private readonly Comment $comment,
+        private readonly ?Comment $childComment = null,
     )
     {}
 
@@ -41,6 +42,7 @@ class StoredCommentMail extends Mailable
             view: 'mail.comment.stored_comment',
             with: [
                 'comment' => $this->comment,
+                'childComment' => $this->childComment,
             ]
         );
     }

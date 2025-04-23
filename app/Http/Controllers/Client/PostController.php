@@ -70,6 +70,7 @@ class PostController extends Controller
 
         $childComments = $post->comments()->create($data);
 
+        Mail::to($post->user)->send(new StoredCommentMail($comment, $childComments));
         return CommentResource::make($childComments)->resolve();
     }
 
