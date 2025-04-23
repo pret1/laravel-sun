@@ -80,7 +80,7 @@ class PostController extends Controller
     }
 
 
-    public function indexChildComments(Post $post, Comment $comment): array
+    public function indexChildComments(Comment $comment): array
     {
         $childComments = $comment->childrenComments()->latest()->get();
         return CommentResource::collection($childComments)->resolve();
