@@ -1,6 +1,5 @@
 <template>
     <div>
-        {{this.person}}
         <PostItem @post_deleted="refreshPosts" v-for="post in postsData" :post="post"></PostItem>
     </div>
 </template>
@@ -26,7 +25,6 @@ export default {
     data() {
         return {
             postsData: this.posts,
-            person: this.$page.props.person
         }
     },
 
@@ -34,12 +32,6 @@ export default {
         refreshPosts(post) {
             this.postsData = this.postsData.filter(postData => postData !== post)
         }
-    },
-
-    mounted() {
-        window.addEventListener('foo-key-localstorage-changed', (event) => {
-            this.person = event.detail.storage;
-        });
     },
 
 }

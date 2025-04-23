@@ -119,15 +119,8 @@ export default {
         toggleLikePost() {
             axios.post(route('client.posts.like.toggle', this.post.id))
                 .then(res => {
-                    console.log(res)
                     this.post.is_liked = res.data.is_liked
                     this.post.liked_profiles_count = res.data.liked_profiles_count;
-
-                    // if (res.data.is_liked) {
-                    //     this.post.liked_profiles_count++;
-                    // } else {
-                    //     this.post.liked_profiles_count--;
-                    // }
                 })
         },
 
