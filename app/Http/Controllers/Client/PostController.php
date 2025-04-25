@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Client\Post\StoreCommentRequest;
 use App\Http\Resources\Comment\Client\CommentResource;
 use App\Http\Resources\Post\PostResource;
-use App\Mail\Comment\StoredCommentMail;
+use App\Jobs\Comment\StoredCommentSendMailJob;
 use App\Mail\Like\LikeMail;
 use App\Models\Comment;
 use App\Models\Post;
@@ -66,12 +66,7 @@ class PostController extends Controller
 
         $commentModel = $post->comments()->create($data);
 
-        Mail::to($post->user)->send(
-            new StoredCommentMail(
-                $comment ?? $commentModel,
-                $comment ? $commentModel : null
-            )
-        );
+        StoredCommentSendMailJob::dispatch($post, $comment, $commentModel);
 
         return CommentResource::make($commentModel)->resolve();
     }
