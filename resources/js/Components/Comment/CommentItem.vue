@@ -73,7 +73,7 @@ export default {
         },
 
         storeChildComment(commentId) {
-            axios.post(route('client.posts.child-comments.store', {
+            axios.post(route('client.posts.comments.store', {
                 post: this.post.id,
                 comment: commentId
             }), this.childComment)

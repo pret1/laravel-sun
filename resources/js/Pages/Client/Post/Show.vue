@@ -80,14 +80,6 @@ export default {
     },
 
     methods: {
-        toggleLikePost() {
-            axios.post(route('client.posts.like.toggle', this.post.id))
-                .then(res => {
-                    this.post.is_liked = res.data.is_liked
-                    this.post.liked_profiles_count = res.data.liked_profiles_count;
-                })
-        },
-
         storeComment() {
             axios.post(route('client.posts.comments.store', this.post.id), this.comment)
                 .then(res => {

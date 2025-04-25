@@ -29,7 +29,8 @@ class StoreCommentRequest extends FormRequest
     protected function passedValidation()
     {
         return $this->merge([
-           'profile_id' => auth()->user()->profile->id
+           'profile_id' => auth()->user()->profile->id,
+           'parent_id' => optional($this->route('comment'))->id,
         ]);
     }
 }

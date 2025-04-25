@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Client\Post\StoreChildCommentRequest;
 use App\Http\Requests\Client\Post\StoreCommentRequest;
 use App\Http\Resources\Comment\Client\CommentResource;
 use App\Http\Resources\Post\PostResource;
@@ -43,6 +42,7 @@ class PostController extends Controller
             'liked_profiles_count' => $likedProfilesCount,
         ]);
     }
+
     public function toggleLikeComment(Comment $comment): JsonResponse
     {
         $res = $comment->likedProfiles()->toggle(auth()->user()->profile->id);
@@ -60,23 +60,20 @@ class PostController extends Controller
         )->resolve();
     }
 
-    public function storeComments(StoreCommentRequest $request, Post $post): array
+    public function storeComments(StoreCommentRequest $request, Post $post, ?Comment $comment = null): array
     {
         $data = $request->validationData();
 
-        $comment = $post->comments()->create($data);
-        Mail::to($post->user)->send(new StoredCommentMail($comment));
-        return CommentResource::make($comment)->resolve();
-    }
+        $commentModel = $post->comments()->create($data);
 
-    public function storeChildComments(StoreChildCommentRequest $request, Post $post, Comment $comment): array
-    {
-        $data = $request->validationData();
+        Mail::to($post->user)->send(
+            new StoredCommentMail(
+                $comment ?? $commentModel,
+                $comment ? $commentModel : null
+            )
+        );
 
-        $childComments = $post->comments()->create($data);
-
-        Mail::to($post->user)->send(new StoredCommentMail($comment, $childComments));
-        return CommentResource::make($childComments)->resolve();
+        return CommentResource::make($commentModel)->resolve();
     }
 
 
