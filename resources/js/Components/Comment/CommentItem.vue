@@ -10,16 +10,13 @@
                 <h3>Child Comments</h3>
             </div>
             <div>
-                <div v-for="commentItemChild in childComments" class="mb-4 pb-4 border-b border-gray-200">
-                    <p>{{ commentItemChild.content }}</p>
-                    <span class="text-sm text-gray-500">{{ commentItemChild.published_at }}</span>
-                    <Like
-                        :item="commentItemChild"
-                        route-name="client.comment.like.toggle"
-                        :on-refresh="() => getChildComments(commentItem.id)"
-                        class="flex justify-end">
-                    </Like>
-                </div>
+                <CommentItem
+                    v-for="child in childComments"
+                    :key="child.id"
+                    :comment-item="child"
+                    :post="post"
+                    @refresh-comments="getChildComments(commentItem.id)"
+                />
             </div>
             <div class="mb-4">
                 <textarea v-model="childComment.content" class="w-full"></textarea>
