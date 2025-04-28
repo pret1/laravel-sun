@@ -8,6 +8,7 @@ use App\Http\Requests\Client\Post\StoreCommentRequest;
 use App\Http\Resources\Comment\Client\CommentResource;
 use App\Http\Resources\Post\PostResource;
 use App\Jobs\Comment\StoredCommentSendMailJob;
+use App\Jobs\Like\ToggleLikeMailJob;
 use App\Mail\Like\LikeMail;
 use App\Models\Comment;
 use App\Models\Post;
@@ -36,7 +37,7 @@ class PostController extends Controller
         $res = $post->likedProfiles()->toggle(auth()->user()->profile->id);
         $likedProfilesCount = $post->likedProfiles()->count();
         $isLiked = count($res['attached']) > 0;
-        Mail::to($post->user)->send(new LikeMail($post, $isLiked));
+        ToggleLikeMailJob::dispatch($post, $isLiked);
         return response()->json([
             'is_liked' => count($res['attached']) > 0,
             'liked_profiles_count' => $likedProfilesCount,
@@ -47,7 +48,7 @@ class PostController extends Controller
     {
         $res = $comment->likedProfiles()->toggle(auth()->user()->profile->id);
         $isLiked = count($res['attached']) > 0;
-        Mail::to($comment->user)->send(new LikeMail($comment, $isLiked));
+        ToggleLikeMailJob::dispatch($comment, $isLiked);
         return response()->json([
             'is_liked' => $isLiked,
         ]);
