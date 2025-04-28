@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\StatisticController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Middleware\IsAdminMiddleware;
 use Illuminate\Support\Facades\Route;
@@ -54,4 +55,6 @@ Route::group(['prefix'=>'admin','middleware' => ['auth', IsAdminMiddleware::clas
     Route::get('tags/create', [TagController::class, 'create'])->name('admin.tags.create');
     Route::get('tags/{tag}', [TagController::class, 'show'])->name('admin.tags.show');
     Route::post('tags', [TagController::class, 'store'])->name('admin.tags.store');
+
+    Route::get('/statistics', [StatisticController::class, 'index'])->name('admin.statistics.index');
 });
