@@ -18,8 +18,8 @@ class StoredCommentSendMailJob implements ShouldQueue
      */
     public function __construct(
         private readonly Post $post,
-        private readonly ?Comment $comment = null,
-        private readonly ?Comment $commentModel = null,
+        private readonly Comment $comment,
+        private readonly ?Comment $parentComment = null,
     )
     {}
 
@@ -30,8 +30,8 @@ class StoredCommentSendMailJob implements ShouldQueue
     {
         Mail::to($this->post->user)->send(
             new StoredCommentMail(
-                $this->comment ?? $this->commentModel,
-                $this->comment ? $this->commentModel : null
+                $this->parentComment ?? $this->comment,
+                $this->parentComment ? $this->comment : null
             )
         );
     }

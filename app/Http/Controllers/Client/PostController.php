@@ -64,11 +64,11 @@ class PostController extends Controller
     {
         $data = $request->validationData();
 
-        $commentModel = $post->comments()->create($data);
+        $newComment = $post->comments()->create($data);
 
-        StoredCommentSendMailJob::dispatch($post, $comment, $commentModel);
+        StoredCommentSendMailJob::dispatch($post, $newComment, $comment);
 
-        return CommentResource::make($commentModel)->resolve();
+        return CommentResource::make($newComment)->resolve();
     }
 
 
