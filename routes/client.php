@@ -15,4 +15,5 @@ Route::group(['prefix'=>'client','middleware' => ['auth']], function () {
     Route::post('/posts/{post}/comments/{comment?}', [PostController::class, 'storeComments'])->name('client.posts.comments.store');
     Route::get('/posts/{post}/comments', [PostController::class, 'indexComments'])->name('client.posts.comments.index');
     Route::get('/comments/{comment}/child-comments', [PostController::class, 'indexChildComments'])->name('client.comments.child-comments.index');
+    Route::post('/posts/{post}/repost', [PostController::class, 'repost'])->name('client.posts.repost');
 });

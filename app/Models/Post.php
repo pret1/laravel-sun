@@ -81,6 +81,16 @@ class Post extends Model
         return $this->morphToMany(Profile::class, 'viewable');
     }
 
+    public function repostedPost(): BelongsTo
+    {
+        return $this->belongsTo(Post::class, 'parent_id');
+    }
+
+    public function repostedPosts(): HasMany
+    {
+        return $this->hasMany(Post::class, 'parent_id');
+    }
+
     public function getImageUrlAttribute(): string
     {
         return Storage::disk('public')->url($this->image?->image_path);

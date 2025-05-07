@@ -1,15 +1,44 @@
 <template>
     <div>
+        <div v-if="isRepost" class="popup flex justify-center items-center">
+            <div class="body p-4">
+                <div class="mb-4">
+                    <input v-model="repost.title" type="text" class="border border-gray-200 w-full" placeholder="title">
+                </div>
+                <div class="mb-4">
+                    <textarea v-model="repost.content" type="text" class="border border-gray-200 w-full" placeholder="content"></textarea>
+                </div>
+                <div class="mb-4">
+                    <a @click.prevent="repostPost"
+                        href="#"
+                        class="inline-block px-3 py-1 bg-emerald-700 text-white border border-emerald-800"
+                    >Repost</a>
+                </div>
+                <div @click="isRepost = false" class="cursor-pointer text-white">
+                    Close
+                </div>
+            </div>
+        </div>
         <div class="mb-4 p-4 border border-gray-200 bg-white">
             <div class="items-center">
                 <div>
                     <p class="mb-4 text-gray-800">Content: {{ post.content }}</p>
                     <img v-if="post.image_url" :alt="post.title" :src="post.image_url" class="mb-4">
-                    <Like
-                        :item="post"
-                        route-name="client.posts.like.toggle"
-                        class="flex justify-end">
-                    </Like>
+                    <div class="flex justify-end">
+                        <div>
+                            <svg @click="isRepost = true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                 stroke="currentColor" class="cursor-pointer mr-4 size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m15 15 6-6m0 0-6-6m6 6H9a6 6 0 0 0 0 12h3" />
+                            </svg>
+                        </div>
+                        <div>
+                            <Like
+                                :item="post"
+                                route-name="client.posts.like.toggle"
+                                class="flex justify-end">
+                            </Like>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -75,7 +104,9 @@ export default {
             comments: [],
             childComments: [],
             replyingTo: null,
-            childComment: {}
+            childComment: {},
+            isRepost: false,
+            repost: {},
         }
     },
 
@@ -95,11 +126,33 @@ export default {
                 })
         },
 
+        repostPost() {
+            axios.post(route('client.posts.repost', this.post.id), this.repost)
+                .then(res => {
+                    console.log(res);
+                })
+        }
+
     }
 
 }
 </script>
 
-<style scoped>
+<style>
+    .popup {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        left: 0;
+        top: 0;
+    }
 
+    .body {
+        width: 40%;
+        height: 40%;
+        background: #323243;
+        left: 0;
+        top: 0;
+    }
 </style>

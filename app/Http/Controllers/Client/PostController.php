@@ -4,16 +4,15 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Client\Post\RepostRequest;
 use App\Http\Requests\Client\Post\StoreCommentRequest;
 use App\Http\Resources\Comment\Client\CommentResource;
 use App\Http\Resources\Post\PostResource;
 use App\Jobs\Comment\StoredCommentSendMailJob;
 use App\Jobs\Like\ToggleLikeMailJob;
-use App\Mail\Like\LikeMail;
 use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Mail;
 use Inertia\Response;
 
 class PostController extends Controller
@@ -30,6 +29,13 @@ class PostController extends Controller
         return response()->json([
             'message' => 'Post has been deleted.'
         ]);
+    }
+
+    public function repost(RepostRequest $request, Post $post): array
+    {
+        $data = $request->validationData();
+        $post = $post->repostedPosts()->create($data);
+        return PostResource::make($post)->resolve();
     }
 
     public function toggleLike(Post $post): JsonResponse

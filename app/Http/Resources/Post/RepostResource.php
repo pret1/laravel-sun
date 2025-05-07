@@ -8,7 +8,7 @@ use App\Http\Resources\Tag\TagResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class PostResource extends JsonResource
+class RepostResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -32,7 +32,6 @@ class PostResource extends JsonResource
             'published_at' => $this->published_at,
             'is_liked' => $this->is_liked,
             'liked_profiles_count' => $this->liked_profiles_count,
-            'reposted_post' =>$this->repostedPost ? RepostResource::make($this->repostedPost)->resolve() : null,
         ];
     }
 }
