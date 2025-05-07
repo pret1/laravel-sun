@@ -12,12 +12,18 @@
 
         <div>
             <h2 class="text-lg font-bold mb-4">Reposts</h2>
-            <PostItem
-                v-for="post in reposts"
-                :key="post.id"
-                :post="post"
-                @post_deleted="refreshPosts"
-            ></PostItem>
+            <div v-for="repostItem in reposts" :key="repostItem.id" class="mb-4 border border-gray-200 p-4">
+                <PostItem
+                    :post="repostItem"
+                    @post_deleted="refreshPosts"
+                ></PostItem>
+                <div v-if="repostItem.parent_id" class="mt-4 p-2 bg-gray-100 border border-gray-300">
+                    <p class="text-sm text-gray-600">Repost of:</p>
+                    <Link class="text-lg" :href="route('client.posts.show', repostItem.reposted_post.id)">
+                        Title: {{ repostItem.reposted_post.title }}
+                    </Link>
+                </div>
+            </div>
         </div>
     </div>
 </template>
