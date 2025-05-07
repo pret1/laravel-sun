@@ -14,6 +14,7 @@ Route::group(['prefix'=>'client','middleware' => ['auth']], function () {
     Route::post('/comments/{comment}/toggle-like', [PostController::class, 'toggleLikeComment'])->name('client.comment.like.toggle');
     Route::post('/posts/{post}/comments/{comment?}', [PostController::class, 'storeComments'])->name('client.posts.comments.store');
     Route::get('/posts/{post}/comments', [PostController::class, 'indexComments'])->name('client.posts.comments.index');
+    Route::get('/posts/{post}/reposts', [PostController::class, 'indexReposts'])->name('client.posts.reposts.index');
     Route::get('/comments/{comment}/child-comments', [PostController::class, 'indexChildComments'])->name('client.comments.child-comments.index');
     Route::post('/posts/{post}/repost', [PostController::class, 'repost'])->name('client.posts.repost');
 });

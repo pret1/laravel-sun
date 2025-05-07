@@ -43,6 +43,17 @@
             </div>
         </div>
         <div class="mb-4 p-4 border border-gray-200 bg-white">
+            <div class="items-center">
+                <div class="mb-4">
+                    <h3>Reposts</h3>
+                </div>
+                <div v-for="repostItem in reposts" :key="repostItem.id" class="mb-4">
+                    <p class="mb-4 text-gray-800">Content: {{ repostItem.title }}</p>
+                    <img v-if="repostItem.image_url" :alt="repostItem.title" :src="repostItem.image_url" class="mb-4">
+                </div>
+            </div>
+        </div>
+        <div class="mb-4 p-4 border border-gray-200 bg-white">
             <div class="mb-4">
                 <h3>Add comments</h3>
             </div>
@@ -96,6 +107,7 @@ export default {
 
     mounted() {
       this.getComments()
+      this.getReposts()
     },
 
     data() {
@@ -107,6 +119,7 @@ export default {
             childComment: {},
             isRepost: false,
             repost: {},
+            reposts: [],
         }
     },
 
@@ -126,10 +139,18 @@ export default {
                 })
         },
 
+        getReposts() {
+            axios.get(route('client.posts.reposts.index', this.post.id))
+                .then(res => {
+                    this.reposts = res.data
+                })
+        },
+
         repostPost() {
             axios.post(route('client.posts.repost', this.post.id), this.repost)
                 .then(res => {
-                    console.log(res);
+                    this.reposts.unshift(res.data)
+                    this.isRepost = false
                 })
         }
 

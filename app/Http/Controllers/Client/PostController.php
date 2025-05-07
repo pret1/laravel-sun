@@ -38,6 +38,12 @@ class PostController extends Controller
         return PostResource::make($post)->resolve();
     }
 
+    public function indexReposts(Post $post): array
+    {
+        $posts = $post->repostedPosts()->get();
+        return PostResource::collection($posts)->resolve();
+    }
+
     public function toggleLike(Post $post): JsonResponse
     {
         $res = $post->likedProfiles()->toggle(auth()->user()->profile->id);
