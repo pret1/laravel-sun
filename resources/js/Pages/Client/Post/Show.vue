@@ -47,9 +47,8 @@
                 <div class="mb-4">
                     <h3>Reposts</h3>
                 </div>
-                <div v-for="repostItem in reposts" :key="repostItem.id" class="mb-4">
-                    <p class="mb-4 text-gray-800">Content: {{ repostItem.title }}</p>
-                    <img v-if="repostItem.image_url" :alt="repostItem.title" :src="repostItem.image_url" class="mb-4">
+                <div v-for="repostItem in reposts" :key="repostItem.id" class="mb-4 border-b border-gray-200">
+                    <Link class="text-lg" :href="route('client.posts.show', repostItem.id)">Title: {{ repostItem.title }}</Link>
                 </div>
             </div>
         </div>
