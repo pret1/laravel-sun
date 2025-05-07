@@ -32,6 +32,7 @@ class PostResource extends JsonResource
             'published_at' => $this->published_at,
             'is_liked' => $this->is_liked,
             'liked_profiles_count' => $this->liked_profiles_count,
+            'parent_id' => $this->parent_id,
             'reposted_post' =>$this->repostedPost ? RepostResource::make($this->repostedPost)->resolve() : null,
         ];
     }

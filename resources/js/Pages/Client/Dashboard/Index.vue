@@ -1,6 +1,24 @@
 <template>
     <div>
-        <PostItem @post_deleted="refreshPosts" v-for="post in postsData" :post="post"></PostItem>
+        <div class="mb-8">
+            <h2 class="text-lg font-bold mb-4">Original Posts</h2>
+            <PostItem
+                v-for="post in originalPosts"
+                :key="post.id"
+                :post="post"
+                @post_deleted="refreshPosts"
+            ></PostItem>
+        </div>
+
+        <div>
+            <h2 class="text-lg font-bold mb-4">Reposts</h2>
+            <PostItem
+                v-for="post in reposts"
+                :key="post.id"
+                :post="post"
+                @post_deleted="refreshPosts"
+            ></PostItem>
+        </div>
     </div>
 </template>
 
@@ -25,6 +43,17 @@ export default {
     data() {
         return {
             postsData: this.posts,
+        }
+    },
+
+
+    computed: {
+        originalPosts() {
+            return this.postsData.filter(post => !post.parent_id);
+        },
+
+        reposts() {
+            return this.postsData.filter(post => post.parent_id);
         }
     },
 
