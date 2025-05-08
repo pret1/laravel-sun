@@ -25,11 +25,16 @@
                     <p class="mb-4 text-gray-800">Content: {{ post.content }}</p>
                     <img v-if="post.image_url" :alt="post.title" :src="post.image_url" class="mb-4">
                     <div class="flex justify-end">
-                        <div>
-                            <svg @click="isRepost = true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                 stroke="currentColor" class="cursor-pointer mr-4 size-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="m15 15 6-6m0 0-6-6m6 6H9a6 6 0 0 0 0 12h3" />
-                            </svg>
+                        <div class="flex">
+                            <div>
+                                {{ reposts.length }}
+                            </div>
+                            <div>
+                                <svg @click="isRepost = true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                     stroke="currentColor" class="cursor-pointer mr-4 size-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="m15 15 6-6m0 0-6-6m6 6H9a6 6 0 0 0 0 12h3" />
+                                </svg>
+                            </div>
                         </div>
                         <div>
                             <Like
