@@ -9,16 +9,16 @@ use App\Http\Requests\Client\Chat\StoreRequest;
 use App\Http\Resources\Chat\ChatResource;
 use App\Http\Resources\Message\MessageResource;
 use App\Models\Chat;
+use App\Services\ChatService;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Response;
 
 class ChatController extends Controller
 {
-    public function store(StoreRequest $request): RedirectResponse
+    public function store(StoreRequest $request, ChatService $chatService): RedirectResponse
     {
         $data = $request->validated();
-        $chat = Chat::create();
-        $chat->profiles()->syncWithoutDetaching([auth()->user()->profile->id, $data['profile_id']]);
+        $chat = $chatService->findOrCreateChat(auth()->user()->profile->id, $data['profile_id']);
 
         return to_route('client.chats.show', ['chat' => $chat]);
     }
