@@ -12,7 +12,9 @@ class ProfileController extends Controller
 {
     public function show(Profile $profile)
     {
+        $authProfileId = auth()->user()->profile->id;
         $profile = ProfileResource::make($profile)->resolve();
-        return inertia('Client/Profile/Show', compact('profile'));
+
+        return inertia('Client/Profile/Show', compact('profile', 'authProfileId'));
     }
 }

@@ -4,8 +4,12 @@
             <div class="mb-4 bg-white p-4 border border-gray-200">
                 {{profile.name}}
             </div>
-            <div class="mb-4 bg-white p-4 border border-gray-200">
-                <Link method="post" :href="route('client.chats.store')"  :data="{ profile_id: profile.id }">Start chat</Link>
+            <div v-if="!isOwnProfile" class="mb-4 bg-white p-4 border border-gray-200">
+                <Link
+                 method="post" 
+                 :href="route('client.chats.store')"  
+                 :data="{ profile_id: profile.id }"
+                 >Start chat</Link>
             </div>
         </div>
     </div>
@@ -25,7 +29,8 @@ export default {
     layout: ClientLayout,
 
     props: {
-        profile: Object
+        profile: Object,
+        authProfileId: Number
     },
 
     data() {
@@ -36,6 +41,12 @@ export default {
 
     methods: {
 
+    },
+
+    computed: {
+        isOwnProfile() {
+            return this.profile.id === this.authProfileId;
+        }
     }
 
 }
