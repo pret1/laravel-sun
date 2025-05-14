@@ -2,7 +2,7 @@
     <div>
         <div class="mb-4 w-1/2 mx-auto">
             <div class="mb-4 bg-white p-4 border border-gray-200">
-                {{ chat.id }}
+                {{ chat.data.id }}
             </div>
             <div class="mb-4 bg-white p-4 border border-gray-200">
                 <div v-if="nextPageUrl" class="mt-4 text-center">
@@ -14,8 +14,12 @@
                     </button>
                 </div>
                 <div class="overflow-y-auto h-64">
-                    <div v-for="message in allMessages" class="mb-4 p-4 border-b border-gray-200">
+                    <div v-for="message in allMessages"
+                         :class="[message.is_self ? 'text-right' : 'text-left','mb-4 p-4 border-b border-gray-200']">
                         {{message.content}}
+                        <small class="text-gray-500">
+                            {{ message.is_self ? 'your' : message.author_name }}
+                        </small>
                     </div>
                 </div>
             </div>
@@ -55,13 +59,13 @@ export default {
         return {
             message: {},
             allMessages: this.messages.data.reverse(),
-            nextPageUrl: this.messages.next_page_url
+            nextPageUrl: this.messages.links.next
         }
     },
 
     methods: {
         storeMessage() {
-            axios.post(route('client.chats.messages.store', this.chat.id), this.message)
+            axios.post(route('client.chats.messages.store', this.chat.data.id), this.message)
                 .then(res => {
                     this.allMessages.push(res.data)
                     this.message = {};
@@ -73,8 +77,8 @@ export default {
 
             axios.get(this.nextPageUrl)
                 .then(res => {
-                this.allMessages = [...res.data.data.reverse(), ...this.allMessages];
-                this.nextPageUrl = res.data.next_page_url;
+                    this.allMessages = [...res.data.messages.reverse(), ...this.allMessages];
+                    this.nextPageUrl = res.data.links[5].url;
             });
         },
     },

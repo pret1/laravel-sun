@@ -27,16 +27,29 @@ class ChatController extends Controller
 
     public function show(Chat $chat): Response|JsonResponse
     {
-        $messages = $chat->messages()->latest()->paginate(5);
-        $chat = ChatResource::make($chat)->resolve();
+
+        $paginatedMessages = $chat->messages()->latest()->paginate(5);
+
+        $messages = MessageResource::collection($paginatedMessages);
+
+        $chat = ChatResource::make($chat);
+
         if (Request::wantsJson()) {
-            return response()->json($messages);
+            return response()->json([
+                'chat' => $chat,
+                'messages' => $messages,
+                'links' => $paginatedMessages->linkCollection(),
+            ]);
         }
 
-        return inertia('Client/Chat/Show', compact('chat', 'messages'));
+        return inertia('Client/Chat/Show', [
+            'chat' => $chat,
+            'messages' => $messages,
+            'links' => $paginatedMessages->linkCollection(),
+        ]);
     }
 
-    public function storeMessage(StoreMessageRequest $request, Chat $chat): array
+    public function storeMessage(StoreMessageRequest $request, Chat $chat)
     {
         $data = $request->validationData();
         $message = $chat->messages()->create($data);
