@@ -14,6 +14,8 @@ Route::group(['prefix'=>'client','middleware' => ['auth']], function () {
         ->name('client.profiles.toggle-subscribe');
 
     Route::post('/chats', [ChatController::class, 'store'])->name('client.chats.store');
+    Route::get('/chats/group', [ChatController::class, 'indexGroup'])->name('client.chats.group.index');
+    Route::post('/chats/group', [ChatController::class, 'storeGroup'])->name('client.chats.group.store');
     Route::get('/chats/{chat}', [ChatController::class, 'show'])->name('client.chats.show');
 
     Route::post('/chats/{chat}/messages', [ChatController::class, 'storeMessage'])

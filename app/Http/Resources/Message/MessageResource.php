@@ -20,7 +20,7 @@ class MessageResource extends JsonResource
             'chat_id' => $this->chat_id,
             'profile_id' => $this->profile_id,
             'is_self' => $this->is_self,
-            'author_name' => auth()->user()->profile->name,
+            'author_name' => $this->profile->name,
         ];
     }
 }
