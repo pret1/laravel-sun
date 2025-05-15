@@ -10,6 +10,8 @@ Route::group(['prefix'=>'client','middleware' => ['auth']], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('client.dashboard');
 
     Route::get('/profiles/{profile}', [ProfileController::class, 'show'])->name('client.profiles.show');
+    Route::post('/profiles/{profile}/toggle-subscribe', [ProfileController::class, 'toggleSubscribe'])
+        ->name('client.profiles.toggle-subscribe');
 
     Route::post('/chats', [ChatController::class, 'store'])->name('client.chats.store');
     Route::get('/chats/{chat}', [ChatController::class, 'show'])->name('client.chats.show');

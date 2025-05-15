@@ -68,4 +68,28 @@ class Profile extends Model
     {
         return $this->morphToMany(Post::class, 'viewable');
     }
+
+    public function subscribers(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Profile::class,
+            'profile_subscriber',
+            'profile_id',
+            'subscriber_id'
+        );
+    }
+    public function subscribering(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Profile::class,
+            'profile_subscriber',
+            'subscriber_id',
+            'profile_id',
+        );
+    }
+
+    public function getIsSubscriberAttribute(): bool
+    {
+        return $this->subscribering->contains(auth()->id());
+    }
 }
