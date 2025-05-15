@@ -13,10 +13,10 @@
             </div>
             <div v-if="!isOwnProfile" class="mb-4 bg-white p-4 border border-gray-200">
                 <a @click.prevent="toggleSubscriber"
-                   class="inline-block px-3 py-2 mr-2 text-sm text-white bg-blue-600"
+                   :class="[profile.is_subscriber ? 'text-blue-600' : 'text-white bg-blue-600', 'inline-block px-3 py-2 mr-2 text-sm border border-blue-600']"
                    href="#"
-                >Subscribe</a>
-                <a class="inline-block px-3 py-2 text-sm text-blue-600 border border-blue-600" href="#">Unsubscribe</a>
+                   v-html="profile.is_subscriber ? 'Unsubscribe' : 'Subscribe'"
+                ></a>
             </div>
         </div>
     </div>
@@ -59,7 +59,7 @@ export default {
                 subscriber_id: this.profile.id
             })
                 .then(res => {
-                    this.profile.is_subscriber = res.is_subscriber
+                    this.profile.is_subscriber = res.data.is_subscriber
                 })
         }
     },
