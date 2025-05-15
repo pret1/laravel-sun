@@ -11,6 +11,12 @@
                  :data="{ profile_id: profile.id }"
                  >Start chat</Link>
             </div>
+            <div>
+                Subscribed to {{ localSubscriptionsCount }} people
+            </div>
+            <div>
+                This profile is followed by {{ localFollowersCount }} people
+            </div>
             <div v-if="!isOwnProfile" class="mb-4 bg-white p-4 border border-gray-200">
                 <a @click.prevent="toggleSubscriber"
                    :class="[profile.is_subscriber ? 'text-blue-600' : 'text-white bg-blue-600', 'inline-block px-3 py-2 mr-2 text-sm border border-blue-600']"
@@ -37,12 +43,15 @@ export default {
 
     props: {
         profile: Object,
-        authProfileId: Number
+        authProfileId: Number,
+        subscriptionsCount: Number,
+        followersCount: Number
     },
 
     data() {
         return {
-
+            localSubscriptionsCount: this.subscriptionsCount,
+            localFollowersCount: this.followersCount,
         }
     },
 
@@ -59,7 +68,10 @@ export default {
                 subscriber_id: this.profile.id
             })
                 .then(res => {
+                    console.log(res.data);
                     this.profile.is_subscriber = res.data.is_subscriber
+                    this.localSubscriptionsCount = res.data.followers_count
+                    this.localFollowersCount = res.data.subscriber_count
                 })
         }
     },

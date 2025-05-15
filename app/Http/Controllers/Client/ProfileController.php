@@ -16,17 +16,27 @@ class ProfileController extends Controller
     public function show(Profile $profile): Response
     {
         $authProfileId = auth()->user()->profile->id;
+        $subscriptionsCount = $profile->subscribers()->count();
+        $followersCount = $profile->subscribering()->count();
         $profile = ProfileResource::make($profile)->resolve();
 
-        return inertia('Client/Profile/Show', compact('profile', 'authProfileId'));
+        return inertia('Client/Profile/Show', compact(
+            'profile',
+            'authProfileId',
+            'subscriptionsCount',
+            'followersCount'));
     }
 
     public function toggleSubscribe(ToggleSubscribeRequest $request ,Profile $profile): JsonResponse
     {
         $data = $request->validated();
         $res = $profile->subscribers()->toggle($data['subscriber_id']);
+        $subscriptionsCount = $profile->subscribers()->count();
+        $followersCount = $profile->subscribering()->count();
         return response()->json([
-           'is_subscriber' => count($res['attached']) > 0
+           'is_subscriber' => count($res['attached']) > 0,
+            'subscriber_count' => $subscriptionsCount,
+            'followers_count' => $followersCount,
         ]);
     }
 }
