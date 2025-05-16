@@ -60,10 +60,10 @@ class ChatController extends Controller
         return MessageResource::make($message)->resolve();
     }
 
-    public function indexGroup(): Response
+    public function createGroup(): Response
     {
         $profiles = ProfileResource::collection(Profile::all())->resolve();
-        return Inertia::render('Client/Chat/Group/Index', [
+        return Inertia::render('Client/Chat/Group/Create', [
             'profiles' => $profiles,
         ]);
     }

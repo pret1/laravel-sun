@@ -9,9 +9,17 @@
                     <div v-for="profile in profiles" :key="profile.id" class="flex justify-between items-center">
                       {{profile.name}}
                       <input type="checkbox" :value="profile.id" v-model="selectedProfiles">
+                        <!--                      need to try-->
+<!--                      <select multiple>???????????????</select>-->
                     </div>
                   </div>
                   <div>
+<!--                      need to try-->
+<!--                      <Link-->
+<!--                          method="post"-->
+<!--                          :href="route('client.chats.group.store')"-->
+<!--                          :data="{ profile_ids: selectedProfiles }"-->
+<!--                      >Create group</Link>-->
                     <button @click="createGroupChat"
                         class="px-3 py-2 text-white bg-blue-600 border border-blue-800"
                     >Create group</button>
@@ -27,7 +35,7 @@ import {Link} from "@inertiajs/vue3";
 import axios from "axios";
 
 export default {
-    name: 'Index',
+    name: 'Create',
     components: {
         Link,
     },
