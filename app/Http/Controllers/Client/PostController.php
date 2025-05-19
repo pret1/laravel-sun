@@ -13,6 +13,7 @@ use App\Jobs\Like\ToggleLikeMailJob;
 use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Response;
 
 class PostController extends Controller
@@ -25,6 +26,7 @@ class PostController extends Controller
 
     public function destroy(Post $post): JsonResponse
     {
+        Gate::authorize('delete', $post);
         $post->delete();
         return response()->json([
             'message' => 'Post has been deleted.'
