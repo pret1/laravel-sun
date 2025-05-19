@@ -31,17 +31,27 @@ class ChatController extends Controller
 
     public function show(Chat $chat): Response|JsonResponse
     {
-
         $paginatedMessages = $chat->messages()->latest()->paginate(5);
 
         $messages = MessageResource::collection($paginatedMessages);
 
         $chat = ChatResource::make($chat);
 
+        $unreadCount = $chat->messages()
+            ->where('profile_id', '!=', auth()->user()->profile->id)
+            ->whereNull('read_at')
+            ->count();
+
+        $chat->messages()
+            ->where('profile_id', '!=', auth()->user()->profile->id)
+            ->whereNull('read_at')
+            ->update(['read_at' => now()]);
+
         if (Request::wantsJson()) {
             return response()->json([
                 'chat' => $chat,
                 'messages' => $messages,
+                'unreadCount' => $unreadCount,
                 'links' => $paginatedMessages->linkCollection(),
             ]);
         }
@@ -49,6 +59,7 @@ class ChatController extends Controller
         return inertia('Client/Chat/Show', [
             'chat' => $chat,
             'messages' => $messages,
+            'unreadCount' => $unreadCount,
             'links' => $paginatedMessages->linkCollection(),
         ]);
     }
