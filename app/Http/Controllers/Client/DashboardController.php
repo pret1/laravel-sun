@@ -12,7 +12,17 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $posts = PostResource::collection(Post::all())->resolve();
+        $posts = Post::with([
+            'profile',
+            'tags',
+            'category',
+            'likedProfiles',
+            'viewedProfiles',
+            'profile.subscribers',
+            'profile.subscribering',
+            'image'
+        ])->get();
+        $posts = PostResource::collection($posts)->resolve();
         return inertia('Client/Dashboard/Index', compact('posts'));
     }
 }
