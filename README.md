@@ -181,3 +181,5 @@ php artisan route:clear
 php artisan route:cache
 composer dump-autoload
 ```
+
+http://localhost:8080/client/chats/group
