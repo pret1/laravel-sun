@@ -9,6 +9,7 @@ use App\Http\Requests\Admin\Post\DeleteRequest;
 use App\Http\Requests\Admin\Post\StoreRequest;
 use App\Http\Resources\Category\CategoryResource;
 use App\Http\Resources\Post\PostResource;
+use App\Mappers\PostMapper;
 use App\Models\Category;
 use App\Models\Post;
 use App\Services\PostService;
@@ -58,9 +59,7 @@ class PostController extends Controller
 
     public function edit(Post $post): Response|ResponseFactory
     {
-        $post = PostResource::make($post)->resolve();
-        $categories = CategoryResource::collection(Category::all())->resolve();
-        return inertia('Admin/Post/Edit', compact('post', 'categories'));
+        return inertia('Admin/Post/Edit', PostMapper::getEdit($post));
     }
 
     public function update(UpdateRequest $request, Post $post): array
