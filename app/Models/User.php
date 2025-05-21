@@ -44,6 +44,8 @@ class User extends Authenticatable implements JWTSubject
         'remember_token',
     ];
 
+    protected $withCount = ['userNotifications'];
+
     /**
      * Get the attributes that should be cast.
      *

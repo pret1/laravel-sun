@@ -18,6 +18,7 @@ class UserResource extends JsonResource
         return [
             'id' => $this->id,
             'profile' => ProfileResource::make($this->profile)->resolve(),
+            'user_notifications_count' => $this->user_notifications_count
         ];
     }
 }
