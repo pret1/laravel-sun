@@ -29,6 +29,8 @@ class GoNotifications extends Command
     public function handle()
     {
         $user = User::first();
-        Notification::send($user, new UserNotification());
+        $user->userNotifications()->create([
+            'content' => 'you have been notified',
+        ]);
     }
 }
