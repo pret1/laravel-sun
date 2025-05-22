@@ -2,10 +2,10 @@
     <section class="w-full">
         <header class="mx-auto p-4 flex justify-between">
             <div>HEADER Dashboard</div>
-            <div class="cursor-pointer notify-block">
-                <div class="flex items-center ">
+            <div class="cursor-pointer notify-block" v-if="$page.props.auth.user.user_notifications_count > 0">
+                <div class="flex items-center" @click="toggleNotify">
                     <div class="mr-1">
-                        {{ this.$page.props.auth.user.user_notifications_count }}
+                        {{ $page.props.auth.user.user_notifications_count }}
                     </div>
                     <div>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -15,7 +15,11 @@
                         </svg>
                     </div>
                 </div>
-                <div class="notify-content">
+                <div class="notify-content" v-if="showNotify">
+                    <div v-for="notification in $page.props.auth.user.notifications" :key="notification.id" class="p-2 border-b border-gray-300">
+                        <div class="text-sm text-gray-700">{{ notification.content }}</div>
+                        <div class="text-xs text-gray-500">{{ notification.created_at }}</div>
+                    </div>
                 </div>
             </div>
         </header>
@@ -32,7 +36,16 @@
 <script>
 export default {
     name: 'ClientLayout',
-
+    data() {
+        return {
+            showNotify: false,
+        }
+    },
+    methods: {
+        toggleNotify() {
+            this.showNotify = !this.showNotify;
+        }
+    }
 }
 </script>
 
@@ -40,14 +53,15 @@ export default {
 .notify-block {
     position: relative;
 }
-
 .notify-content {
     width: 400px;
-    height: 600px;
+    max-height: 600px;
     background: #eac87b;
     position: absolute;
     top: 100%;
     right: 0;
     overflow-y: auto;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 }
 </style>

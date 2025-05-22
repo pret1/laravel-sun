@@ -18,7 +18,17 @@ class UserResource extends JsonResource
         return [
             'id' => $this->id,
             'profile' => ProfileResource::make($this->profile)->resolve(),
-            'user_notifications_count' => $this->user_notifications_count
+            'user_notifications_count' => $this->user_notifications_count,
+            'notifications' => $this->userNotifications->map(function ($notification) {
+                return [
+                    'id' => $notification->id,
+                    'content' => $notification->content,
+                    'read_at' => $notification->read_at,
+                    'created_at' => $notification->created_at
+                        ? $notification->created_at->format('d.m.Y H:i')
+                        : null,
+                ];
+            }),
         ];
     }
 }
