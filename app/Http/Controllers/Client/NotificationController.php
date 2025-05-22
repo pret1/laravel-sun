@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Client\Notification\MakrReadRequest;
+use App\Http\Resources\Natification\UserNatificationResource;
 
 class NotificationController extends Controller
 {
@@ -24,6 +25,7 @@ class NotificationController extends Controller
             ->whereNull('read_at')
             ->get();
 
+        $notifications = UserNatificationResource::collection($notifications)->resolve();
 
         return response()->json(['notifications' => $notifications]);
     }
