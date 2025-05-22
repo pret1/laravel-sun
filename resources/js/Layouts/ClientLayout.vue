@@ -5,7 +5,7 @@
             <div class="cursor-pointer notify-block" v-if="$page.props.auth.user.user_notifications_count > 0">
                 <div class="flex items-center" @click="toggleNotify">
                     <div class="mr-1">
-                        {{ $page.props.auth.user.user_notifications_count }}
+                        {{ unreadCount }}
                     </div>
                     <div>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -16,7 +16,7 @@
                     </div>
                 </div>
                 <div class="notify-content" v-if="showNotify">
-                    <div v-for="notification in $page.props.auth.user.notifications" :key="notification.id" class="p-2 border-b border-gray-300">
+                    <div v-for="notification in unreadNotifications" :key="notification.id" class="p-2 border-b border-gray-300">
                         <div class="text-sm text-gray-700">{{ notification.content }}</div>
                         <div class="text-xs text-gray-500">{{ notification.created_at }}</div>
                     </div>
@@ -34,15 +34,33 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
     name: 'ClientLayout',
     data() {
         return {
             showNotify: false,
+            notifications: this.$page.props.auth.user.notifications || [],
+        }
+    },
+    computed: {
+        unreadNotifications() {
+            return this.notifications.filter(n => !n.read_at);
+        },
+        unreadCount() {
+            return this.unreadNotifications.length;
         }
     },
     methods: {
         toggleNotify() {
+            if (this.showNotify && this.unreadCount > 0) {
+                axios.post(route('client.notifications.read'), {
+                    notifications: this.notifications
+                })
+                    .then((res) => {
+                        this.notifications = res.data.notifications;
+                    });
+            }
             this.showNotify = !this.showNotify;
         }
     }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Client\ChatController;
+use App\Http\Controllers\Client\NotificationController;
 use App\Http\Controllers\Client\PostController;
 use App\Http\Controllers\Client\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -8,6 +9,7 @@ use App\Http\Controllers\Client\DashboardController;
 
 Route::group(['prefix'=>'client','middleware' => ['auth']], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('client.dashboard');
+    Route::post('/notifications/mark-read', [NotificationController::class, 'markRead'])->name('client.notifications.read');
 
     Route::get('/profiles/{profile}', [ProfileController::class, 'show'])->name('client.profiles.show');
     Route::post('/profiles/{profile}/toggle-subscribe', [ProfileController::class, 'toggleSubscribe'])
