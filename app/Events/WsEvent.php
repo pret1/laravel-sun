@@ -26,12 +26,12 @@ class WsEvent implements ShouldBroadcastNow
     /**
      * Get the channels the event should broadcast on.
      *
-     * @return array<int, \Illuminate\Broadcasting\Channel>
+     * @return array<int, PrivateChannel>
      */
     public function broadcastOn(): array
     {
         return [
-            new Channel('post-name'),
+            new PrivateChannel('posts'),
         ];
     }
 

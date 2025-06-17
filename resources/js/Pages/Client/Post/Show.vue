@@ -115,7 +115,7 @@ export default {
     },
 
     created() {
-        Echo.channel(`post-name`)
+        Echo.private(`posts`)
             .listen('.post.created', (e) => {
                 console.log(e);
             });
