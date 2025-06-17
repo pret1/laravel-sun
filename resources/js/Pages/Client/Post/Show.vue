@@ -114,6 +114,13 @@ export default {
       this.getReposts()
     },
 
+    created() {
+        Echo.channel(`post-name`)
+            .listen('.post.created', (e) => {
+                console.log(e);
+            });
+    },
+
     data() {
         return {
             comment: {},
