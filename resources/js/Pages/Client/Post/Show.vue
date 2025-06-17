@@ -115,7 +115,7 @@ export default {
     },
 
     created() {
-        Echo.private(`posts`)
+        Echo.private(`posts.4`)
             .listen('.post.created', (e) => {
                 console.log(e);
             });

@@ -31,7 +31,7 @@ class WsEvent implements ShouldBroadcastNow
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('posts'),
+            new PrivateChannel('posts.4'),
         ];
     }
 
