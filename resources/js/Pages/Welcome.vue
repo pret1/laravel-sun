@@ -27,9 +27,6 @@ function handleImageError() {
 </script>
 
 <template>
-    <head>
-        <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-    </head>
     <Head title="Welcome" />
     <div class="bg-gray-50 text-black/50 dark:bg-black dark:text-white/50">
         <img

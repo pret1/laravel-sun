@@ -7,9 +7,6 @@ import { Head } from '@inertiajs/vue3';
     <Head title="Dashboard" />
 
     <AuthenticatedLayout>
-        <head>
-            <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-        </head>
         <template #header>
             <h2
                 class="text-xl font-semibold leading-tight text-gray-800"
