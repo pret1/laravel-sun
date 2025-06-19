@@ -114,13 +114,6 @@ export default {
       this.getReposts()
     },
 
-    created() {
-        Echo.private(`posts.4`)
-            .listen('.post.created', (e) => {
-                console.log(e);
-            });
-    },
-
     data() {
         return {
             comment: {},

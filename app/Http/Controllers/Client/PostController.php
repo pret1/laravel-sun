@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Client;
 
+use App\Events\UserNotification\SendWsNotificationEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Client\Post\RepostRequest;
 use App\Http\Requests\Client\Post\StoreCommentRequest;
@@ -12,6 +13,7 @@ use App\Jobs\Comment\StoredCommentSendMailJob;
 use App\Jobs\Like\ToggleLikeMailJob;
 use App\Models\Comment;
 use App\Models\Post;
+use App\Models\UserNotification;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Response;
@@ -51,6 +53,12 @@ class PostController extends Controller
         $res = $post->likedProfiles()->toggle(auth()->user()->profile->id);
         $likedProfilesCount = $post->likedProfiles()->count();
         $isLiked = count($res['attached']) > 0;
+        $userNotification = UserNotification::create([
+            'user_id' => $post->user->id,
+            'content' => 'Someone like or dislike your post.',
+        ]);
+//        event(new SendWsNotificationEvent($userNotification));
+        SendWsNotificationEvent::dispatch($userNotification);
         ToggleLikeMailJob::dispatch($post, $isLiked);
         return response()->json([
             'is_liked' => count($res['attached']) > 0,

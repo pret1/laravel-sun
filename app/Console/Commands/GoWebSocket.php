@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
+use App\Events\UserNotification\SendWsNotificationEvent;
 use App\Events\WsEvent;
+use App\Models\UserNotification;
 use Illuminate\Console\Command;
 
 class GoWebSocket extends Command
@@ -27,6 +29,11 @@ class GoWebSocket extends Command
      */
     public function handle()
     {
-        WsEvent::dispatch();
+        $userNotification = UserNotification::create([
+            'user_id' => 4,
+            'content' => '222222222222222 asdasdasdasda'
+        ]);
+
+        SendWsNotificationEvent::broadcast($userNotification);
     }
 }

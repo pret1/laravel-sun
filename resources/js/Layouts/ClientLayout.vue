@@ -51,6 +51,13 @@ export default {
             return this.unreadNotifications.length;
         }
     },
+    created() {
+        Echo.private(`user-notification.${this.$page.props.auth.user.id}`)
+            .listen('.UserNotification', (e) => {
+                console.log(e);
+                this.notifications.unshift(e.message);
+            });
+    },
     methods: {
         toggleNotify() {
             if (this.showNotify && this.unreadCount > 0) {
