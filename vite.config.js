@@ -30,8 +30,9 @@ export default defineConfig({
     },
     build: {
         outDir: 'public/build',
-        manifest: true,
-        sourcemap: true,
+        rollupOptions: {
+            input: 'resources/js/app.js',
+        },
     },
     esbuild: {
         sourcemap: true,
