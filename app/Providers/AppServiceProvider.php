@@ -22,7 +22,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->app['router']->pushMiddlewareToGroup('web', CustomVerifyCsrfToken::class);
+//        $this->app['router']->pushMiddlewareToGroup('web', CustomVerifyCsrfToken::class);
 
         Model::unguard();
         Vite::prefetch(concurrency: 3);
